@@ -1,5 +1,6 @@
 package com.droidquest;
 
+import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -21,18 +22,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-import javax.swing.Timer;
 
 import com.droidquest.avatars.LabCursor;
-import com.droidquest.chipstuff.Port;
-import com.droidquest.decorations.Graphix;
 import com.droidquest.decorations.Spark;
-import com.droidquest.devices.Device;
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
 import com.droidquest.levels.MainMenu;
@@ -69,7 +61,7 @@ public class RoomDisplay extends JPanel
 	{
 		setSize(new Dimension(560,384));
 		level = new MainMenu(this);
-		level.Init();
+		getLevel().Init();
 		smallFont = new Font("Courier",Font.BOLD, 20);
 		bigFont = new Font("Courier",Font.BOLD, 45);
 		//	setFocusable(true);
@@ -91,7 +83,7 @@ public class RoomDisplay extends JPanel
 		addKeyListener(new KeyAdapter() { 
 			public void keyReleased(KeyEvent e) {
 				// Event Handler for KeyReleased here
-				if (level.player.KeyUp(e))
+				if (getLevel().player.KeyUp(e))
 					repaint();
 
 				if (e.getKeyCode() == e.VK_Q)
@@ -105,7 +97,7 @@ public class RoomDisplay extends JPanel
 				{
 					if (timerspeed<128) 
 						timerspeed*=2;
-					if ( (timerspeed>=128) && (level.player instanceof LabCursor) )
+					if ( (timerspeed>=128) && (getLevel().player instanceof LabCursor) )
 						timerspeed*=2;
 					timer.setDelay(timerspeed);
 				}
@@ -116,7 +108,7 @@ public class RoomDisplay extends JPanel
 		// Key Pressed Functions
 		addKeyListener(new KeyAdapter() { 
 			public void keyPressed(KeyEvent e) {
-				if (level.player.KeyDown(e))
+				if (getLevel().player.KeyDown(e))
 					repaint();
 				return;
 			}
@@ -130,192 +122,34 @@ public class RoomDisplay extends JPanel
 				int deltaX = newX - e.getX();
 				int deltaY = newY - e.getY();
 				e.translatePoint(deltaX,deltaY);
-				level.player.MouseClick(e);
+				getLevel().player.MouseClick(e);
 			}
 		});
 
-		timer = new Timer(timerspeed, new ActionListener() { 
-			public void actionPerformed(ActionEvent e)
-			{
-				if (level.portal != null)
-				{
-					String filename = level.portal.levelName;
-					boolean bringStuff = level.portal.bringStuff;
-					boolean initLevel = level.portal.initLevel;
-					int x = level.player.x + level.player.getWidth()/2;
-					int y = level.player.y + level.player.getHeight()/2;
-					Graphics g = getGraphics();
-					level.PlaySound(level.currentViewer.room,Level.TELEPORTSOUND);
-					boolean tempsound = level.roomdisplay.useSounds;
-					level.roomdisplay.useSounds = false;
-					//		     for (int a=0; a<560; a+=2)
-					//		       {
-					//			  int c = 255*a/560;
-					//			  g.setColor(new Color(c,255-c,0));
-					//			  g.drawRect(x-a-1,y-a-1,a*2+2,a*2+2);
-					//			  g.setColor(Color.black);
-					//			  g.drawRect(x-a,y-a,a*2,a*2);
-					//			  long timeout = System.currentTimeMillis() + 1;
-					//			  do {} while (System.currentTimeMillis() < timeout);
-					//		       }
-					//		     g.setColor(Color.black);
-					//		     for (int a=0; a<560; a++)
-					//		       {
-					//			  g.drawRect(x-a,y-a,a*2,a*2);
-					//			  long timeout = System.currentTimeMillis() + 1;
-					//			  do {} while (System.currentTimeMillis() < timeout);
-					//		       }
-					if (bringStuff)
-					{
-						System.out.println("Saving carried items.");
-						level.WriteInventory();
-					}
-
-					FileInputStream f;
-					try
-					{
-						f = new FileInputStream(filename);
-						try {f.close();} catch (IOException ie){}
-					}
-					catch(FileNotFoundException ie)
-					{
-						// filename does not exist
-						RoomDisplay rd = level.roomdisplay;
-						String classname = "com.droidquest.levels."+filename.substring(0,filename.length()-4);
-						Constructor constructor = null;
-						try
-						{
-							Class newlevel = Class.forName(classname);
-							Class[] arglist = {Class.forName("com.droidquest.RoomDisplay")};
-							constructor = newlevel.getConstructor(arglist);
-							constructor.setAccessible(true);
-						}
-						catch (ClassNotFoundException ce) {
-							ce.printStackTrace();
-						}
-						catch (NoSuchMethodException ne) {
-							ne.printStackTrace();
-						};
-						try
-						{
-							Object[] args = {rd};
-							level = (Level) constructor.newInstance(args);
-							rd.SaveLevel();
-						}
-						catch(InstantiationException ie2)
-						{
-							System.out.println("Instantiation");
-							System.exit(0);
-						}
-						catch(IllegalAccessException ie2)
-						{
-							System.out.println("Illegal Access");
-							System.exit(0);
-						}
-						catch(IllegalArgumentException ie2)
-						{
-							System.out.println("Illegal Argument");
-							System.exit(0);
-						}
-						catch(InvocationTargetException ie2)
-						{
-							System.out.println("Invocation Target");
-							Throwable t = ie2.getTargetException();
-							ie2.printStackTrace();
-							System.out.println(t.getClass());
-							System.exit(0);
-						};
-					}
-					//		       {
-					//		         look for a class that matches the name "filename" without the ".lvl"
-					//		         if found, create it and save it, then load the file.
-					//		       }
-
-					System.out.println("Loading level " + filename);
-					LoadLevel(filename);
-					if (initLevel)
-					{
-						System.out.println("Initializing Level");
-						level.Init();
-					}
-					if (bringStuff)
-					{
-						System.out.println("Loading carried items.");
-						level.LoadInventory();
-					}
-					x = level.player.x + level.player.getWidth()/2;
-					y = level.player.y + level.player.getHeight()/2;
-
-					//		     for (int a=560; a>0; a-=2)
-					//		       {
-					//			  int c = 255*a/560;
-					//			  g.setColor(new Color(255-c,c,0));
-					//			  g.drawRect(x-a-1,y-a-1,a*2+2,a*2+2);
-					//			  g.setColor(Color.black);
-					//			  g.drawRect(x-a,y-a,a*2,a*2);
-					//			  long timeout = System.currentTimeMillis() + 1;
-					//			  do {} while (System.currentTimeMillis() < timeout);
-					//		       }
-					//		     g.setColor(Color.black);
-					//		     for (int a=560; a>0; a--)
-					//		       {
-					//			  g.drawRect(x-a,y-a,a*2,a*2);
-					//			  long timeout = System.currentTimeMillis() + 1;
-					//			  do {} while (System.currentTimeMillis() < timeout);
-					//		       }
-					level.roomdisplay.useSounds = tempsound;
-					level.PlaySound(level.currentViewer.room,Level.TRANSPORTSOUND);
-				}
-				Electricity();
-				for (int a = 0; a < level.items.size(); a++)
-				{
-					Item item = (Item) level.items.elementAt(a);
-					item.Animate();
-					if (item.room == level.currentViewer.room)
-						item.Decorate();
-				}
-				for (int a=0; a<level.materials.size(); a++)
-					((Material) level.materials.elementAt(a)).Animate();
-				for (int a=0; a<level.rooms.size(); a++)
-				{
-					Room room = (Room) level.rooms.elementAt(a);
-					for (int b=0; b<room.graphix.size(); b++)
-					{
-						Graphix graphix = (Graphix) room.graphix.elementAt(b);
-						graphix.Animate();
-					}
-				}
-
-				repaint();
-				for (int a = 0; a< level.sparks.size(); a++)
-				{
-					Spark spark = (Spark)level.sparks.elementAt(a);
-					spark.Age();
-					if (spark.age>6)
-					{
-						level.sparks.removeElement(spark);
-						a--;
-					}
-				}
-			}
-		});
+        final ClockTickHandler clockTickHandler = new ClockTickHandler(this);
+		timer = new Timer(timerspeed, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                clockTickHandler.handleClockTick();
+            }
+        });
 
 		Image tempImage= new BufferedImage(200,200,BufferedImage.TYPE_4BYTE_ABGR);
 		Graphics g = tempImage.getGraphics();
 		Image tempIcon;
 		ImageIcon tempImageIcon;
 
-		for (int a = 0; a<level.materials.size(); a++)
+		for (int a = 0; a< getLevel().materials.size(); a++)
 		{
-			Material mat = (Material) level.materials.elementAt(a);
+			Material mat = (Material) getLevel().materials.elementAt(a);
 			tempImageIcon = mat.icon;
 			if (tempImageIcon != null)
 				g.drawImage(tempImageIcon.getImage(), 0, 0, this);
 		}
 
-		for (int a = 0; a<level.items.size(); a++)
+		for (int a = 0; a< getLevel().items.size(); a++)
 		{
-			Item itm = (Item) level.items.elementAt(a);
+			Item itm = (Item) getLevel().items.elementAt(a);
 			for (int b=0; b<itm.icons.length; b++)
 			{
 				tempImageIcon = itm.icons[b];
@@ -325,45 +159,45 @@ public class RoomDisplay extends JPanel
 		}
 
 		timer.start();
-		level.PlaySound(level.player.room, Level.STARTMUSICSOUND);
+		getLevel().PlaySound(getLevel().player.room, Level.STARTMUSICSOUND);
 	}
 
-	public void paintComponent(Graphics g) 
+    public void paintComponent(Graphics g)
 	{
 		super.paintComponents(g); // Paint background
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setTransform(at);
 
 		// Paint Materials
-		if (level.currentViewer.room.MaterialArray==null)
-			level.currentViewer.room.GenerateArray();
+		if (getLevel().currentViewer.room.MaterialArray==null)
+			getLevel().currentViewer.room.GenerateArray();
 		for (int y=0; y<12; y++)
 			for (int x=0;x<20;x++)
-				level.currentViewer.room.MaterialArray[y][x].Draw(g2,this,x,y);
+				getLevel().currentViewer.room.MaterialArray[y][x].Draw(g2,this,x,y);
 
 		// Paint Texts
-		level.currentViewer.room.DrawTextBoxes(g2, this);
+		getLevel().currentViewer.room.DrawTextBoxes(g2, this);
 
 		// Paint Graphix
-		level.currentViewer.room.DrawGraphix(g2,this);
+		getLevel().currentViewer.room.DrawGraphix(g2,this);
 
 		// Paint Arrows
-		level.currentViewer.room.DrawArrows(g2);
+		getLevel().currentViewer.room.DrawArrows(g2);
 
 		// Paint Items
-		for (int a = 0; a < level.items.size(); a++)
-			if (level.currentViewer.room == ((Item) level.items.elementAt(a)).room)
-				((Item) level.items.elementAt(a)).Draw(g2,this);
+		for (int a = 0; a < getLevel().items.size(); a++)
+			if (getLevel().currentViewer.room == ((Item) getLevel().items.elementAt(a)).room)
+				((Item) getLevel().items.elementAt(a)).Draw(g2,this);
 
 		// Paint Wires
-		for (int a = 0; a< level.currentViewer.room.wires.size(); a++)
-			((Wire) level.currentViewer.room.wires.elementAt(a)).Draw(g2);
+		for (int a = 0; a< getLevel().currentViewer.room.wires.size(); a++)
+			((Wire) getLevel().currentViewer.room.wires.elementAt(a)).Draw(g2);
 
 		// Paint Sparks
-		for (int a = 0; a< level.sparks.size(); a++)
+		for (int a = 0; a< getLevel().sparks.size(); a++)
 		{
-			Spark spark = (Spark)level.sparks.elementAt(a);
-			if (spark.room == level.currentViewer.room)
+			Spark spark = (Spark) getLevel().sparks.elementAt(a);
+			if (spark.room == getLevel().currentViewer.room)
 				spark.Draw(g2);
 		}
 
@@ -376,107 +210,9 @@ public class RoomDisplay extends JPanel
 
 	}
 
-	public void Electricity() 
-	{
-		if (level.electricity == false) 
-			return;
-
-		for (int a=0; a<level.items.size(); a++)
-		{
-			Item item = (Item) level.items.elementAt(a);
-			if (item.isDevice())
-			{
-				Device device = (Device) item;
-				for (int b=0; b<device.ports.length; b++)
-				{
-					Wire wire = device.ports[b].myWire;
-					if (wire != null)
-					{
-						if (wire.inPort != null && wire.outPort!=null)
-						{
-							wire.value = wire.outPort.value;
-							wire.inPort.value = wire.value;
-						}
-					}
-					else if (device.ports[b].type == Port.TYPE_INPUT)
-					{
-						device.ports[b].value = false;
-						if (level.gameCursor instanceof LabCursor)
-							if (device.room == level.gameCursor.room)
-								if (device.ports[b].x+device.x >= level.gameCursor.x
-								&& device.ports[b].x+device.x <= level.gameCursor.x + level.gameCursor.getWidth()
-								&& device.ports[b].y+device.y >= level.gameCursor.y
-								&& device.ports[b].y+device.y <= level.gameCursor.y + level.gameCursor.getHeight())
-									if (((LabCursor)level.gameCursor).hot)
-										device.ports[b].value = true;
-					}
-				}
-			}
-		}
-
-		for (int a=0; a<level.items.size(); a++)
-		{
-			Item item = (Item) level.items.elementAt(a);
-			if (item.isDevice())
-			{
-				Device device = (Device) item;
-				device.Function();
-			}
-		}
-
-
-		boolean nodeChanged;
-		int counter=0;
-		do
-		{
-			nodeChanged=false;
-			for (int a=0; a<level.items.size(); a++)
-			{
-				Item item = (Item) level.items.elementAt(a);
-				if (item.isDevice())
-				{
-					Device device = (Device) item;
-					for (int b=0; b<device.ports.length; b++)
-					{
-						Wire wire = device.ports[b].myWire;
-						if (wire != null)
-						{
-							if (wire.inPort != null && wire.outPort!=null)
-							{
-								wire.value = wire.outPort.value;
-								wire.inPort.value = wire.value;
-							}
-						}
-						else if (device.ports[b].type == Port.TYPE_INPUT)
-						{
-							device.ports[b].value = false;
-							if (level.gameCursor instanceof LabCursor)
-								if (device.room == level.gameCursor.room)
-									if (device.ports[b].x+device.x >= level.gameCursor.x
-									&& device.ports[b].x+device.x <= level.gameCursor.x + level.gameCursor.getWidth()
-									&& device.ports[b].y+device.y >= level.gameCursor.y
-									&& device.ports[b].y+device.y <= level.gameCursor.y + level.gameCursor.getHeight())
-										if (((LabCursor)level.gameCursor).hot)
-											device.ports[b].value = true;
-						}
-					}
-					if (device.isNode())
-					{
-						if (device.Function())
-							nodeChanged=true;
-
-					}
-				}
-			}
-			counter++;
-		}
-		while (nodeChanged && counter<1000);
-
-	}
-
 	public void SaveLevel() 
 	{
-		String temp = level.getClass().toString();
+		String temp = getLevel().getClass().toString();
 		System.out.println("Class name is " + temp);
 		String[] path = temp.split("\\.");
 		for (int a=0; a< path.length; a++)
@@ -493,7 +229,7 @@ public class RoomDisplay extends JPanel
 		{
 			FileOutputStream out = new FileOutputStream(filename);
 			ObjectOutputStream s = new ObjectOutputStream(out);
-			level.writeObject(s);
+			getLevel().writeObject(s);
 			s.flush();
 			s.close();
 			out.close();
@@ -512,18 +248,18 @@ public class RoomDisplay extends JPanel
 	public void LoadLevel(String filename) 
 	{
 		timer.stop();
-		level.Empty();
+		getLevel().Empty();
 		level = new Level(this);
-		Item.level = level;
-		Room.level = level;
-		Material.level = level;
+		Item.level = getLevel();
+		Room.level = getLevel();
+		Material.level = getLevel();
 
 		// Add flags for loading Object inventories or running Init()
 		try 
 		{
 			FileInputStream in = new FileInputStream(filename);
 			ObjectInputStream s = new ObjectInputStream(in);
-			level.readObject(s);
+			getLevel().readObject(s);
 			s.close();
 			in.close();
 		}	
@@ -540,23 +276,27 @@ public class RoomDisplay extends JPanel
 			return;
 		}
 
-		if (level.remote != null)
+		if (getLevel().remote != null)
 		{
-			if (level.electricity)
+			if (getLevel().electricity)
 			{
-				level.remote.x = 28;
-				level.remote.y = -20;
-				level.remote.carriedBy = level.player;
-				level.remote.room = level.player.room;
+				getLevel().remote.x = 28;
+				getLevel().remote.y = -20;
+				getLevel().remote.carriedBy = getLevel().player;
+				getLevel().remote.room = getLevel().player.room;
 			}
 			else // Electricity is off
 			{
-				level.remote.carriedBy = null;
-				level.remote.room = null;
+				getLevel().remote.carriedBy = null;
+				getLevel().remote.room = null;
 			}
 		}
 
 		timer.start();
 	}
+
+    public Level getLevel() {
+        return level;
+    }
 
 }

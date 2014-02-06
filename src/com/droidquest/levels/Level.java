@@ -60,7 +60,7 @@ public class Level implements ImageObserver, Serializable {
 	public transient static String PICKUPSOUND = "pickup2.WAV"; 
 	public transient static String DROPSOUND = "drop2.WAV"; 
 	public transient static String BEEPSOUND = "beep2.WAV"; 
-	public transient static String BUMPSOUND = "bump2.WAV"; 
+	public transient static String BUMPSOUND = "bump2.WAV";
 	public transient static String CHARGESOUND = "charge.WAV"; 
 	public transient static String DISCHARGESOUND = "discharge.WAV"; 
 	public transient static String BURNSOUND = "burn.WAV"; 
