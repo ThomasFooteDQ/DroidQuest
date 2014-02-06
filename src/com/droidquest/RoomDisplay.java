@@ -24,6 +24,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import com.droidquest.avatars.LabCursor;
+import com.droidquest.controllers.GameContext;
 import com.droidquest.decorations.Spark;
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
@@ -31,9 +32,8 @@ import com.droidquest.levels.MainMenu;
 import com.droidquest.materials.Material;
 
 public class RoomDisplay extends JPanel 
-{  
-	public DQ dq;
-	Level level;   
+{
+    private final GameContext context;
 	public Timer timer;
 	int timerspeed=128;
 	public boolean useSounds = true;
@@ -57,11 +57,13 @@ public class RoomDisplay extends JPanel
 		return(true);
 	}
 
-	public RoomDisplay()  
+	public RoomDisplay(GameContext context)
 	{
+        this.context = context;
+
 		setSize(new Dimension(560,384));
-		level = new MainMenu(this);
-		getLevel().Init();
+		context.setCurrentLevel(new MainMenu(this));
+        context.getCurrentLevel().Init();
 		smallFont = new Font("Courier",Font.BOLD, 20);
 		bigFont = new Font("Courier",Font.BOLD, 45);
 		//	setFocusable(true);
@@ -126,7 +128,7 @@ public class RoomDisplay extends JPanel
 			}
 		});
 
-        final ClockTickHandler clockTickHandler = new ClockTickHandler(this);
+        final ClockTickHandler clockTickHandler = new ClockTickHandler(context, this);
 		timer = new Timer(timerspeed, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -249,7 +251,7 @@ public class RoomDisplay extends JPanel
 	{
 		timer.stop();
 		getLevel().Empty();
-		level = new Level(this);
+		context.setCurrentLevel(new Level(this));
 		Item.level = getLevel();
 		Room.level = getLevel();
 		Material.level = getLevel();
@@ -296,7 +298,7 @@ public class RoomDisplay extends JPanel
 	}
 
     public Level getLevel() {
-        return level;
+        return context.getCurrentLevel();
     }
 
 }

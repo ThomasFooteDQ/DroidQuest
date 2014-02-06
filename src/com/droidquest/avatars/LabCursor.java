@@ -1,5 +1,6 @@
 package com.droidquest.avatars;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FileDialog;
@@ -7,8 +8,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.Room;
 import com.droidquest.devices.Device;
@@ -82,7 +81,8 @@ public boolean KeyUp(KeyEvent e)
 	     if (carrying != null)
 	       if (carrying.getClass().toString().endsWith("SmallChip"))
 		 {
-		    FileDialog fd = new FileDialog(level.roomdisplay.dq,"Load Chip", FileDialog.LOAD);
+             JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(level.roomdisplay);
+             FileDialog fd = new FileDialog(parentFrame,"Load Chip", FileDialog.LOAD);
 		    fd.setDirectory("chips");
 		    fd.show();
 		    System.out.println("Dialog returned with " 
@@ -110,7 +110,8 @@ public boolean KeyUp(KeyEvent e)
 	     if (carrying != null)
 	       if (carrying.getClass().toString().endsWith("SmallChip"))
 		 {
-		    FileDialog fd = new FileDialog(level.roomdisplay.dq,"Save Chip", FileDialog.SAVE);
+             JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(level.roomdisplay);
+             FileDialog fd = new FileDialog(parentFrame,"Save Chip", FileDialog.SAVE);
 		    fd.setDirectory("chips");
 		    fd.show();
 		    System.out.println("Dialog returned with " 

@@ -8,6 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import com.droidquest.avatars.LabCursor;
 import com.droidquest.chipstuff.Port;
+import com.droidquest.controllers.GameContext;
 import com.droidquest.decorations.Graphix;
 import com.droidquest.decorations.Spark;
 import com.droidquest.devices.Device;
@@ -20,8 +21,10 @@ import com.droidquest.materials.Material;
 */
 public class ClockTickHandler {
     private final RoomDisplay roomDisplay;
+    private final GameContext context;
 
-    public ClockTickHandler(RoomDisplay roomDisplay) {
+    public ClockTickHandler(GameContext context, RoomDisplay roomDisplay) {
+        this.context = context;
         this.roomDisplay = roomDisplay;
     }
 
@@ -290,10 +293,10 @@ public class ClockTickHandler {
     }
 
     private Level getLevel() {
-        return getRoomDisplay().getLevel();
+        return context.getCurrentLevel();
     }
 
     private void setLevel(Level level) {
-        getRoomDisplay().level = level;
+        context.setCurrentLevel(level);
     }
 }

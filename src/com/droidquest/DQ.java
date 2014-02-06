@@ -2,46 +2,29 @@ package com.droidquest;
 
 //This is the source code for DroidQuest 2.7. Copyright 2003 by Thomas Foote.
 
-import java.io.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
-
 import javax.swing.*;
-
-import com.droidquest.avatars.GameCursor;
-import com.droidquest.chipstuff.Port;
-import com.droidquest.decorations.Arrow;
-import com.droidquest.decorations.Graphix;
-import com.droidquest.decorations.Spark;
-import com.droidquest.decorations.TextBox;
-import com.droidquest.devices.ANDGate;
-import com.droidquest.devices.Device;
-import com.droidquest.devices.FlipFlop;
-import com.droidquest.devices.NOTGate;
-import com.droidquest.devices.Node;
-import com.droidquest.devices.ORGate;
-import com.droidquest.devices.PortDevice;
-import com.droidquest.devices.XORGate;
-import com.droidquest.items.Item;
-import com.droidquest.items.ToolBox;
-import com.droidquest.levels.Level;
-import com.droidquest.levels.MainMenu;
-import com.droidquest.materials.Material;
-
+import java.awt.Container;
+import java.awt.FileDialog;
+import java.awt.GraphicsConfiguration;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.Vector;
-import java.util.Date;
-import java.lang.Integer;
-import java.util.Random;
-import java.applet.*;
-import java.net.URL;
-import java.net.MalformedURLException;
+
+import com.droidquest.controllers.GameContext;
+import com.droidquest.levels.Level;
+import com.droidquest.levels.MainMenu;
 
 public class DQ extends JFrame implements ActionListener 
 {
 	RoomDisplay myRoom;
+    private GameContext context;
 
 	public DQ () 
 	{
@@ -57,8 +40,8 @@ public class DQ extends JFrame implements ActionListener
 		setIconImage(new ImageIcon("images/helper0.gif").getImage());
 
 		Container contentPane = getContentPane();
-		myRoom = new RoomDisplay();
-		myRoom.dq=this;
+        context = new GameContext();
+		myRoom = new RoomDisplay(context);
 
 		addFocusListener(new FocusAdapter() 
 		{
@@ -136,9 +119,9 @@ public class DQ extends JFrame implements ActionListener
 					"return to Main Menu", JOptionPane.YES_NO_OPTION);
 			if (n==0)
 			{
-				myRoom.level.Empty();
-				myRoom.level = new MainMenu(myRoom);
-				myRoom.level.Init();
+                context.getCurrentLevel().Empty();
+                context.setCurrentLevel(new MainMenu(myRoom));
+                context.getCurrentLevel().Init();
 			}
 		}
 
@@ -147,11 +130,11 @@ public class DQ extends JFrame implements ActionListener
 			myRoom.useSounds = ((JCheckBoxMenuItem)e.getSource()).getState();
 			if (myRoom.useSounds==false)
 			{
-				Set<String> keys = myRoom.level.sounds.keySet();
+				Set<String> keys = getLevel().sounds.keySet();
 				Iterator<String> iterator = keys.iterator();
 				while (iterator.hasNext()) {
 					String soundFile = iterator.next();
-					SoundClip soundClip = myRoom.level.sounds.get(soundFile);
+					SoundClip soundClip = context.getCurrentLevel().sounds.get(soundFile);
 					soundClip.audioClip.stop();
 				}
 //				for (int a=0; a<myRoom.level.sounds.size(); a++)
@@ -167,6 +150,9 @@ public class DQ extends JFrame implements ActionListener
 
 	}
 
+    public Level getLevel() {
+        return context.getCurrentLevel();
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

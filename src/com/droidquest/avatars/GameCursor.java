@@ -1,5 +1,6 @@
 package com.droidquest.avatars;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FileDialog;
@@ -7,8 +8,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.Room;
 import com.droidquest.RoomDisplay;
@@ -394,7 +393,8 @@ public class GameCursor extends Item
 			if (carrying != null)
 				if (carrying.getClass().toString().endsWith("SmallChip"))
 				{
-					FileDialog fd = new FileDialog(level.roomdisplay.dq,"Load Chip", FileDialog.LOAD);
+                    JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(level.roomdisplay);
+					FileDialog fd = new FileDialog(parent,"Load Chip", FileDialog.LOAD);
 					fd.setDirectory("chips");
 					fd.show();
 					System.out.println("Dialog returned with " 
