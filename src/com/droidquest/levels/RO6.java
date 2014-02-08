@@ -2,8 +2,8 @@ package com.droidquest.levels;
 
 import java.awt.Color;
 
+import com.droidquest.Game;
 import com.droidquest.Room;
-import com.droidquest.RoomDisplay;
 import com.droidquest.avatars.GameCursor;
 import com.droidquest.avatars.HelpCam;
 import com.droidquest.avatars.Remote;
@@ -27,11 +27,11 @@ import com.droidquest.materials.Switch;
 
 class RO6 extends Level 
 {
-public RO6 (RoomDisplay rd) 
+public RO6 (Game game)
   {
-	super(rd);
-	
-	materials.addElement(new Material(true, false));               // 0  = Empty Space 
+    super(game);
+
+	materials.addElement(new Material(true, false));               // 0  = Empty Space
 	materials.addElement(new Material(Color.blue, false, true));   // 1  = Blue
 	materials.addElement(new Material(Color.white, false, true));  // 2  = White
 	materials.addElement(new Material(Color.red, false, true));  // 3  = Red

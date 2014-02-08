@@ -15,20 +15,21 @@ import java.util.Random;
 import java.util.Vector;
 
 import com.droidquest.Room;
-import com.droidquest.RoomDisplay;
-import com.droidquest.devices.SmallChip;
 import com.droidquest.SoundClip;
 import com.droidquest.Wire;
 import com.droidquest.chipstuff.Port;
-import com.droidquest.materials.Portal;
+import com.droidquest.Game;
 import com.droidquest.devices.Device;
+import com.droidquest.devices.SmallChip;
 import com.droidquest.items.Initializer;
 import com.droidquest.items.Item;
 import com.droidquest.items.ToolBox;
 import com.droidquest.materials.Material;
+import com.droidquest.materials.Portal;
 
-public class Level implements ImageObserver, Serializable { 
-	public Item player;
+public class Level implements ImageObserver, Serializable {
+    private final Game game;
+    public Item player;
 	public Item gameCursor;
 	public Item solderingPen;
 	public Item remote;
@@ -44,7 +45,6 @@ public class Level implements ImageObserver, Serializable {
 	public Vector items = new Vector();
 	public Vector sparks = new Vector();
 
-	public transient RoomDisplay roomdisplay;
 	public transient Vector invRooms = new Vector();
 	public transient Vector invRoomIndexes = new Vector();
 	public transient Vector invMaterials = new Vector();
@@ -76,25 +76,18 @@ public class Level implements ImageObserver, Serializable {
 			};
 	public transient boolean cheatmode = true;
 
-	public Level() 
+	public Level(Game game)
 	{
+        this.game = game;
+
 		Item.level = this;
 		Room.level = this;
 		Material.level = this;	
-		InitSounds();
-	}
-
-	public Level(RoomDisplay rd) 
-	{
-		roomdisplay = rd;
-		Item.level = this;
-		Room.level = this;
-		Material.level = this;
 		random.setSeed(System.currentTimeMillis());
 		InitSounds();
 	}
 
-	public void LinkRoomsLeftRight(int L, int R) 
+	public void LinkRoomsLeftRight(int L, int R)
 	{
 		((Room) rooms.elementAt(L)).rightRoom = (Room) rooms.elementAt(R);
 		((Room) rooms.elementAt(R)).leftRoom  = (Room) rooms.elementAt(L);
@@ -708,8 +701,8 @@ public class Level implements ImageObserver, Serializable {
 
 	public void LoadInventory() 
 	{
-		roomdisplay.timer.stop();
-		String filename = "temp.inv";
+        game.suspend();
+        String filename = "temp.inv";
 		System.out.println("Loading Inventory ");
 		int orgNumRooms = rooms.size();
 		int orgNumMaterials = materials.size();
@@ -871,7 +864,6 @@ public class Level implements ImageObserver, Serializable {
 		catch (FileNotFoundException e)
 		{
 			System.out.println("File Not Found");
-			roomdisplay.timer.start();
 			return;
 		}
 		catch (IOException e)
@@ -881,7 +873,9 @@ public class Level implements ImageObserver, Serializable {
 			e.printStackTrace();
 			return;
 		}
-		roomdisplay.timer.start();
+        finally {
+            game.restart();
+        }
 
 		// Remove all unnecessary Materials
 		for (int a=0; a< materials.size()-1; a++)
@@ -946,7 +940,7 @@ public class Level implements ImageObserver, Serializable {
 
 	public void PlaySound(Room room, String soundname) 
 	{
-		if (roomdisplay.useSounds==false)
+		if (!game.isSoundEnabled())
 			return;
 
 		boolean flag = true;

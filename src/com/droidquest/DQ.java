@@ -17,19 +17,20 @@ import java.awt.event.WindowEvent;
 import java.util.Iterator;
 import java.util.Set;
 
-import com.droidquest.controllers.GameContext;
 import com.droidquest.levels.Level;
 import com.droidquest.levels.MainMenu;
 
 public class DQ extends JFrame implements ActionListener 
 {
-	RoomDisplay myRoom;
-    private GameContext context;
+    private final Game game;
 
-	public DQ () 
+	public DQ(Game game)
 	{
 		// Constructor
 		super("DroidQuest");
+
+        this.game = game;
+
 		setSize(560+8,384+27+24);
 		addWindowListener( new WindowAdapter() 
 		{
@@ -40,19 +41,19 @@ public class DQ extends JFrame implements ActionListener
 		setIconImage(new ImageIcon("images/helper0.gif").getImage());
 
 		Container contentPane = getContentPane();
-        context = new GameContext();
-		myRoom = new RoomDisplay(context);
+        game.setCurrentLevel(new MainMenu(game));
+        game.getCurrentLevel().Init();
+        final RoomDisplay view = new RoomDisplay(game);
+        game.setView(view);
 
-		addFocusListener(new FocusAdapter() 
-		{
-			public void focusGained(FocusEvent e)
-			{
-				myRoom.requestFocus();
-			}
-		});
+		addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {
+                getGame().getView().requestFocus();
+            }
+        });
 
-		contentPane.add(myRoom);
-		myRoom.setLocation(0,0);
+		contentPane.add(view);
+		view.setLocation(0, 0);
 
 		JMenuBar menuBar;
 		JMenu fileMenu;
@@ -88,9 +89,14 @@ public class DQ extends JFrame implements ActionListener
 		catch (SecurityException e) {}
 	}
 
+    protected Game getGame() {
+        return game;
+    }
+
 	public static void main(String[] args) 
 	{
-		DQ dq = new DQ();
+        Game game = new Game();
+		DQ dq = new DQ(game);
 		GraphicsConfiguration gc = dq.getGraphicsConfiguration();
 		Rectangle bounds = gc.getBounds();
 		dq.setLocation(bounds.x + (bounds.width - 568)/2,
@@ -105,12 +111,12 @@ public class DQ extends JFrame implements ActionListener
 		{
 			FileDialog fd = new FileDialog(this,"Save Level", FileDialog.SAVE);
 			fd.setDirectory("ROlevels");
-			fd.show();
+			fd.setVisible(true);
 			System.out.println("Dialog returned with " 
 					+ fd.getDirectory()
 					+ fd.getFile());
 			if (fd.getFile() != null)
-				myRoom.SaveLevel(fd.getDirectory()+fd.getFile());
+				game.saveLevel(fd.getDirectory() + fd.getFile());
 		}
 
 		if (e.getActionCommand() == "Main Menu") 
@@ -119,22 +125,22 @@ public class DQ extends JFrame implements ActionListener
 					"return to Main Menu", JOptionPane.YES_NO_OPTION);
 			if (n==0)
 			{
-                context.getCurrentLevel().Empty();
-                context.setCurrentLevel(new MainMenu(myRoom));
-                context.getCurrentLevel().Init();
+                game.getCurrentLevel().Empty();
+                game.setCurrentLevel(new MainMenu(game));
+                game.getCurrentLevel().Init();
 			}
 		}
 
 		if (e.getActionCommand() == "Sound") 
 		{
-			myRoom.useSounds = ((JCheckBoxMenuItem)e.getSource()).getState();
-			if (myRoom.useSounds==false)
+            game.setSoundEnabled(((JCheckBoxMenuItem) e.getSource()).getState());
+			if (!game.isSoundEnabled())
 			{
 				Set<String> keys = getLevel().sounds.keySet();
 				Iterator<String> iterator = keys.iterator();
 				while (iterator.hasNext()) {
 					String soundFile = iterator.next();
-					SoundClip soundClip = context.getCurrentLevel().sounds.get(soundFile);
+					SoundClip soundClip = game.getCurrentLevel().sounds.get(soundFile);
 					soundClip.audioClip.stop();
 				}
 //				for (int a=0; a<myRoom.level.sounds.size(); a++)
@@ -151,7 +157,7 @@ public class DQ extends JFrame implements ActionListener
 	}
 
     public Level getLevel() {
-        return context.getCurrentLevel();
+        return game.getCurrentLevel();
     }
 }
 

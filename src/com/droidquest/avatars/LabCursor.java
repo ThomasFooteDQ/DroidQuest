@@ -81,7 +81,7 @@ public boolean KeyUp(KeyEvent e)
 	     if (carrying != null)
 	       if (carrying.getClass().toString().endsWith("SmallChip"))
 		 {
-             JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(level.roomdisplay);
+             JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(e.getComponent());
              FileDialog fd = new FileDialog(parentFrame,"Load Chip", FileDialog.LOAD);
 		    fd.setDirectory("chips");
 		    fd.show();
@@ -110,7 +110,7 @@ public boolean KeyUp(KeyEvent e)
 	     if (carrying != null)
 	       if (carrying.getClass().toString().endsWith("SmallChip"))
 		 {
-             JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(level.roomdisplay);
+             JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(e.getComponent());
              FileDialog fd = new FileDialog(parentFrame,"Save Chip", FileDialog.SAVE);
 		    fd.setDirectory("chips");
 		    fd.show();

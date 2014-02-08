@@ -15,20 +15,15 @@ import com.droidquest.materials.Material;
  * Singleton context object containing game-wide variables and resources.
  */
 public class Game {
-    private static Game context = new Game();
-
     private Level currentLevel;
     private boolean suspended;
     private boolean soundEnabled = true;
+    private ClockTickHandler clockTickHandler;
+    private RoomDisplay view;
 
-    public static Game getInstance() {
-        return context;
+    public Game() {
+        clockTickHandler = new ClockTickHandler(this);
     }
-
-    /**
-     * Can't be instantiated.  @see getInstance();
-     */
-    private Game() {}
 
     public Level getCurrentLevel() {
         return currentLevel;
@@ -44,7 +39,7 @@ public class Game {
 
         try {
             getCurrentLevel().Empty();
-            setCurrentLevel(new Level());
+            setCurrentLevel(new Level(this));
             Item.level = getCurrentLevel();
             Room.level = getCurrentLevel();
             Material.level = getCurrentLevel();
@@ -155,5 +150,17 @@ public class Game {
 
     public void setSoundEnabled(boolean soundEnabled) {
         this.soundEnabled = soundEnabled;
+    }
+
+    public ClockTickHandler getClockTickHandler() {
+        return clockTickHandler;
+    }
+
+    public void setView(RoomDisplay view) {
+        this.view = view;
+    }
+
+    public RoomDisplay getView() {
+        return view;
     }
 }

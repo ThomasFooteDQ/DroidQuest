@@ -393,7 +393,7 @@ public class GameCursor extends Item
 			if (carrying != null)
 				if (carrying.getClass().toString().endsWith("SmallChip"))
 				{
-                    JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(level.roomdisplay);
+                    JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(e.getComponent());
 					FileDialog fd = new FileDialog(parent,"Load Chip", FileDialog.LOAD);
 					fd.setDirectory("chips");
 					fd.show();

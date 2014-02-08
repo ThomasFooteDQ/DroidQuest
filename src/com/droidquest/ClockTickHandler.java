@@ -8,27 +8,33 @@ import java.lang.reflect.InvocationTargetException;
 
 import com.droidquest.avatars.LabCursor;
 import com.droidquest.chipstuff.Port;
-import com.droidquest.controllers.GameContext;
 import com.droidquest.decorations.Graphix;
 import com.droidquest.decorations.Spark;
 import com.droidquest.devices.Device;
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
 import com.droidquest.materials.Material;
+import com.droidquest.view.View;
 
 /**
-* Created by jeff on 2/5/2014.
-*/
+ * Main event loop handler.
+ */
 public class ClockTickHandler {
-    private final RoomDisplay roomDisplay;
-    private final GameContext context;
+    private final Game game;
 
-    public ClockTickHandler(GameContext context, RoomDisplay roomDisplay) {
-        this.context = context;
-        this.roomDisplay = roomDisplay;
+    public ClockTickHandler(Game game) {
+        this.game = game;
     }
 
+    /**
+     * Main event handler.  Invoked every "clock tick" to animate the models and repaint the view.  By default, a clock tick
+     * is 128ms.
+     */
     public void handleClockTick() {
+        if (game.isSuspended()) {
+            return;
+        }
+
         if (getLevel().portal != null)
         {
             String filename = getLevel().portal.levelName;
@@ -37,8 +43,8 @@ public class ClockTickHandler {
             int x = getLevel().player.x + getLevel().player.getWidth()/2;
             int y = getLevel().player.y + getLevel().player.getHeight()/2;
             getLevel().PlaySound(getLevel().currentViewer.room, Level.TELEPORTSOUND);
-            boolean tempsound = getLevel().roomdisplay.useSounds;
-            getLevel().roomdisplay.useSounds = false;
+            boolean tempsound = game.isSoundEnabled();
+            game.setSoundEnabled(false);
             //		     for (int a=0; a<560; a+=2)
             //		       {
             //			  int c = 255*a/560;
@@ -71,7 +77,6 @@ public class ClockTickHandler {
             catch(FileNotFoundException ie)
             {
                 // filename does not exist
-                RoomDisplay rd = getLevel().roomdisplay;
                 String classname = "com.droidquest.levels."+filename.substring(0,filename.length()-4);
                 Constructor<? extends Level> constructor = null;
                 try
@@ -89,9 +94,8 @@ public class ClockTickHandler {
                 };
                 try
                 {
-                    Object[] args = {rd};
-                    setLevel(constructor.newInstance(args));
-                    rd.SaveLevel();
+                    setLevel(constructor.newInstance());
+                    game.saveLevel();
                 }
                 catch(InstantiationException ie2)
                 {
@@ -123,7 +127,7 @@ public class ClockTickHandler {
             //		       }
 
             System.out.println("Loading level " + filename);
-            getRoomDisplay().LoadLevel(filename);
+            game.loadLevel(filename);
             if (initLevel)
             {
                 System.out.println("Initializing Level");
@@ -154,7 +158,7 @@ public class ClockTickHandler {
             //			  long timeout = System.currentTimeMillis() + 1;
             //			  do {} while (System.currentTimeMillis() < timeout);
             //		       }
-            getLevel().roomdisplay.useSounds = tempsound;
+            game.setSoundEnabled(tempsound);
             getLevel().PlaySound(getLevel().currentViewer.room, Level.TRANSPORTSOUND);
         }
         electricity();
@@ -177,7 +181,7 @@ public class ClockTickHandler {
             }
         }
 
-        getRoomDisplay().repaint();
+        renderView();
         for (int a = 0; a< getLevel().sparks.size(); a++)
         {
             Spark spark = (Spark) getLevel().sparks.elementAt(a);
@@ -288,15 +292,21 @@ public class ClockTickHandler {
 
     }
 
-    private RoomDisplay getRoomDisplay() {
-        return roomDisplay;
+    public void renderView() {
+        if (getView() != null) {
+            getView().render();
+        }
+    }
+
+    private View getView() {
+        return game.getView();
     }
 
     private Level getLevel() {
-        return context.getCurrentLevel();
+        return game.getCurrentLevel();
     }
 
     private void setLevel(Level level) {
-        context.setCurrentLevel(level);
+        game.setCurrentLevel(level);
     }
 }

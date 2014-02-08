@@ -16,54 +16,30 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 import com.droidquest.avatars.LabCursor;
-import com.droidquest.controllers.GameContext;
 import com.droidquest.decorations.Spark;
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
-import com.droidquest.levels.MainMenu;
 import com.droidquest.materials.Material;
+import com.droidquest.view.View;
 
-public class RoomDisplay extends JPanel 
+public class RoomDisplay extends JPanel implements View
 {
-    private final GameContext context;
-	public Timer timer;
+    private final Game game;
+    private Timer timer;
 	int timerspeed=128;
-	public boolean useSounds = true;
 	AffineTransform at = new AffineTransform();
 
 	public Font bigFont;
 	public Font smallFont;
 	private int repeating=0; // Used for repeating keys
 
-	//public boolean isFocusTraversable() 
-	//  {
-	// Necessary to get the keyboard focus to work with
-	// the ScrenDisplay class.
-	//	return(true);
-	//  }
-
-	public boolean isFocusable() 
+	public RoomDisplay(final Game game)
 	{
-		// Necessary to get the keyboard focus to work with
-		// the ScrenDisplay class.
-		return(true);
-	}
+        this.game = game;
 
-	public RoomDisplay(GameContext context)
-	{
-        this.context = context;
-
-		setSize(new Dimension(560,384));
-		context.setCurrentLevel(new MainMenu(this));
-        context.getCurrentLevel().Init();
+		setSize(new Dimension(560, 384));
 		smallFont = new Font("Courier",Font.BOLD, 20);
 		bigFont = new Font("Courier",Font.BOLD, 45);
 		//	setFocusable(true);
@@ -128,11 +104,10 @@ public class RoomDisplay extends JPanel
 			}
 		});
 
-        final ClockTickHandler clockTickHandler = new ClockTickHandler(context, this);
-		timer = new Timer(timerspeed, new ActionListener() {
+        timer = new Timer(timerspeed, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                clockTickHandler.handleClockTick();
+                game.getClockTickHandler().handleClockTick();
             }
         });
 
@@ -163,6 +138,11 @@ public class RoomDisplay extends JPanel
 		timer.start();
 		getLevel().PlaySound(getLevel().player.room, Level.STARTMUSICSOUND);
 	}
+
+    @Override
+    public void render() {
+        repaint();
+    }
 
     public void paintComponent(Graphics g)
 	{
@@ -212,93 +192,14 @@ public class RoomDisplay extends JPanel
 
 	}
 
-	public void SaveLevel() 
-	{
-		String temp = getLevel().getClass().toString();
-		System.out.println("Class name is " + temp);
-		String[] path = temp.split("\\.");
-		for (int a=0; a< path.length; a++)
-			System.out.println(a + " = " + path[a]);
-		//	String filename = temp.substring(6);
-		String filename = path[path.length-1];
-		SaveLevel(filename+".lvl");
-	}
-
-	public void SaveLevel(String filename) 
-	{
-		System.out.println("Saving level " + filename);
-		try
-		{
-			FileOutputStream out = new FileOutputStream(filename);
-			ObjectOutputStream s = new ObjectOutputStream(out);
-			getLevel().writeObject(s);
-			s.flush();
-			s.close();
-			out.close();
-		}
-		catch (FileNotFoundException e)
-		{
-			System.out.println("File Not Found");
-		}
-		catch (IOException e)
-		{
-			System.out.println("IO Exception");
-			System.out.println(e.getMessage());
-		}
-	}
-
-	public void LoadLevel(String filename) 
-	{
-		timer.stop();
-		getLevel().Empty();
-		context.setCurrentLevel(new Level(this));
-		Item.level = getLevel();
-		Room.level = getLevel();
-		Material.level = getLevel();
-
-		// Add flags for loading Object inventories or running Init()
-		try 
-		{
-			FileInputStream in = new FileInputStream(filename);
-			ObjectInputStream s = new ObjectInputStream(in);
-			getLevel().readObject(s);
-			s.close();
-			in.close();
-		}	
-		catch (FileNotFoundException e)
-		{
-			System.out.println("File Not Found");
-			return;
-		}
-		catch (IOException e)
-		{
-			System.out.println("IO Exception");
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-			return;
-		}
-
-		if (getLevel().remote != null)
-		{
-			if (getLevel().electricity)
-			{
-				getLevel().remote.x = 28;
-				getLevel().remote.y = -20;
-				getLevel().remote.carriedBy = getLevel().player;
-				getLevel().remote.room = getLevel().player.room;
-			}
-			else // Electricity is off
-			{
-				getLevel().remote.carriedBy = null;
-				getLevel().remote.room = null;
-			}
-		}
-
-		timer.start();
-	}
-
-    public Level getLevel() {
-        return context.getCurrentLevel();
+    public boolean isFocusable()
+    {
+        // Necessary to get the keyboard focus to work with
+        // the ScrenDisplay class.
+        return(true);
     }
 
+    public Level getLevel() {
+        return game.getCurrentLevel();
+    }
 }
