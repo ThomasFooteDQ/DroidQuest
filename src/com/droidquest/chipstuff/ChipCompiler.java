@@ -99,7 +99,7 @@ public ChipCompiler(PrototypeChip pc, SmallChip sc)
 		  for (int ap=1; ap<4; ap++) // For every output Signal in the Node
 		    {
 		       Signal s1 = gate1.portSignals[ap].externalSignal;
-		       if (s1!= null)
+		       if (s1!= null && s1!=dummy)
 			 {
 			    for (int b=0; b<sc.gates.size(); b++) // For every other Gate in the Chip
 			      {
