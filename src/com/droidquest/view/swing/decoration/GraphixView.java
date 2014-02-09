@@ -1,4 +1,4 @@
-package com.droidquest.view.swing.room;
+package com.droidquest.view.swing.decoration;
 
 import java.awt.Graphics;
 
