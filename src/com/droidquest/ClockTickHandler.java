@@ -184,7 +184,7 @@ public class ClockTickHandler {
         for (int a = 0; a< getLevel().sparks.size(); a++)
         {
             Spark spark = (Spark) getLevel().sparks.elementAt(a);
-            spark.Age();
+            spark.animate();
             if (spark.age>6)
             {
                 getLevel().sparks.removeElement(spark);

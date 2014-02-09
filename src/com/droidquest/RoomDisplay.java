@@ -160,24 +160,15 @@ public class RoomDisplay extends JPanel implements View
             }
         });
 
+        Collection<Spark> sparks = Collections2.<Spark>filter(getLevel().sparks, new Predicate<Spark>() {
+            @Override
+            public boolean apply(Spark spark) {
+                return spark.getRoom() == getLevel().currentViewer.room;
+            }
+        });
+
         // Paint Room
-        roomView.draw(g2, getLevel().currentViewer.room, roomItems);
-
-		// Paint Sparks
-		for (int a = 0; a< getLevel().sparks.size(); a++)
-		{
-			Spark spark = (Spark) getLevel().sparks.elementAt(a);
-			if (spark.room == getLevel().currentViewer.room)
-				spark.Draw(g2);
-		}
-
-		// Repaint the Current Player on top of everything else
-		//	if (level.currentViewer.room == level.player.room) 
-		//	  level.player.Draw(g2,this);
-		//	
-		//	Problem with this: You can't find the Black Crystal. This could be fixed by 
-		//	putting a menu item in "Cursor always on top".
-
+        roomView.draw(g2, getLevel().currentViewer.room, roomItems, sparks);
 	}
 
     public boolean isFocusable()

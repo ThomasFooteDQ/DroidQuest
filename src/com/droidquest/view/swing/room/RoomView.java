@@ -8,8 +8,10 @@ import com.droidquest.Room;
 import com.droidquest.Wire;
 import com.droidquest.decorations.Arrow;
 import com.droidquest.decorations.Graphix;
+import com.droidquest.decorations.Spark;
 import com.droidquest.decorations.TextBox;
 import com.droidquest.items.Item;
+import com.droidquest.view.swing.decoration.SparkView;
 import com.droidquest.view.swing.item.ItemView;
 import com.droidquest.view.swing.item.WireView;
 import com.droidquest.view.swing.material.MaterialView;
@@ -24,6 +26,7 @@ public class RoomView {
     private final MaterialView materialView;
     private final ItemView itemView;
     private final WireView wireView;
+    private final SparkView sparkView;
 
     public RoomView() {
         arrowView = new ArrowView();
@@ -32,15 +35,30 @@ public class RoomView {
         materialView = new MaterialView();
         itemView = new ItemView();
         wireView = new WireView();
+        sparkView = new SparkView();
     }
 
-    public void draw(Graphics graphics, Room room, Collection<Item> items) {
+    public void draw(Graphics graphics, Room room, Collection<Item> items, Collection<Spark> sparks) {
         drawMaterials(graphics, room);
         drawTextBoxes(graphics, room.getTextBoxes());
         drawGraphix(graphics, room.getGraphix());
         drawArrows(graphics, room.getArrows());
         drawItems(graphics, items);
         drawWires(graphics, room.getWires());
+        drawSparks(graphics, sparks);
+
+        // Repaint the Current Player on top of everything else
+        //	if (level.currentViewer.room == level.player.room)
+        //	  level.player.Draw(g2,this);
+        //
+        //	Problem with this: You can't find the Black Crystal. This could be fixed by
+        //	putting a menu item in "Cursor always on top".
+    }
+
+    private void drawSparks(Graphics g, Collection<Spark> sparks) {
+        for (Spark spark : sparks) {
+            sparkView.draw(g, spark);
+        }
     }
 
     private void drawWires(Graphics g, Collection<Wire> wires) {
