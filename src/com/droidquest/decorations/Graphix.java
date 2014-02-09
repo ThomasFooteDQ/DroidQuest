@@ -1,11 +1,8 @@
 package com.droidquest.decorations;
 
+import javax.swing.*;
 import java.awt.Graphics;
 import java.io.Serializable;
-
-import javax.swing.ImageIcon;
-
-import com.droidquest.RoomDisplay;
 
 public class Graphix implements Serializable 
 {
@@ -79,10 +76,10 @@ public void GenerateIcons()
 	icon = icons[0];
   }
 
-public void Draw(Graphics g, RoomDisplay rd) 
+public void Draw(Graphics g)
   {
 	if (icon != null)
-	  g.drawImage(icon.getImage(), x, y, rd);
+	  g.drawImage(icon.getImage(), x, y, null);
   }
 
 public void Animate() 

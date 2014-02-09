@@ -2,7 +2,6 @@ package com.droidquest;
 
 import javax.swing.*;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -23,16 +22,16 @@ import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
 import com.droidquest.materials.Material;
 import com.droidquest.view.View;
+import com.droidquest.view.swing.RoomView;
 
 public class RoomDisplay extends JPanel implements View
 {
     private final Game game;
+    private final RoomView roomView;
     private Timer timer;
 	int timerspeed=128;
 	AffineTransform at = new AffineTransform();
 
-	public Font bigFont;
-	public Font smallFont;
 	private int repeating=0; // Used for repeating keys
 
 	public RoomDisplay(final Game game)
@@ -40,8 +39,7 @@ public class RoomDisplay extends JPanel implements View
         this.game = game;
 
 		setSize(new Dimension(560, 384));
-		smallFont = new Font("Courier",Font.BOLD, 20);
-		bigFont = new Font("Courier",Font.BOLD, 45);
+        roomView = new RoomView();
 		//	setFocusable(true);
 		requestFocus();
 
@@ -157,14 +155,8 @@ public class RoomDisplay extends JPanel implements View
 			for (int x=0;x<20;x++)
 				getLevel().currentViewer.room.MaterialArray[y][x].Draw(g2,this,x,y);
 
-		// Paint Texts
-		getLevel().currentViewer.room.DrawTextBoxes(g2, this);
-
-		// Paint Graphix
-		getLevel().currentViewer.room.DrawGraphix(g2,this);
-
-		// Paint Arrows
-		getLevel().currentViewer.room.DrawArrows(g2);
+        // Paint Room
+        roomView.draw(g2, getLevel().currentViewer.room);
 
 		// Paint Items
 		for (int a = 0; a < getLevel().items.size(); a++)
