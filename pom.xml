@@ -19,7 +19,6 @@
     </build>
 
     <dependencies>
-        <!--
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
@@ -30,6 +29,5 @@
             <artifactId>guava</artifactId>
             <version>16.0</version>
         </dependency>
-    -->
     </dependencies>
 </project>

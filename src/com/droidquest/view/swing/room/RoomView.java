@@ -2,12 +2,15 @@ package com.droidquest.view.swing.room;
 
 import java.awt.Font;
 import java.awt.Graphics;
+import java.util.Collection;
 import java.util.List;
 
 import com.droidquest.Room;
 import com.droidquest.decorations.Arrow;
 import com.droidquest.decorations.Graphix;
 import com.droidquest.decorations.TextBox;
+import com.droidquest.items.Item;
+import com.droidquest.view.swing.item.ItemView;
 import com.droidquest.view.swing.material.MaterialView;
 
 /**
@@ -20,6 +23,7 @@ public class RoomView {
     private final GraphixView graphixView;
     private final TextBoxView textBoxView;
     private final MaterialView materialView;
+    private final ItemView itemView;
 
     public RoomView() {
         smallFont = new Font("Courier", Font.BOLD, 20);
@@ -29,13 +33,15 @@ public class RoomView {
         graphixView = new GraphixView();
         textBoxView = new TextBoxView();
         materialView = new MaterialView();
+        itemView = new ItemView();
     }
 
-    public void draw(Graphics graphics, Room room) {
+    public void draw(Graphics graphics, Room room, Collection<Item> items) {
         drawMaterials(graphics, room);
         drawTextBoxes(graphics, room.getTextBoxes());
         drawGraphix(graphics, room.getGraphix());
         drawArrows(graphics, room.getArrows());
+        drawItems(graphics, items);
     }
 
     private void drawMaterials(Graphics g, Room room) {
@@ -66,4 +72,9 @@ public class RoomView {
             arrowView.draw(g, arrow);
     }
 
+    private void drawItems(Graphics g, Collection<Item> items) {
+        for (Item item : items) {
+            itemView.draw(g, item);
+        }
+    }
 }

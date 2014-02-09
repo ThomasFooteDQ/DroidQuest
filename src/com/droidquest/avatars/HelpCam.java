@@ -1,11 +1,8 @@
 package com.droidquest.avatars;
 
-import java.awt.Graphics;
+import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 
 import com.droidquest.Room;
 import com.droidquest.items.Item;
@@ -18,6 +15,8 @@ public HelpCam(Room r)
 	x=28; y=32; width=0; height=0; room =r;
 	GenerateIcons();
 	currentIcon = icons[0].getImage();
+
+    setVisible(false);
   }
 
 public void GenerateIcons() 
@@ -35,11 +34,5 @@ public boolean KeyUp(KeyEvent e)
 	  }
 	return false;
   }
-
-public void Draw(Graphics g, JPanel jp) 
-  {
-	// Draws nothing
-  }
-
 
 }

@@ -1,9 +1,6 @@
 package com.droidquest.items;
 
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-
-import javax.swing.JPanel;
 
 import com.droidquest.Room;
 import com.droidquest.decorations.TextBox;
@@ -16,12 +13,10 @@ public SpyCam(Room r)
 	room = r;
 	width=0; height=0; 
 	grabbable=false;
+    setVisible(false);
   }
 
-public void Draw(Graphics g, JPanel jp)
-  {}
-
-public boolean KeyUp(KeyEvent e) 
+public boolean KeyUp(KeyEvent e)
   {
 	if (e.getKeyCode() == e.VK_RIGHT) 
 	  {

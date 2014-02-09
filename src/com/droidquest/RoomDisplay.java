@@ -15,6 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.Collection;
 
 import com.droidquest.avatars.LabCursor;
 import com.droidquest.decorations.Spark;
@@ -23,6 +24,8 @@ import com.droidquest.levels.Level;
 import com.droidquest.materials.Material;
 import com.droidquest.view.View;
 import com.droidquest.view.swing.room.RoomView;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 
 public class RoomDisplay extends JPanel implements View
 {
@@ -146,19 +149,22 @@ public class RoomDisplay extends JPanel implements View
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setTransform(at);
 
-		// Paint Materials
-		if (getLevel().currentViewer.room.MaterialArray==null)
+        // Populate material array, if not already done
+        if (getLevel().currentViewer.room.MaterialArray==null)
 			getLevel().currentViewer.room.GenerateArray();
 
-        // Paint Room
-        roomView.draw(g2, getLevel().currentViewer.room);
-
 		// Paint Items
-		for (int a = 0; a < getLevel().items.size(); a++)
-			if (getLevel().currentViewer.room == ((Item) getLevel().items.elementAt(a)).room)
-				((Item) getLevel().items.elementAt(a)).Draw(g2,this);
+        Collection<Item> roomItems = Collections2.<Item>filter(getLevel().items, new Predicate<Item>() {
+            @Override
+            public boolean apply(Item item) {
+                return item.getRoom() == getLevel().currentViewer.room;
+            }
+        });
 
-		// Paint Wires
+        // Paint Room
+        roomView.draw(g2, getLevel().currentViewer.room, roomItems);
+
+        // Paint Wires
 		for (int a = 0; a< getLevel().currentViewer.room.wires.size(); a++)
 			((Wire) getLevel().currentViewer.room.wires.elementAt(a)).Draw(g2);
 

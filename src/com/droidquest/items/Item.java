@@ -1,8 +1,8 @@
 package com.droidquest.items;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.InputEvent;
@@ -12,9 +12,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 
 import com.droidquest.Room;
 import com.droidquest.Wire;
@@ -47,6 +44,7 @@ public class Item implements Serializable, Cloneable
 	public Rectangle upPortal;    
 	public Rectangle downPortal;  
 	public boolean editable=false;
+    private boolean visible = true;
 
 	public Item() 
 	{
@@ -65,24 +63,7 @@ public class Item implements Serializable, Cloneable
 		currentIcon = icons[0].getImage();
 	}
 
-	public void writeRef(ObjectOutputStream s) throws IOException 
-	{
-		s.writeInt(level.items.indexOf(carrying));
-		s.writeInt(level.items.indexOf(carriedBy));
-		s.writeInt(level.rooms.indexOf(room));
-		s.writeInt(level.rooms.indexOf(InternalRoom));
-	}
-
-	public void readRef(ObjectInputStream s) throws IOException 
-	{
-		carrying = level.FindItem(s.readInt());
-		carriedBy =  level.FindItem(s.readInt());
-		room = level.FindRoom(s.readInt());
-		InternalRoom = level.FindRoom(s.readInt());
-		GenerateIcons();
-	}
-
-	public Image getIcon() 
+	public Image getIcon()
 	{
 		return currentIcon;
 	}
@@ -97,7 +78,23 @@ public class Item implements Serializable, Cloneable
 		return height;
 	}
 
-	public int getX() 
+    public int getOrgX() {
+        return orgX;
+    }
+
+    public void setOrgX(int orgX) {
+        this.orgX = orgX;
+    }
+
+    public int getOrgY() {
+        return orgY;
+    }
+
+    public void setOrgY(int orgY) {
+        this.orgY = orgY;
+    }
+
+    public int getX()
 	{
 		return (x-orgX);
 	}
@@ -112,7 +109,23 @@ public class Item implements Serializable, Cloneable
 		return room;
 	}
 
-	public void PicksUp(Item item) 
+    public Color getOutline() {
+        return outline;
+    }
+
+    public void setOutline(Color outline) {
+        this.outline = outline;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public void PicksUp(Item item)
 	{
 		// This picks up an item
 		if (carrying == null)
@@ -557,28 +570,7 @@ public class Item implements Serializable, Cloneable
 			return new Dimension(x,y);     
 	}
 
-	public void Draw(Graphics g, JPanel jp) 
-	{
-		Dimension d = GetXY();
-		if (currentIcon != null)
-			g.drawImage(currentIcon, d.width-orgX, d.height-orgY, jp);
-		else
-			System.out.println("Cannot draw " + getClass());
-		if (outline != null)
-		{
-			g.setColor(outline);
-			g.drawRect(d.width,d.height, width+1, height+1);
-			g.drawRect(d.width+1,d.height+1, width-1, height-1);
-			outline=null;
-		}
-	}
-
-	public void Draw(Graphics g, int X, int Y, JPanel jp) 
-	{
-		g.drawImage(currentIcon, X - orgX, Y - orgY, jp);
-	}
-
-	public boolean Overlaps(Item testItem) 
+	public boolean Overlaps(Item testItem)
 	{
 		boolean overlap = false;
 		if (this!=testItem && this.room == testItem.room)
@@ -708,5 +700,23 @@ public class Item implements Serializable, Cloneable
 					flag=true;
 		return flag;
 	}
+
+    public void writeRef(ObjectOutputStream s) throws IOException
+    {
+        s.writeInt(level.items.indexOf(carrying));
+        s.writeInt(level.items.indexOf(carriedBy));
+        s.writeInt(level.rooms.indexOf(room));
+        s.writeInt(level.rooms.indexOf(InternalRoom));
+    }
+
+    public void readRef(ObjectInputStream s) throws IOException
+    {
+        carrying = level.FindItem(s.readInt());
+        carriedBy =  level.FindItem(s.readInt());
+        room = level.FindRoom(s.readInt());
+        InternalRoom = level.FindRoom(s.readInt());
+        GenerateIcons();
+    }
+
 
 }
