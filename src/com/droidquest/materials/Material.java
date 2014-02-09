@@ -1,10 +1,9 @@
 package com.droidquest.materials;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.Serializable;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.RoomDisplay;
 import com.droidquest.items.Item;
@@ -14,26 +13,15 @@ public class Material implements Serializable, Cloneable
 {
 	public transient static Level level;
 	public transient ImageIcon icon;
-	public String file;
 	public boolean passable;
 	public boolean detectable;
 	public Color color;
 
 	public Material(){}
 
-	public Material(String filename, boolean p, boolean d) 
+	public Material(boolean p, boolean d)
 	{
-		//	icon=Toolkit.getDefaultToolkit().getImage(filename);
-		icon = new ImageIcon(filename);
-		passable = p;
-		detectable = d;
-	}
-
-	public Material(boolean p, boolean d) 
-	{
-		passable = p;
-		detectable = d;
-		color = Color.black;
+        this(Color.black, p, d);
 	}
 
 	public Material (Color c, boolean p, boolean d) 
@@ -45,8 +33,6 @@ public class Material implements Serializable, Cloneable
 
 	public void GenerateIcons() 
 	{
-		if (file != null)
-			icon = new ImageIcon(file);
 	}
 
 	public void Draw(Graphics g, RoomDisplay rd, int x, int y) 
@@ -97,8 +83,7 @@ public class Material implements Serializable, Cloneable
 		if (getClass() == mat.getClass()
 				&& color == mat.color 
 				&& passable == mat.passable 
-				&& detectable == mat.detectable
-				&& file == mat.file)
+				&& detectable == mat.detectable)
 			return true;
 		else
 			return false;

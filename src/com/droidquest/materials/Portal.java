@@ -1,10 +1,9 @@
 package com.droidquest.materials;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.items.Item;
 
@@ -16,7 +15,7 @@ public boolean initLevel;
 
 public Portal(String ln, boolean bs, boolean il) 
   {
-	super("",true, false);
+	super(true, false);
 	levelName = ln;
 	bringStuff = bs;
 	initLevel = il;
