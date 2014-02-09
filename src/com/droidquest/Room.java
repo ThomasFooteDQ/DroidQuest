@@ -260,4 +260,8 @@ public void Erase()
     public List<Arrow> getArrows() {
         return arrows;
     }
+
+    public List<Wire> getWires() {
+        return wires;
+    }
 }

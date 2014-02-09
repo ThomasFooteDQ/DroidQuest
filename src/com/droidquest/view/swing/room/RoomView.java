@@ -1,39 +1,37 @@
 package com.droidquest.view.swing.room;
 
-import java.awt.Font;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.List;
 
 import com.droidquest.Room;
+import com.droidquest.Wire;
 import com.droidquest.decorations.Arrow;
 import com.droidquest.decorations.Graphix;
 import com.droidquest.decorations.TextBox;
 import com.droidquest.items.Item;
 import com.droidquest.view.swing.item.ItemView;
+import com.droidquest.view.swing.item.WireView;
 import com.droidquest.view.swing.material.MaterialView;
 
 /**
  * Swing Renderer class which renders rooms.
  */
 public class RoomView {
-    private final Font smallFont;
-    private final Font bigFont;
     private final ArrowView arrowView;
     private final GraphixView graphixView;
     private final TextBoxView textBoxView;
     private final MaterialView materialView;
     private final ItemView itemView;
+    private final WireView wireView;
 
     public RoomView() {
-        smallFont = new Font("Courier", Font.BOLD, 20);
-        bigFont = new Font("Courier", Font.BOLD, 45);
-
         arrowView = new ArrowView();
         graphixView = new GraphixView();
         textBoxView = new TextBoxView();
         materialView = new MaterialView();
         itemView = new ItemView();
+        wireView = new WireView();
     }
 
     public void draw(Graphics graphics, Room room, Collection<Item> items) {
@@ -42,6 +40,13 @@ public class RoomView {
         drawGraphix(graphics, room.getGraphix());
         drawArrows(graphics, room.getArrows());
         drawItems(graphics, items);
+        drawWires(graphics, room.getWires());
+    }
+
+    private void drawWires(Graphics g, Collection<Wire> wires) {
+        for (Wire wire : wires) {
+            wireView.draw(g, wire);
+        }
     }
 
     private void drawMaterials(Graphics g, Room room) {

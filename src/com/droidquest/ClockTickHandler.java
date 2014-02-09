@@ -211,8 +211,7 @@ public class ClockTickHandler {
                     {
                         if (wire.inPort != null && wire.outPort!=null)
                         {
-                            wire.value = wire.outPort.value;
-                            wire.inPort.value = wire.value;
+                            wire.inPort.value = wire.outPort.value;
                         }
                     }
                     else if (device.ports[b].type == Port.TYPE_INPUT)
@@ -260,8 +259,7 @@ public class ClockTickHandler {
                         {
                             if (wire.inPort != null && wire.outPort!=null)
                             {
-                                wire.value = wire.outPort.value;
-                                wire.inPort.value = wire.value;
+                                wire.inPort.value = wire.outPort.value;
                             }
                         }
                         else if (device.ports[b].type == Port.TYPE_INPUT)

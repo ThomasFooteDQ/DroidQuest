@@ -717,6 +717,4 @@ public class Item implements Serializable, Cloneable
         InternalRoom = level.FindRoom(s.readInt());
         GenerateIcons();
     }
-
-
 }

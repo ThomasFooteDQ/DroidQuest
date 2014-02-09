@@ -32,8 +32,8 @@ public class RoomDisplay extends JPanel implements View
     private final Game game;
     private final RoomView roomView;
     private Timer timer;
-	int timerspeed=128;
-	AffineTransform at = new AffineTransform();
+	private int timerspeed=128;
+	private AffineTransform at = new AffineTransform();
 
 	public RoomDisplay(final Game game)
 	{
@@ -153,7 +153,6 @@ public class RoomDisplay extends JPanel implements View
         if (getLevel().currentViewer.room.MaterialArray==null)
 			getLevel().currentViewer.room.GenerateArray();
 
-		// Paint Items
         Collection<Item> roomItems = Collections2.<Item>filter(getLevel().items, new Predicate<Item>() {
             @Override
             public boolean apply(Item item) {
@@ -163,10 +162,6 @@ public class RoomDisplay extends JPanel implements View
 
         // Paint Room
         roomView.draw(g2, getLevel().currentViewer.room, roomItems);
-
-        // Paint Wires
-		for (int a = 0; a< getLevel().currentViewer.room.wires.size(); a++)
-			((Wire) getLevel().currentViewer.room.wires.elementAt(a)).Draw(g2);
 
 		// Paint Sparks
 		for (int a = 0; a< getLevel().sparks.size(); a++)
@@ -192,7 +187,7 @@ public class RoomDisplay extends JPanel implements View
         return(true);
     }
 
-    public Level getLevel() {
+    private Level getLevel() {
         return game.getCurrentLevel();
     }
 }
