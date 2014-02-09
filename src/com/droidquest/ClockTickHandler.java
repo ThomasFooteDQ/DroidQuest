@@ -82,8 +82,7 @@ public class ClockTickHandler {
                 try
                 {
                     Class<? extends Level> newlevel = (Class<? extends Level>) Class.forName(classname);
-                    Class[] arglist = {Class.forName("com.droidquest.RoomDisplay")};
-                    constructor = newlevel.getConstructor(arglist);
+                    constructor = newlevel.getConstructor(Game.class);
                     constructor.setAccessible(true);
                 }
                 catch (ClassNotFoundException ce) {
@@ -94,7 +93,7 @@ public class ClockTickHandler {
                 };
                 try
                 {
-                    setLevel(constructor.newInstance());
+                    setLevel(constructor.newInstance(game));
                     game.saveLevel();
                 }
                 catch(InstantiationException ie2)
