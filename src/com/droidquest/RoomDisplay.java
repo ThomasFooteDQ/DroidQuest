@@ -32,8 +32,6 @@ public class RoomDisplay extends JPanel implements View
 	int timerspeed=128;
 	AffineTransform at = new AffineTransform();
 
-	private int repeating=0; // Used for repeating keys
-
 	public RoomDisplay(final Game game)
 	{
         this.game = game;
@@ -151,9 +149,6 @@ public class RoomDisplay extends JPanel implements View
 		// Paint Materials
 		if (getLevel().currentViewer.room.MaterialArray==null)
 			getLevel().currentViewer.room.GenerateArray();
-		for (int y=0; y<12; y++)
-			for (int x=0;x<20;x++)
-				getLevel().currentViewer.room.MaterialArray[y][x].Draw(g2,this,x,y);
 
         // Paint Room
         roomView.draw(g2, getLevel().currentViewer.room);

@@ -245,6 +245,9 @@ public void Erase()
 	  }
 	wires.clear();
   }
+    public Material getMaterial(int x, int y) {
+        return MaterialArray[y][x];
+    }
 
     public List<TextBox> getTextBoxes() {
         return textBoxes;

@@ -2,10 +2,8 @@ package com.droidquest.materials;
 
 import javax.swing.*;
 import java.awt.Color;
-import java.awt.Graphics;
 import java.io.Serializable;
 
-import com.droidquest.RoomDisplay;
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
 
@@ -33,31 +31,6 @@ public class Material implements Serializable, Cloneable
 
 	public void GenerateIcons() 
 	{
-	}
-
-	public void Draw(Graphics g, RoomDisplay rd, int x, int y) 
-	{
-		if (icon==null)
-		{
-			// Blank Background
-			g.setColor(color);
-			g.fillRect(x*28,y*32,28,32);
-//			if (color!=Color.BLACK){
-//				g.setColor(color.brighter());
-//				g.drawLine(x*28, y*32, x*28+27, y*32);
-//				g.drawLine(x*28, y*32, x*28, y*32+31);
-//				g.setColor(color.darker());
-//				g.drawLine(x*28+27, y*32, x*28+27, y*32+31);
-//				g.drawLine(x*28, y*32+31, x*28+27, y*32+31);
-//			}
-			return;
-		}
-		else
-		{
-			// Material Background
-			g.drawImage(icon.getImage(), x*28, y*32, rd);
-			return;
-		}
 	}
 
 	public void TouchedByItem(Item item) 
@@ -112,4 +85,11 @@ public class Material implements Serializable, Cloneable
 		return newObject;
 	}
 
+    public ImageIcon getIcon() {
+        return icon;
+    }
+
+    public Color getColor() {
+        return color;
+    }
 }
