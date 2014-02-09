@@ -17,6 +17,7 @@ import com.droidquest.view.swing.decoration.SparkView;
 import com.droidquest.view.swing.decoration.TextBoxView;
 import com.droidquest.view.swing.item.ItemView;
 import com.droidquest.view.swing.item.WireView;
+import com.droidquest.view.swing.material.MappedMaterialView;
 import com.droidquest.view.swing.material.MaterialView;
 
 /**
@@ -35,7 +36,7 @@ public class RoomView {
         arrowView = new ArrowView();
         graphixView = new GraphixView();
         textBoxView = new TextBoxView();
-        materialView = new MaterialView();
+        materialView = MappedMaterialView.create();
         itemView = new ItemView();
         wireView = new WireView();
         sparkView = new SparkView();

@@ -1,11 +1,5 @@
 package com.droidquest.materials;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
-
 import com.droidquest.Room;
 import com.droidquest.items.Item;
 
@@ -23,38 +17,9 @@ Room room;
 public ElevatorLock() 
   {
 	super(true, false);
-	GenerateIcons();	
   }
 
-public void GenerateIcons() 
-  {
-	BufferedImage bi = new BufferedImage(28,32,BufferedImage.TYPE_4BYTE_ABGR);
-	Graphics g;
-	try
-	  {
-	     g = bi.getGraphics();
-	  }
-	catch (NullPointerException e)
-	  {
-	     System.out.println("Could not get Graphics pointer to " + getClass() + " Image");
-	     return;
-	  }
-	
-	g.setColor(Color.blue);
-	g.fillRect(0,0,28,32);
-	g.setColor(Color.black);
-	g.fillRect(4,4,4,2);
-	g.fillRect(12,4,4,2);
-	g.fillRect(4,8,4,2);
-	g.fillRect(20,8,4,2);
-	g.fillRect(20,26,4,2);
-	g.fillRect(4,14,12,4);
-	g.fillRect(4,22,12,4);
-	g.fillRect(20,12,4,12);
-	icon = new ImageIcon(bi);	
-  }
-
-public void TouchedByItem(Item item) 
+public void TouchedByItem(Item item)
   {
 	if (item.getClass().toString().endsWith("ElevatorKey"))
 	  {

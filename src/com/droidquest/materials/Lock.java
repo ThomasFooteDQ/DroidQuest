@@ -2,10 +2,6 @@ package com.droidquest.materials;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.Room;
 import com.droidquest.items.Item;
@@ -75,33 +71,9 @@ public class Lock extends Material
 		color = lc;
 		keyColor = kc;
 		program = prg;
-		GenerateIcons();
 	  }
 
-	public void GenerateIcons() 
-	  {
-		BufferedImage bi = new BufferedImage(28,32,BufferedImage.TYPE_4BYTE_ABGR);
-		Graphics g;
-		try
-		  {
-		     g = bi.getGraphics();
-		  }
-		catch (NullPointerException e)
-		  {
-		     System.out.println("Could not get Graphics pointer to " + getClass() + "Image");
-		     return;
-		  }
-		
-		g.setColor(color);
-		g.fillRect(0,0,28,32);
-		g.setColor(Color.black);
-		g.fillRect(0,14,16,2);
-		g.fillRect(0,16,12,2);
-		g.fillRect(2,18,6,2);
-		icon = new ImageIcon(bi);	
-	  }
-
-	public boolean equals(Material mat) 
+	public boolean equals(Material mat)
 	  {
 		if (super.equals(mat))
 		  if (keyColor == ((Lock)mat).keyColor

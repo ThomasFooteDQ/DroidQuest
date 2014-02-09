@@ -1,7 +1,7 @@
 package com.droidquest.materials;
 
-import javax.swing.*;
 import java.awt.Color;
+import java.awt.Image;
 import java.io.Serializable;
 
 import com.droidquest.items.Item;
@@ -10,7 +10,7 @@ import com.droidquest.levels.Level;
 public class Material implements Serializable, Cloneable 
 {
 	public transient static Level level;
-	public transient ImageIcon icon;
+	public transient Image image;
 	public boolean passable;
 	public boolean detectable;
 	public Color color;
@@ -85,8 +85,8 @@ public class Material implements Serializable, Cloneable
 		return newObject;
 	}
 
-    public ImageIcon getIcon() {
-        return icon;
+    public Image getImage() {
+        return image;
     }
 
     public Color getColor() {

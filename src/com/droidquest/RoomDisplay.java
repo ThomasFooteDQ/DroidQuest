@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -14,14 +13,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 import java.util.Collection;
 
 import com.droidquest.avatars.LabCursor;
 import com.droidquest.decorations.Spark;
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
-import com.droidquest.materials.Material;
 import com.droidquest.view.View;
 import com.droidquest.view.swing.room.RoomView;
 import com.google.common.base.Predicate;
@@ -109,32 +106,8 @@ public class RoomDisplay extends JPanel implements View
                 game.getClockTickHandler().handleClockTick();
             }
         });
-
-		Image tempImage= new BufferedImage(200,200,BufferedImage.TYPE_4BYTE_ABGR);
-		Graphics g = tempImage.getGraphics();
-		Image tempIcon;
-		ImageIcon tempImageIcon;
-
-		for (int a = 0; a< getLevel().materials.size(); a++)
-		{
-			Material mat = (Material) getLevel().materials.elementAt(a);
-			tempImageIcon = mat.icon;
-			if (tempImageIcon != null)
-				g.drawImage(tempImageIcon.getImage(), 0, 0, this);
-		}
-
-		for (int a = 0; a< getLevel().items.size(); a++)
-		{
-			Item itm = (Item) getLevel().items.elementAt(a);
-			for (int b=0; b<itm.icons.length; b++)
-			{
-				tempImageIcon = itm.icons[b];
-				if (tempImageIcon != null)
-					g.drawImage(tempImageIcon.getImage(), 0, 0, this);
-			}
-		}
-
 		timer.start();
+
 		getLevel().PlaySound(getLevel().player.room, Level.STARTMUSICSOUND);
 	}
 

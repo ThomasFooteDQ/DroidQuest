@@ -1,12 +1,6 @@
 package com.droidquest.materials;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.Date;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.Room;
 import com.droidquest.items.Item;
@@ -14,54 +8,18 @@ import com.droidquest.items.Item;
 public class MultiButton extends Material 
 {
 public int number; //0=starter, 1,2,3,4,5,6,7,8,9 = buttons
-transient ImageIcon images[];
 static int[] states = new int[10]; //0=Blue, 1=White, 2=Orange
 public Date timeout;
 transient Room room=null;
 
-public MultiButton(int n, int s) 
+    public MultiButton(int n, int s)
   {
 	super(true, false);
 	number = n;
 	states[number] = s;
   }
 
-public void GenerateIcons() 
-  {
-	images = new ImageIcon[3];
-	for (int a=0; a<3; a++)
-	  {
-	     images[a] = new ImageIcon(new BufferedImage(28,32,BufferedImage.TYPE_4BYTE_ABGR));
-	     Graphics g;
-	     try
-	       {
-		  g = images[a].getImage().getGraphics();
-	       }
-	     catch (NullPointerException e)
-	       {
-		  System.out.println("Could not get Graphics pointer to " + getClass() + " Image");
-		  return;
-	       }
-	     Graphics2D g2 = (Graphics2D) g;
-	     Color c = Color.blue;
-	     if (a==1)
-	       c = Color.white;
-	     else if (a==2)
-	       c = new Color(255,128,0);
-	     g2.setColor(c);
-	     g.fillRect(0,0,28,32);
-	     g2.setColor(Color.black);
-	     g.fillRect(4,14,20,4);
-	     g.fillRect(8,12,12,8);
-	     g.fillRect(12,8,4,16);
-	     g2.setColor(c);
-	     g.fillRect(12,14,4,4);
-	  }
-	
-	icon = images[0];
-  }
-
-public void TouchedByItem(Item item) 
+public void TouchedByItem(Item item)
   {
 	if (room==null)
 	  room = item.room;
@@ -92,9 +50,7 @@ public void TouchedByItem(Item item)
 
 public void Animate() 
   {
-	icon = images[states[number]];
-	
-	if (number!=0) 
+	if (number!=0)
 	  return;
 	
 	if (states[0]==0)
@@ -136,4 +92,8 @@ public boolean equals(Material mat)
 	    return true;
 	return false;
   }
+
+    public int getCurrentState() {
+        return states[number];
+    }
 }
