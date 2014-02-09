@@ -6,10 +6,10 @@ import java.io.Serializable;
 
 public class Arrow implements Serializable 
 {
-public static int DIR_UP    = 0;
-public static int DIR_RIGHT = 1;
-public static int DIR_DOWN  = 2;
-public static int DIR_LEFT  = 3;
+public static final int DIR_UP    = 0;
+public static final int DIR_RIGHT = 1;
+public static final int DIR_DOWN  = 2;
+public static final int DIR_LEFT  = 3;
 public int direction;
 public int length;
 public int x;
@@ -54,4 +54,23 @@ public void Draw(Graphics g)
 	  }
   }
 
+    public Color getColor() {
+        return color;
+    }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getLength() {
+        return length;
+    }
 }

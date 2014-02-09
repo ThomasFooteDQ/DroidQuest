@@ -22,7 +22,7 @@ import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
 import com.droidquest.materials.Material;
 import com.droidquest.view.View;
-import com.droidquest.view.swing.RoomView;
+import com.droidquest.view.swing.room.RoomView;
 
 public class RoomDisplay extends JPanel implements View
 {
