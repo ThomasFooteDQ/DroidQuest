@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
 import com.droidquest.materials.Material;
+import com.droidquest.view.api.sound.SoundPlayer;
 
 /**
  * Singleton context object containing game-wide variables and resources.
@@ -19,6 +20,7 @@ public class Game {
     private boolean suspended;
     private boolean soundEnabled = true;
     private ClockTickHandler clockTickHandler;
+    private SoundPlayer soundPlayer;
     private RoomDisplay view;
 
     public Game() {
@@ -144,12 +146,12 @@ public class Game {
         setSuspended(false);
     }
 
-    public boolean isSoundEnabled() {
-        return soundEnabled;
+    public SoundPlayer getSoundPlayer() {
+        return soundPlayer;
     }
 
-    public void setSoundEnabled(boolean soundEnabled) {
-        this.soundEnabled = soundEnabled;
+    public void setSoundPlayer(SoundPlayer soundPlayer) {
+        this.soundPlayer = soundPlayer;
     }
 
     public ClockTickHandler getClockTickHandler() {

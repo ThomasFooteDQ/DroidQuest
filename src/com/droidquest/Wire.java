@@ -34,9 +34,9 @@ public Wire(Port f, Port t)
 	  System.out.println("f.myDevice is null");
 	
 	f.myDevice.room.wires.addElement(this);
-	f.myDevice.level.PlaySound(f.myDevice.room, Level.ATTACHSOUND);
-	
-	if (f.type == Port.TYPE_INPUT)
+      f.myDevice.level.getSoundPlayer().playIfInRoom(f.myDevice.room, Level.ATTACHSOUND);
+
+      if (f.type == Port.TYPE_INPUT)
 	  {
 	     if (t.type == Port.TYPE_INPUT)
 	       {
@@ -165,10 +165,10 @@ protected void readRef(ObjectInputStream s, Level level) throws IOException
   }
 
 public void ConnectTo(Port t) 
-  { 
-	fromPort.myDevice.level.PlaySound(fromPort.myDevice.room, Level.DETATCHSOUND);
+  {
+      fromPort.myDevice.level.getSoundPlayer().playIfInRoom(fromPort.myDevice.room, Level.DETATCHSOUND);
 
-	if (toPort.myDevice == toPort.myDevice.level.solderingPen) 
+      if (toPort.myDevice == toPort.myDevice.level.solderingPen)
 	  {
 	     toPort.value = false;
 	     toPort.type = Port.TYPE_UNDEFINED;
@@ -342,10 +342,10 @@ public void ConnectTo(Port t)
 public void Remove() 
   {
 	Room room = fromPort.myDevice.room;
-	
-	room.level.PlaySound(room, Level.DETATCHSOUND);
-	
-	fromPort.myWire = null;
+
+      room.level.getSoundPlayer().playIfInRoom(room, Level.DETATCHSOUND);
+
+      fromPort.myWire = null;
 	toPort.myWire = null;
 	fromPort = null;
 	toPort = null;

@@ -17,8 +17,8 @@ public class CrystalRecharger extends Material
 		if (item.getClass().toString().endsWith("Crystal"))
 		  {
 		     item.charge=100000;
-		     level.PlaySound(item.room, Level.CHARGESOUND);
-		  }
+              level.getSoundPlayer().playIfInRoom(item.room, Level.CHARGESOUND);
+          }
 	  }
 
 	}

@@ -33,8 +33,8 @@ public class BatteryIn extends Material
 			       item.charge-=empty;
 			       robot.charge=100000;
 			    }
-			 level.PlaySound(robot.InternalRoom, Level.DISCHARGESOUND);
-		       }
+                   level.getSoundPlayer().playIfInRoom(robot.InternalRoom, Level.DISCHARGESOUND);
+               }
 		  }
 	  }
 

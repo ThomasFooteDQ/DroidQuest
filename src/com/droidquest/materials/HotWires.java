@@ -30,8 +30,8 @@ public class HotWires extends Material
 		  if (item.charge>0)
 		    {
 		       item.charge=0;
-		       level.PlaySound(item.room, Level.DISCHARGESOUND);
-		    }
+                level.getSoundPlayer().playIfInRoom(item.room, Level.DISCHARGESOUND);
+            }
 	  }
 
 	public boolean equals(Material mat)

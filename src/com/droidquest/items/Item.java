@@ -136,8 +136,8 @@ public class Item implements Serializable, Cloneable
 				item.x -= x;
 				item.y -= y;
 				item.outline=Color.white;
-				level.PlaySound(room,Level.PICKUPSOUND);
-			}
+                level.getSoundPlayer().playIfInRoom(room, Level.PICKUPSOUND);
+            }
 	}
 
 	public void Drops() 
@@ -173,8 +173,8 @@ public class Item implements Serializable, Cloneable
 			carrying = null;
 			outline=new Color(128,128,128);
 			item.IsDropped();
-			level.PlaySound(room, Level.DROPSOUND);
-		}
+            level.getSoundPlayer().playIfInRoom(room, Level.DROPSOUND);
+        }
 	}
 
 	public void IsDropped() 
@@ -196,8 +196,8 @@ public class Item implements Serializable, Cloneable
 				{
 					SetRoom(null); // Cheap way to remove the wires;
 					level.items.removeElement(this);
-					level.PlaySound(room,Level.DISCHARGESOUND);
-					return;
+                    level.getSoundPlayer().playIfInRoom(room, Level.DISCHARGESOUND);
+                    return;
 				}
 			}
 

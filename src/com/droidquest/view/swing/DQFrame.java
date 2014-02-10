@@ -12,12 +12,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Iterator;
-import java.util.Set;
 
 import com.droidquest.Game;
 import com.droidquest.RoomDisplay;
-import com.droidquest.SoundClip;
 import com.droidquest.levels.Level;
 import com.droidquest.levels.MainMenu;
 
@@ -39,8 +36,8 @@ public class DQFrame extends JFrame implements ActionListener
         setSize(560+8,384+27+24);
         GraphicsConfiguration gc = getGraphicsConfiguration();
         Rectangle bounds = gc.getBounds();
-        setLocation(bounds.x + (bounds.width - 568)/2,
-                bounds.y + (bounds.height - 435)/2 );
+        setLocation(bounds.x + (bounds.width - 568) / 2,
+                bounds.y + (bounds.height - 435) / 2);
 
         addWindowListener( new WindowAdapter()
         {
@@ -129,22 +126,7 @@ public class DQFrame extends JFrame implements ActionListener
 
         if (e.getActionCommand().equals(SOUND))
         {
-            game.setSoundEnabled(((JCheckBoxMenuItem) e.getSource()).getState());
-            if (!game.isSoundEnabled())
-            {
-                Set<String> keys = getLevel().sounds.keySet();
-                Iterator<String> iterator = keys.iterator();
-                while (iterator.hasNext()) {
-                    String soundFile = iterator.next();
-                    SoundClip soundClip = game.getCurrentLevel().sounds.get(soundFile);
-                    soundClip.audioClip.stop();
-                }
-//				for (int a=0; a<myRoom.level.sounds.size(); a++)
-//				{
-//					SoundClip sc = (SoundClip) myRoom.level.sounds.elementAt(a);
-//					sc.audioClip.stop();
-//				}
-            }
+            game.getSoundPlayer().setAudioEnabled(((JCheckBoxMenuItem) e.getSource()).getState());
         }
 
         if (e.getActionCommand().equals(EXIT))

@@ -42,9 +42,9 @@ public class ClockTickHandler {
             boolean initLevel = getLevel().portal.initLevel;
             int x = getLevel().player.x + getLevel().player.getWidth()/2;
             int y = getLevel().player.y + getLevel().player.getHeight()/2;
-            getLevel().PlaySound(getLevel().currentViewer.room, Level.TELEPORTSOUND);
-            boolean tempsound = game.isSoundEnabled();
-            game.setSoundEnabled(false);
+            game.getSoundPlayer().play(Level.TELEPORTSOUND);
+            boolean tempsound = game.getSoundPlayer().isAudioEnabled();
+            game.getSoundPlayer().setAudioEnabled(false);
             //		     for (int a=0; a<560; a+=2)
             //		       {
             //			  int c = 255*a/560;
@@ -157,8 +157,8 @@ public class ClockTickHandler {
             //			  long timeout = System.currentTimeMillis() + 1;
             //			  do {} while (System.currentTimeMillis() < timeout);
             //		       }
-            game.setSoundEnabled(tempsound);
-            getLevel().PlaySound(getLevel().currentViewer.room, Level.TRANSPORTSOUND);
+            game.getSoundPlayer().setAudioEnabled(tempsound);
+            game.getSoundPlayer().play(Level.TRANSPORTSOUND);
         }
         electricity();
         for (int a = 0; a < getLevel().items.size(); a++)

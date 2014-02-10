@@ -4,12 +4,14 @@ package com.droidquest;
 
 import com.droidquest.levels.MainMenu;
 import com.droidquest.view.swing.DQFrame;
+import com.droidquest.view.swing.sound.SwingSoundPlayer;
 
 public class DQ
 {
 	public static void main(String[] args)
 	{
         Game game = new Game();
+        game.setSoundPlayer(new SwingSoundPlayer(game));
         game.setCurrentLevel(new MainMenu(game));
         game.getCurrentLevel().Init();
 

@@ -108,7 +108,7 @@ public class RoomDisplay extends JPanel implements View
         });
 		timer.start();
 
-		getLevel().PlaySound(getLevel().player.room, Level.STARTMUSICSOUND);
+		game.getSoundPlayer().playIfInRoom(getLevel().player.room, Level.STARTMUSICSOUND);
 	}
 
     @Override

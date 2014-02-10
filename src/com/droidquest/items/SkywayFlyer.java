@@ -56,8 +56,8 @@ public void Animate()
 	
 	if (Overlaps(level.player))
 	  {
-	     level.PlaySound(room, Level.DISCHARGESOUND);
-	     level.player.x = 2*28;
+          level.getSoundPlayer().playIfInRoom(room, Level.DISCHARGESOUND);
+          level.player.x = 2*28;
 	     level.player.y = 8*32;
 	     level.player.SetRoom(room.downRoom);
 	  }

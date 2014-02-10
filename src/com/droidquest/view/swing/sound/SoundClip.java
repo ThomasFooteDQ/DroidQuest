@@ -1,16 +1,15 @@
-package com.droidquest;
+package com.droidquest.view.swing.sound;
 
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class SoundClip 
-{
+public class SoundClip {
 public AudioClip audioClip;
-public String filename;
+private String filename;
 
-public SoundClip(String f) 
+public SoundClip(String f)
   {
 	filename = f;
 	try 
@@ -25,4 +24,8 @@ public SoundClip(String f)
 	     System.err.println(e.getMessage());
 	  }
   }
+
+    public String getFilename() {
+        return filename;
+    }
 }

@@ -13,7 +13,6 @@ import com.droidquest.items.GenericRobot;
 import com.droidquest.Room;
 import com.droidquest.chipstuff.Port;
 import com.droidquest.decorations.Spark;
-import com.droidquest.items.Item;
 
 public class Antenna extends Device 
 {
@@ -111,7 +110,7 @@ public void Decorate()
 	     g.fillRect(22,6,6,16);
 	     g.fillRect(8,22,32,2);
 	     if (ports[0].value && level.electricity)
-	       level.PlaySound(room, level.BEEPSOUND);
+             level.getSoundPlayer().playIfInRoom(room, level.BEEPSOUND);
 	  }
   }
 

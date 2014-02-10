@@ -1,13 +1,12 @@
 package com.droidquest.items;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.Room;
 import com.droidquest.chipstuff.Port;
@@ -355,18 +354,18 @@ public void Animate()
 	// Make sounds
 	if (topBumper)
 	  if (oldTopBumper != topBumper)
-	    level.PlaySound(room, Level.BUMPSOUND);
+          level.getSoundPlayer().playIfInRoom(room, Level.BUMPSOUND);
 	if (bottomBumper)
 	  if (oldBottomBumper != bottomBumper)
-	    level.PlaySound(room, Level.BUMPSOUND);
+          level.getSoundPlayer().playIfInRoom(room, Level.BUMPSOUND);
 	if (rightBumper)
 	  if (oldRightBumper != rightBumper)
-	    level.PlaySound(room, Level.BUMPSOUND);
+          level.getSoundPlayer().playIfInRoom(room, Level.BUMPSOUND);
 	if (leftBumper)
 	  if (oldLeftBumper != leftBumper)
-	    level.PlaySound(room, Level.BUMPSOUND);
+          level.getSoundPlayer().playIfInRoom(room, Level.BUMPSOUND);
 	if (broadcasting && level.electricity)
-	  level.PlaySound(room, Level.BEEPSOUND);
+        level.getSoundPlayer().playIfInRoom(room, Level.BEEPSOUND);
 	oldTopBumper = topBumper;
 	oldBottomBumper = bottomBumper;
 	oldRightBumper = rightBumper;

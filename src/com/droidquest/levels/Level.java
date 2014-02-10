@@ -10,15 +10,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.Vector;
 
+import com.droidquest.Game;
 import com.droidquest.Room;
-import com.droidquest.SoundClip;
 import com.droidquest.Wire;
 import com.droidquest.chipstuff.Port;
-import com.droidquest.Game;
 import com.droidquest.devices.Device;
 import com.droidquest.devices.SmallChip;
 import com.droidquest.items.Initializer;
@@ -26,9 +24,10 @@ import com.droidquest.items.Item;
 import com.droidquest.items.ToolBox;
 import com.droidquest.materials.Material;
 import com.droidquest.materials.Portal;
+import com.droidquest.view.api.sound.SoundPlayer;
 
 public class Level implements ImageObserver, Serializable {
-    private final Game game;
+    private final transient Game game;
     public Item player;
 	public Item gameCursor;
 	public Item solderingPen;
@@ -51,8 +50,6 @@ public class Level implements ImageObserver, Serializable {
 	public transient Vector invMaterialIndexes = new Vector();
 	public transient Vector invItems = new Vector();
 	public transient Vector invItemIndexes = new Vector();
-
-	public transient HashMap<String, SoundClip> sounds = new HashMap<String, SoundClip>();
 
 	public transient Random random = new Random();
 	public transient static String ATTACHSOUND = "attach.WAV"; 
@@ -921,50 +918,12 @@ public class Level implements ImageObserver, Serializable {
 
 	public void InitSounds() 
 	{
+        game.getSoundPlayer().unloadAll();
 		for (int a=0; a<soundFiles.length; a++)
-			sounds.put(soundFiles[a], new SoundClip(soundFiles[a]));
-//		sounds.addElement(new SoundClip("attach.WAV"));
-//		sounds.addElement(new SoundClip("detatch.WAV"));
-//		sounds.addElement(new SoundClip("pickup.WAV"));
-//		sounds.addElement(new SoundClip("drop.WAV"));
-//		sounds.addElement(new SoundClip("beep.WAV"));
-//		sounds.addElement(new SoundClip("bump.WAV"));
-//		sounds.addElement(new SoundClip("charge.WAV"));
-//		sounds.addElement(new SoundClip("discharge.WAV"));
-//		sounds.addElement(new SoundClip("burn.WAV"));
-//		sounds.addElement(new SoundClip("liberty.mid"));
-//		sounds.addElement(new SoundClip("sp001.wav"));
-//		sounds.addElement(new SoundClip("teleport.WAV"));
-//		sounds.addElement(new SoundClip("transport.WAV"));
+            game.getSoundPlayer().load(soundFiles[a]);
 	}
 
-	public void PlaySound(Room room, String soundname) 
-	{
-		if (!game.isSoundEnabled())
-			return;
-
-		boolean flag = true;
-		if (currentViewer != null)
-			if (room != currentViewer.room)
-				flag = false;
-
-		if(flag)
-		{
-//			for (int a=0; a<sounds.size(); a++)
-//			{
-//				SoundClip soundclip = (SoundClip) sounds.elementAt(a);
-//				if (soundname == soundclip.filename)
-//					soundclip.audioClip.play();
-//			}
-			System.out.println("Playing sound " + soundname);
-			SoundClip soundClip = sounds.get(soundname);
-			if (soundClip != null)
-				soundClip.audioClip.play();
-			System.out.println("Done");
-		}
-	}
-
-	public void Init() 
+    public void Init()
 	{
 		// Generate all Room Material Arrays
 		for (int a=0; a<rooms.size(); a++)
@@ -987,5 +946,8 @@ public class Level implements ImageObserver, Serializable {
 
 	}
 
+    public SoundPlayer getSoundPlayer() {
+        return game.getSoundPlayer();
+    }
 }
 
