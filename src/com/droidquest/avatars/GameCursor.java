@@ -10,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import com.droidquest.Room;
-import com.droidquest.RoomDisplay;
 import com.droidquest.devices.Device;
 import com.droidquest.devices.GenericChip;
 import com.droidquest.devices.SmallChip;
@@ -21,14 +20,12 @@ import com.droidquest.items.ToolBox;
 public class GameCursor extends Item 
 {
 	private int walk = 0; // 0 or 1, used in animation
-	public boolean outline; // Draw outline around GameCursor?
 
 	public GameCursor(){}
 
 	public GameCursor(int X, int Y, Room r) 
 	{
 		x=X; y=Y; 
-		outline=false;
 		room=r;
 		width=28; height=32;
 		GenerateIcons();
@@ -322,7 +319,7 @@ public class GameCursor extends Item
 					SetRoom(item.InternalRoom);
 				}
 		}
-		super.MoveDown( nudge);
+		super.MoveDown(nudge);
 		walk = 1-walk;
 		currentIcon = icons[2+walk].getImage();
 	}
@@ -342,7 +339,7 @@ public class GameCursor extends Item
 					SetRoom(item.InternalRoom);
 				}
 		}
-		super.MoveLeft( nudge);
+		super.MoveLeft(nudge);
 		walk = 1-walk;
 		currentIcon = icons[4+walk].getImage();
 	}
@@ -364,22 +361,12 @@ public class GameCursor extends Item
 				}
 			}
 		}
-		super.MoveRight( nudge);
+		super.MoveRight(nudge);
 		walk = 1-walk;
 		currentIcon = icons[6+walk].getImage();
 	}
 
-	public void Draw(Graphics g, RoomDisplay rd) 
-	{
-		g.drawImage(currentIcon, x, y, rd);
-		if (outline)
-		{
-			g.setColor(Color.white);
-			g.drawRect(x,y,28,32);
-		}
-	}
-
-	public boolean CanBePickedUp(Item i) 
+	public boolean CanBePickedUp(Item i)
 	{
 		if (i.getClass().toString().endsWith("Robot"))
 			return false;
@@ -549,7 +536,7 @@ public class GameCursor extends Item
 					if (item.CanBePickedUp(level.gameCursor))
 						PicksUp(item);
 			}
-			outline = false;
+			outline = null;
 			return false;
 		}
 		if (e.getKeyCode() == e.VK_CLOSE_BRACKET) 
@@ -674,7 +661,7 @@ public class GameCursor extends Item
 		if (e.getKeyCode() == e.VK_SPACE) 
 		{
 			if (level.player == level.gameCursor)
-				outline = true;
+				outline = Color.white;
 		}
 		return false;
 	}
