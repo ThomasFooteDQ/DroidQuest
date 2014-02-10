@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 import com.droidquest.decorations.Graphix;
-import com.droidquest.view.swing.ImageRepository;
+import com.droidquest.view.swing.image.ImageRepository;
 
 /**
  * Swing Renderer class for painting Graphix elements

@@ -11,7 +11,7 @@ import com.droidquest.decorations.Graphix;
 import com.droidquest.decorations.Spark;
 import com.droidquest.decorations.TextBox;
 import com.droidquest.items.Item;
-import com.droidquest.view.swing.ImageRepository;
+import com.droidquest.view.swing.image.ImageRepository;
 import com.droidquest.view.swing.decoration.ArrowView;
 import com.droidquest.view.swing.decoration.GraphixView;
 import com.droidquest.view.swing.decoration.SparkView;

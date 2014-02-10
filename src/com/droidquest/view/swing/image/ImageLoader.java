@@ -1,4 +1,4 @@
-package com.droidquest.view.swing;
+package com.droidquest.view.swing.image;
 
 import javax.imageio.ImageIO;
 import java.awt.Image;

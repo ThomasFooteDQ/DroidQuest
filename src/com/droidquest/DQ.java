@@ -2,163 +2,20 @@ package com.droidquest;
 
 //This is the source code for DroidQuest 2.7. Copyright 2003 by Thomas Foote.
 
-import javax.swing.*;
-import java.awt.Container;
-import java.awt.FileDialog;
-import java.awt.GraphicsConfiguration;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.Iterator;
-import java.util.Set;
-
-import com.droidquest.levels.Level;
 import com.droidquest.levels.MainMenu;
+import com.droidquest.view.swing.DQFrame;
 
-public class DQ extends JFrame implements ActionListener 
+public class DQ
 {
-    private final Game game;
-
-	public DQ(Game game)
-	{
-		// Constructor
-		super("DroidQuest");
-
-        this.game = game;
-
-		setSize(560+8,384+27+24);
-		addWindowListener( new WindowAdapter() 
-		{
-			public void windowClosing(WindowEvent e)
-			{ setVisible(false); dispose(); System.exit(0); }
-		});	
-		
-		setIconImage(new ImageIcon("images/helper0.gif").getImage());
-
-		Container contentPane = getContentPane();
-        game.setCurrentLevel(new MainMenu(game));
-        game.getCurrentLevel().Init();
-        final RoomDisplay view = new RoomDisplay(game);
-        game.setView(view);
-
-		addFocusListener(new FocusAdapter() {
-            public void focusGained(FocusEvent e) {
-                getGame().getView().requestFocus();
-            }
-        });
-
-		contentPane.add(view);
-		view.setLocation(0, 0);
-
-		JMenuBar menuBar;
-		JMenu fileMenu;
-		JMenuItem menuItemSave;
-		JMenuItem menuItemMain;
-		JCheckBoxMenuItem menuItemSound;
-		JMenuItem menuItemExit;
-
-		menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-		fileMenu = new JMenu("File");
-		fileMenu.setMnemonic(KeyEvent.VK_F);
-		menuBar.add(fileMenu);
-
-		menuItemSave = new JMenuItem("Save Level",KeyEvent.VK_S);
-		menuItemMain = new JMenuItem("Main Menu", KeyEvent.VK_M);
-		menuItemSound = new JCheckBoxMenuItem("Sound", true);
-		menuItemExit = new JMenuItem("Exit", KeyEvent.VK_X);
-		fileMenu.add(menuItemSave);
-		fileMenu.add(menuItemMain);
-		fileMenu.add(menuItemSound);
-		fileMenu.add(menuItemExit);
-
-		menuItemSave.addActionListener(this);
-		menuItemMain.addActionListener(this);
-		menuItemSound.addActionListener(this);
-		menuItemExit.addActionListener(this);
-
-		try
-		{
-			System.setErr(System.out);
-		}
-		catch (SecurityException e) {}
-	}
-
-    protected Game getGame() {
-        return game;
-    }
-
-	public static void main(String[] args) 
+	public static void main(String[] args)
 	{
         Game game = new Game();
-		DQ dq = new DQ(game);
-		GraphicsConfiguration gc = dq.getGraphicsConfiguration();
-		Rectangle bounds = gc.getBounds();
-		dq.setLocation(bounds.x + (bounds.width - 568)/2,
-				bounds.y + (bounds.height - 435)/2 );
+        game.setCurrentLevel(new MainMenu(game));
+        game.getCurrentLevel().Init();
+
+        DQFrame dq = new DQFrame(game);
 		dq.setVisible(true);
-
 	}
-
-	public void actionPerformed(ActionEvent e) 
-	{
-		if (e.getActionCommand() == "Save Level") 
-		{
-			FileDialog fd = new FileDialog(this,"Save Level", FileDialog.SAVE);
-			fd.setDirectory("ROlevels");
-			fd.setVisible(true);
-			System.out.println("Dialog returned with " 
-					+ fd.getDirectory()
-					+ fd.getFile());
-			if (fd.getFile() != null)
-				game.saveLevel(fd.getDirectory() + fd.getFile());
-		}
-
-		if (e.getActionCommand() == "Main Menu") 
-		{
-			int n = JOptionPane.showConfirmDialog(this,"Do you want to quit this level?",
-					"return to Main Menu", JOptionPane.YES_NO_OPTION);
-			if (n==0)
-			{
-                game.getCurrentLevel().Empty();
-                game.setCurrentLevel(new MainMenu(game));
-                game.getCurrentLevel().Init();
-			}
-		}
-
-		if (e.getActionCommand() == "Sound") 
-		{
-            game.setSoundEnabled(((JCheckBoxMenuItem) e.getSource()).getState());
-			if (!game.isSoundEnabled())
-			{
-				Set<String> keys = getLevel().sounds.keySet();
-				Iterator<String> iterator = keys.iterator();
-				while (iterator.hasNext()) {
-					String soundFile = iterator.next();
-					SoundClip soundClip = game.getCurrentLevel().sounds.get(soundFile);
-					soundClip.audioClip.stop();
-				}
-//				for (int a=0; a<myRoom.level.sounds.size(); a++)
-//				{
-//					SoundClip sc = (SoundClip) myRoom.level.sounds.elementAt(a);
-//					sc.audioClip.stop();
-//				}
-			}
-		}
-
-		if (e.getActionCommand() == "Exit") 
-		{ setVisible(false); dispose(); System.exit(0); }
-
-	}
-
-    public Level getLevel() {
-        return game.getCurrentLevel();
-    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

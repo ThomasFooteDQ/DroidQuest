@@ -1,4 +1,4 @@
-package com.droidquest.view.swing;
+package com.droidquest.view.swing.image;
 
 import java.awt.Image;
 import java.util.HashMap;
