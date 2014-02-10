@@ -3,7 +3,6 @@ package com.droidquest.avatars;
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FileDialog;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -12,9 +11,9 @@ import java.awt.image.BufferedImage;
 import com.droidquest.Room;
 import com.droidquest.devices.Device;
 import com.droidquest.devices.GenericChip;
-import com.droidquest.devices.SmallChip;
 import com.droidquest.items.Item;
 import com.droidquest.items.ToolBox;
+import com.droidquest.operation.Operation;
 
 public class LabCursor extends Item 
 {
@@ -76,24 +75,10 @@ public boolean CanBePickedUp(Item i)
 
 public boolean KeyUp(KeyEvent e) 
   {
+      Operation op = null;
 	if (e.getKeyCode() == e.VK_L) 
 	  {
-	     if (carrying != null)
-	       if (carrying.getClass().toString().endsWith("SmallChip"))
-		 {
-             JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(e.getComponent());
-             FileDialog fd = new FileDialog(parentFrame,"Load Chip", FileDialog.LOAD);
-		    fd.setDirectory("chips");
-		    fd.show();
-		    System.out.println("Dialog returned with " 
-				       + fd.getDirectory()
-				       + fd.getFile());
-		    if (fd.getFile() != null)
-		      {
-			 ((SmallChip)carrying).Empty();
-			 ((SmallChip)carrying).LoadChip(fd.getDirectory()+fd.getFile());
-		      }
-		 }
+         op = getOperationFactory().createLoadSmallChipOperation(this);
 	  }
 	if (e.getKeyCode() == e.VK_H) 
 	  {
@@ -106,7 +91,7 @@ public boolean KeyUp(KeyEvent e)
 	  }
 	if (e.getKeyCode() == e.VK_S) 
 	  {
-          getOperationFactory().createLabSolderingPenOperation(this).execute();
+          op = getOperationFactory().createLabSolderingPenOperation(this);
 	  }
 	if (e.getKeyCode() == e.VK_R) 
 	  {
@@ -283,6 +268,10 @@ public boolean KeyUp(KeyEvent e)
 				+ ", (" + freemem/1024 + "K), ("
 				+ freemem/1024/1024 + "M)");
 	  }
+
+    if (op != null && op.canExecute()) {
+        op.execute();
+    }
 
 	return false;
   }

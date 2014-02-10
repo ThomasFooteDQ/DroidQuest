@@ -3,7 +3,6 @@ package com.droidquest.avatars;
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FileDialog;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -12,10 +11,10 @@ import java.awt.image.BufferedImage;
 import com.droidquest.Room;
 import com.droidquest.devices.Device;
 import com.droidquest.devices.GenericChip;
-import com.droidquest.devices.SmallChip;
 import com.droidquest.items.GenericRobot;
 import com.droidquest.items.Item;
 import com.droidquest.items.ToolBox;
+import com.droidquest.operation.Operation;
 
 public class GameCursor extends Item 
 {
@@ -373,30 +372,17 @@ public class GameCursor extends Item
 
 	public boolean KeyUp(KeyEvent e) 
 	{
-		if (e.getKeyCode() == e.VK_L) 
+        Operation op = null;
+
+		if (e.getKeyCode() == e.VK_L)
 		{
-			if (carrying != null)
-				if (carrying.getClass().toString().endsWith("SmallChip"))
-				{
-                    JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(e.getComponent());
-					FileDialog fd = new FileDialog(parent,"Load Chip", FileDialog.LOAD);
-					fd.setDirectory("chips");
-					fd.show();
-					System.out.println("Dialog returned with " 
-							+ fd.getDirectory()
-							+ fd.getFile());
-					if (fd.getFile() != null)
-					{
-						((SmallChip)carrying).Empty();
-						((SmallChip)carrying).LoadChip(fd.getDirectory()+fd.getFile());
-					}
-				}
+            op = getOperationFactory().createLoadSmallChipOperation(this);
 		}
-		if (e.getKeyCode() == e.VK_S) 
+		if (e.getKeyCode() == e.VK_S)
 		{
-            getOperationFactory().createSolderingPenOperation(this).execute();
+            op = getOperationFactory().createSolderingPenOperation(this);
 		}
-		if (e.getKeyCode() == e.VK_R) 
+		if (e.getKeyCode() == e.VK_R)
 		{
 			if (level.remote == null) return false;
 			if (level.remote.carriedBy == null)
@@ -593,7 +579,11 @@ public class GameCursor extends Item
 					+ freemem/1024/1024 + "M)");
 		}
 
-		return false;
+        if (op != null && op.canExecute()) {
+            op.execute();
+        }
+
+        return false;
 	}
 
     public boolean KeyDown(KeyEvent e)

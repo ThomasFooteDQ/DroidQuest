@@ -21,12 +21,14 @@ public class SwingSaveChipOperation implements Operation {
     }
 
     @Override
-    public void execute() {
+    public boolean canExecute() {
         Item carried = currentAvatar.getCarrying();
-        if (!(carried instanceof SmallChip)) {
-            return;
-        }
 
+        return carried instanceof SmallChip;
+    }
+
+    @Override
+    public void execute() {
         JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(getViewComponent());
         FileDialog fd = new FileDialog(parentFrame,"Save Chip", FileDialog.SAVE);
         fd.setDirectory("chips");
@@ -36,7 +38,7 @@ public class SwingSaveChipOperation implements Operation {
                 + fd.getDirectory()
                 + fd.getFile());
         if (fd.getFile() != null)
-            ((SmallChip) carried).SaveChip(fd.getDirectory()+fd.getFile());
+            ((SmallChip) currentAvatar.getCarrying()).SaveChip(fd.getDirectory()+fd.getFile());
     }
 
     public JComponent getViewComponent() {

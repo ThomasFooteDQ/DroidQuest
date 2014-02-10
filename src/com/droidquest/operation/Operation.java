@@ -5,6 +5,11 @@ package com.droidquest.operation;
  */
 public interface Operation {
     /**
+     * Returns true if the operation can currently be executed.
+     */
+    public boolean canExecute();
+
+    /**
      * Execute the operation.
      */
     public void execute();

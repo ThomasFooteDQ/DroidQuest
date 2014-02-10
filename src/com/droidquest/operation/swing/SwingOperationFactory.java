@@ -6,6 +6,7 @@ import com.droidquest.levels.Level;
 import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.OperationFactory;
 import com.droidquest.operation.api.mode.SolderingPenOperation;
+import com.droidquest.operation.swing.mode.SwingLoadSmallChipOperation;
 import com.droidquest.operation.swing.mode.SwingSaveChipOperation;
 import com.droidquest.view.View;
 
@@ -27,6 +28,11 @@ public class SwingOperationFactory implements OperationFactory {
     @Override
     public Operation createLabSolderingPenOperation(Item currentAvatar) {
         return new SolderingPenOperation(getCurrentLevel(), currentAvatar, createSaveChipOperation(currentAvatar));
+    }
+
+    @Override
+    public Operation createLoadSmallChipOperation(Item avatar) {
+        return new SwingLoadSmallChipOperation(avatar, getView());
     }
 
     private Operation createSaveChipOperation(Item currentAvatar) {

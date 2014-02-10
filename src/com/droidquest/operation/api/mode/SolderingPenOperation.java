@@ -19,30 +19,43 @@ public class SolderingPenOperation implements Operation {
     }
 
     @Override
+    public boolean canExecute() {
+        if (getCurrentLevel().solderingPen == null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
     public void execute() {
-        if (level.solderingPen == null) {
+        if (!canExecute()) {
             return;
         }
 
         if (currentAvatar.getCarrying() != null) {
-            if (saveChipOperation != null) {
+            if (saveChipOperation != null && saveChipOperation.canExecute()) {
                 saveChipOperation.execute();
             }
             currentAvatar.Drops();
         }
 
-        level.solderingPen.x = currentAvatar.getX();
-        level.solderingPen.y = currentAvatar.getY();
-        level.solderingPen.room = currentAvatar.getRoom();
+        getCurrentLevel().solderingPen.x = currentAvatar.getX();
+        getCurrentLevel().solderingPen.y = currentAvatar.getY();
+        getCurrentLevel().solderingPen.room = currentAvatar.getRoom();
         currentAvatar.setRoom(null);
 
-        if (level.currentViewer == level.player) {
-            level.currentViewer = level.solderingPen;
+        if (getCurrentLevel().currentViewer == getCurrentLevel().player) {
+            getCurrentLevel().currentViewer = getCurrentLevel().solderingPen;
         }
 
-        level.player = level.solderingPen;
-        if (level.remote != null && level.remote.carriedBy != null) {
-            level.remote.carriedBy = level.player;
+        getCurrentLevel().player = getCurrentLevel().solderingPen;
+        if (getCurrentLevel().remote != null && getCurrentLevel().remote.carriedBy != null) {
+            getCurrentLevel().remote.carriedBy = getCurrentLevel().player;
         }
+    }
+
+    private Level getCurrentLevel() {
+        return level;
     }
 }
