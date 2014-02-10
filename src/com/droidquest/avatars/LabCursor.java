@@ -106,35 +106,7 @@ public boolean KeyUp(KeyEvent e)
 	  }
 	if (e.getKeyCode() == e.VK_S) 
 	  {
-	     if (level.solderingPen == null) return false;
-	     if (carrying != null)
-	       if (carrying.getClass().toString().endsWith("SmallChip"))
-		 {
-             JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(e.getComponent());
-             FileDialog fd = new FileDialog(parentFrame,"Save Chip", FileDialog.SAVE);
-		    fd.setDirectory("chips");
-		    fd.show();
-		    System.out.println("Dialog returned with " 
-				       + fd.getDirectory()
-				       + fd.getFile());
-		    if (fd.getFile() != null)
-		      ((SmallChip)carrying).SaveChip(fd.getDirectory()+fd.getFile());
-		    return false;
-		 }
-	     if (carrying != null)
-	       Drops();
-	     level.solderingPen.x = x;
-	     level.solderingPen.y = y;
-	     level.solderingPen.room = room;
-	     room = null;
-	     if (level.currentViewer == level.player)
-	       level.currentViewer=level.solderingPen;
-	     level.player = level.solderingPen;
-	     if (level.remote != null)
-	       if (level.remote.carriedBy != null)
-		 {
-		    level.remote.carriedBy = level.player;
-		 }
+          getOperationFactory().createLabSolderingPenOperation(this).execute();
 	  }
 	if (e.getKeyCode() == e.VK_R) 
 	  {

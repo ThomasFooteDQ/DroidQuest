@@ -949,5 +949,9 @@ public class Level implements ImageObserver, Serializable {
     public SoundPlayer getSoundPlayer() {
         return game.getSoundPlayer();
     }
+
+    public Game getGame() {
+        return game;
+    }
 }
 

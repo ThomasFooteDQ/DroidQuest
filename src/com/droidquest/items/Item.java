@@ -18,6 +18,7 @@ import com.droidquest.Wire;
 import com.droidquest.devices.Device;
 import com.droidquest.levels.Level;
 import com.droidquest.materials.ChipTrash;
+import com.droidquest.operation.api.OperationFactory;
 
 public class Item implements Serializable, Cloneable 
 {
@@ -108,6 +109,10 @@ public class Item implements Serializable, Cloneable
 	{
 		return room;
 	}
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
 
     public Color getOutline() {
         return outline;
@@ -240,7 +245,11 @@ public class Item implements Serializable, Cloneable
 		return false;
 	}
 
-	public boolean KeyDown(KeyEvent e) 
+    public OperationFactory getOperationFactory() {
+        return level.getGame().getOperationFactory();
+    }
+
+    public boolean KeyDown(KeyEvent e)
 	{
 		// Handles keybord input.
 		// Return TRUE if repaint is needed (usually for movement)
@@ -717,4 +726,13 @@ public class Item implements Serializable, Cloneable
         InternalRoom = level.FindRoom(s.readInt());
         GenerateIcons();
     }
+
+    /**
+     * Returns the item that this item is carrying, or null if no item is being carried.
+     * @return an item
+     */
+    public Item getCarrying() {
+        return carrying;
+    }
+
 }

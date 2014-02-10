@@ -3,6 +3,7 @@ package com.droidquest;
 //This is the source code for DroidQuest 2.7. Copyright 2003 by Thomas Foote.
 
 import com.droidquest.levels.MainMenu;
+import com.droidquest.operation.swing.SwingOperationFactory;
 import com.droidquest.view.swing.DQFrame;
 import com.droidquest.view.swing.sound.SwingSoundPlayer;
 
@@ -12,6 +13,7 @@ public class DQ
 	{
         Game game = new Game();
         game.setSoundPlayer(new SwingSoundPlayer(game));
+        game.setOperationFactory(new SwingOperationFactory(game));
         game.setCurrentLevel(new MainMenu(game));
         game.getCurrentLevel().Init();
 

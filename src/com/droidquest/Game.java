@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
 import com.droidquest.materials.Material;
+import com.droidquest.operation.api.OperationFactory;
 import com.droidquest.view.api.sound.SoundPlayer;
 
 /**
@@ -18,10 +19,10 @@ import com.droidquest.view.api.sound.SoundPlayer;
 public class Game {
     private Level currentLevel;
     private boolean suspended;
-    private boolean soundEnabled = true;
     private ClockTickHandler clockTickHandler;
     private SoundPlayer soundPlayer;
     private RoomDisplay view;
+    private OperationFactory operationFactory;
 
     public Game() {
         clockTickHandler = new ClockTickHandler(this);
@@ -164,5 +165,13 @@ public class Game {
 
     public RoomDisplay getView() {
         return view;
+    }
+
+    public OperationFactory getOperationFactory() {
+        return operationFactory;
+    }
+
+    public void setOperationFactory(OperationFactory operationFactory) {
+        this.operationFactory = operationFactory;
     }
 }

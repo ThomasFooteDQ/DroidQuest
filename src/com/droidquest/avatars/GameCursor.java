@@ -21,9 +21,7 @@ public class GameCursor extends Item
 {
 	private int walk = 0; // 0 or 1, used in animation
 
-	public GameCursor(){}
-
-	public GameCursor(int X, int Y, Room r) 
+	public GameCursor(int X, int Y, Room r)
 	{
 		x=X; y=Y; 
 		room=r;
@@ -299,7 +297,7 @@ public class GameCursor extends Item
 					SetRoom(item.InternalRoom);
 				}
 		}
-		super.MoveUp( nudge);
+		super.MoveUp(nudge);
 		walk = 1-walk;
 		currentIcon = icons[0+walk].getImage();
 	}
@@ -396,21 +394,7 @@ public class GameCursor extends Item
 		}
 		if (e.getKeyCode() == e.VK_S) 
 		{
-			if (level.solderingPen == null) return false;
-			if (carrying != null)
-				Drops();
-			level.solderingPen.x = x;
-			level.solderingPen.y = y;
-			level.solderingPen.room = room;
-			room = null;
-			if (level.currentViewer == level.player)
-				level.currentViewer=level.solderingPen;
-			level.player = level.solderingPen;
-			if (level.remote != null)
-				if (level.remote.carriedBy != null)
-				{
-					level.remote.carriedBy = level.player;
-				}
+            getOperationFactory().createSolderingPenOperation(this).execute();
 		}
 		if (e.getKeyCode() == e.VK_R) 
 		{
@@ -612,7 +596,7 @@ public class GameCursor extends Item
 		return false;
 	}
 
-	public boolean KeyDown(KeyEvent e) 
+    public boolean KeyDown(KeyEvent e)
 	{
 		if (e.getKeyCode() == e.VK_RIGHT) 
 		{

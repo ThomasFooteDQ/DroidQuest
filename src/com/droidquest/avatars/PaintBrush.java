@@ -1,12 +1,11 @@
 package com.droidquest.avatars;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.items.GenericRobot;
 import com.droidquest.items.Item;
@@ -124,14 +123,7 @@ public class PaintBrush extends Item
 		  }
 		if (e.getKeyCode() == e.VK_S) 
 		  {
-		     if (level.solderingPen == null) return false;
-		     level.solderingPen.x = x;
-		     level.solderingPen.y = y;
-		     level.solderingPen.room = room;
-		     room = null;
-		     if (level.currentViewer == level.player)
-		       level.currentViewer=level.solderingPen;
-		     level.player = level.solderingPen;
+             getOperationFactory().createSolderingPenOperation(this).execute();
 		  }
 		if (e.getKeyCode() == e.VK_R) 
 		  {
