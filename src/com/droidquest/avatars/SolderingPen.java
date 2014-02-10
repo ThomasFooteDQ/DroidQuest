@@ -1,5 +1,6 @@
 package com.droidquest.avatars;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -8,13 +9,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
-import javax.swing.ImageIcon;
-
 import com.droidquest.Room;
 import com.droidquest.Wire;
 import com.droidquest.chipstuff.Port;
 import com.droidquest.devices.Device;
 import com.droidquest.items.Item;
+import com.droidquest.operation.Operation;
 
 public class SolderingPen extends Device 
 {
@@ -319,6 +319,7 @@ public boolean CanBePickedUp(Item i)
 
 public boolean KeyUp(KeyEvent e) 
   {
+      Operation op = null;
 	if (e.getKeyCode() == e.VK_C) 
 	  {
 	     if (ports[0].myWire != null)
@@ -338,30 +339,7 @@ public boolean KeyUp(KeyEvent e)
 	  }
 	if (e.getKeyCode() == e.VK_R) 
 	  {
-	     if (level.remote == null) return false;
-	     if (level.remote.carriedBy == null)
-	       { // Summon Remote
-		  level.remote.x = 28;
-		  level.remote.y = -20;
-		  level.remote.carriedBy = level.player;
-		  level.remote.room = level.player.room;
-		  level.electricity = true;
-	       }
-	     else
-	       { // Hide Remote
-		  level.remote.carriedBy = null;
-		  level.remote.room = null;
-		  level.electricity = false;
-	       }
-//	     if (ports[0].myWire != null)
-//	       ports[0].myWire.Remove();
-//	     level.remote.x = x;
-//	     level.remote.y = y;
-//	     level.remote.room = room;
-//	     room = null;
-//	     if (level.currentViewer == level.player)
-//	       level.currentViewer=level.remote;
-//	     level.player = level.remote;
+          op = getOperationFactory().createToggleRemoteOperation();
 	  }
 	if (e.getKeyCode() == e.VK_P) 
 	  {
@@ -447,6 +425,10 @@ public boolean KeyUp(KeyEvent e)
 		    }
 	       }
 	  }
+
+      if (op != null && op.canExecute()) {
+          op.execute();
+      }
 	return false;
   }
 

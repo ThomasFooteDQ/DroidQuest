@@ -32,7 +32,7 @@ public class Level implements ImageObserver, Serializable {
 	public Item gameCursor;
 	public Item solderingPen;
 	public Item remote;
-	public Item toolbox;
+	public ToolBox toolbox;
 	public Item currentViewer;
 	public Item helpCam;   
 	public Item paintbrush;
@@ -266,7 +266,7 @@ public class Level implements ImageObserver, Serializable {
 		currentViewer = FindItem(s.readInt());
 		solderingPen = FindItem(s.readInt());
 		remote = FindItem(s.readInt());
-		toolbox = FindItem(s.readInt());
+		toolbox = (ToolBox) FindItem(s.readInt());
 		helpCam = FindItem(s.readInt());
 		paintbrush = FindItem(s.readInt());
 

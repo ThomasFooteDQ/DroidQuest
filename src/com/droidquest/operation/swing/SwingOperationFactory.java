@@ -6,6 +6,8 @@ import com.droidquest.levels.Level;
 import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.OperationFactory;
 import com.droidquest.operation.api.mode.SolderingPenOperation;
+import com.droidquest.operation.api.mode.ToggleRemoteOperation;
+import com.droidquest.operation.api.mode.ToggleToolboxOperation;
 import com.droidquest.operation.swing.mode.SwingLoadSmallChipOperation;
 import com.droidquest.operation.swing.mode.SwingSaveChipOperation;
 import com.droidquest.view.View;
@@ -21,11 +23,6 @@ public class SwingOperationFactory implements OperationFactory {
     }
 
     @Override
-    public Operation createSolderingPenOperation(Item currentAvatar) {
-        return new SolderingPenOperation(getCurrentLevel(), currentAvatar, null);
-    }
-
-    @Override
     public Operation createLabSolderingPenOperation(Item currentAvatar) {
         return new SolderingPenOperation(getCurrentLevel(), currentAvatar, createSaveChipOperation(currentAvatar));
     }
@@ -37,6 +34,21 @@ public class SwingOperationFactory implements OperationFactory {
 
     private Operation createSaveChipOperation(Item currentAvatar) {
         return new SwingSaveChipOperation(currentAvatar, getView());
+    }
+
+    @Override
+    public Operation createSolderingPenOperation(Item currentAvatar) {
+        return new SolderingPenOperation(getCurrentLevel(), currentAvatar, null);
+    }
+
+    @Override
+    public Operation createToggleRemoteOperation() {
+        return new ToggleRemoteOperation(getCurrentLevel());
+    }
+
+    @Override
+    public Operation createToggleToolboxOperation(Item avatar) {
+        return new ToggleToolboxOperation(getCurrentLevel(), avatar);
     }
 
     protected Level getCurrentLevel() {

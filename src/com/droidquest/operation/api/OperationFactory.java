@@ -13,4 +13,8 @@ public interface OperationFactory {
     Operation createLoadSmallChipOperation(Item avatar);
 
     Operation createSolderingPenOperation(Item currentAvatar);
+
+    Operation createToggleRemoteOperation();
+
+    Operation createToggleToolboxOperation(Item avatar);
 }

@@ -12,7 +12,6 @@ import com.droidquest.Room;
 import com.droidquest.devices.Device;
 import com.droidquest.devices.GenericChip;
 import com.droidquest.items.Item;
-import com.droidquest.items.ToolBox;
 import com.droidquest.operation.Operation;
 
 public class LabCursor extends Item 
@@ -95,30 +94,7 @@ public boolean KeyUp(KeyEvent e)
 	  }
 	if (e.getKeyCode() == e.VK_R) 
 	  {
-	     if (level.remote == null) return false;
-	     if (level.remote.carriedBy == null)
-	       { // Summon Remote
-		  level.remote.x = 28;
-		  level.remote.y = -20;
-		  level.remote.carriedBy = level.player;
-		  level.remote.room = level.player.room;
-		  level.electricity = true;
-	       }
-	     else
-	       { // Hide Remote
-		  level.remote.carriedBy = null;
-		  level.remote.room = null;
-		  level.electricity = false;
-	       }
-//	     if (carrying != null)
-//	       Drops();
-//	     level.remote.x = x;
-//	     level.remote.y = y;
-//	     level.remote.room = room;
-//	     room = null;
-//	     if (level.currentViewer == level.player)
-//	       level.currentViewer=level.remote;
-//	     level.player = level.remote;
+          op = getOperationFactory().createToggleRemoteOperation();
 	  }
 	if (e.getKeyCode() == e.VK_P) 
 	  {
@@ -135,19 +111,7 @@ public boolean KeyUp(KeyEvent e)
 	  }
 	if (e.getKeyCode() == e.VK_T) 
 	  {
-	     if (level.toolbox == null) return false;
-	     if (level.toolbox.room != room)
-	       {
-		  // Summon Toolbox
-		  if (carrying != null) return false;
-		  if (((ToolBox)level.toolbox).open) ((ToolBox)level.toolbox).Toggle();
-		  level.toolbox.room = room;
-		  level.toolbox.x = x+28;
-		  level.toolbox.y = y+6;
-		  PicksUp(level.toolbox);
-	       }
-	     else
-	       ((ToolBox)level.toolbox).Toggle();
+         op = getOperationFactory().createToggleToolboxOperation(this);
 	  }
 	if (e.getKeyCode() == e.VK_SLASH) 
 	  {
