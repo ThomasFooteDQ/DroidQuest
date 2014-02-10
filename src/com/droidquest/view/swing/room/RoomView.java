@@ -11,6 +11,7 @@ import com.droidquest.decorations.Graphix;
 import com.droidquest.decorations.Spark;
 import com.droidquest.decorations.TextBox;
 import com.droidquest.items.Item;
+import com.droidquest.view.swing.ImageRepository;
 import com.droidquest.view.swing.decoration.ArrowView;
 import com.droidquest.view.swing.decoration.GraphixView;
 import com.droidquest.view.swing.decoration.SparkView;
@@ -33,8 +34,10 @@ public class RoomView {
     private final SparkView sparkView;
 
     public RoomView() {
+        ImageRepository imageRepository = new ImageRepository();
+
         arrowView = new ArrowView();
-        graphixView = new GraphixView();
+        graphixView = new GraphixView(imageRepository);
         textBoxView = new TextBoxView();
         materialView = MappedMaterialView.create();
         itemView = new ItemView();

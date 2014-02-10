@@ -76,14 +76,12 @@ public class BlueGridSwitch extends Material
 			  Graphix gr = (Graphix) room.graphix.elementAt(a);
 			  String[] filelist = {"whiteHorizontal.gif"};
 			  gr.filenames = filelist;
-			  gr.GenerateIcons();
 		       }
 		     for (int a=0; a<5; a++)
 		       {
 			  Graphix gr = (Graphix) room.graphix.elementAt(a+5);
 			  String[] filelist = {"whiteVertical.gif"};
 			  gr.filenames = filelist;
-			  gr.GenerateIcons();
 		       }
 		     animationState++;
 		     break;
@@ -123,14 +121,12 @@ public class BlueGridSwitch extends Material
 			  Graphix gr = (Graphix) room.graphix.elementAt(a);
 			  String[] filelist = {"blueHorizontal.gif"};
 			  gr.filenames = filelist;
-			  gr.GenerateIcons();
 		       }
 		     for (int a=0; a<5; a++)
 		       {
 			  Graphix gr = (Graphix) room.graphix.elementAt(a+5);
 			  String[] filelist = {"blueVertical.gif"};
 			  gr.filenames = filelist;
-			  gr.GenerateIcons();
 		       }
 		     animationState++;
 		     break;

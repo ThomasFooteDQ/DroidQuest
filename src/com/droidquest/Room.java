@@ -83,11 +83,6 @@ public void readRef(ObjectInputStream s) throws IOException
 	     wire.readRef(s,level);
 	  }
 	
-	for (int a=0; a<graphix.size(); a++)
-	  {
-	     ((Graphix)graphix.elementAt(a)).GenerateIcons();
-	  }
-	
 	GenerateArray();
   }
 
