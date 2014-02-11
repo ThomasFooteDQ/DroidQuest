@@ -8,9 +8,11 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import com.droidquest.items.Item;
+import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.move.Direction;
+import com.droidquest.operation.api.move.Distance;
 
-public class Remote extends Item 
-{
+public class Remote extends Item {
 public Remote() 
   {
 //	width=28; height=32;
@@ -112,9 +114,10 @@ public boolean CanBePickedUp(Item i)
 
 public boolean KeyUp(KeyEvent e) 
   {
+    Operation op = null;
 	if (e.getKeyCode() == e.VK_S) 
 	  {
-          getOperationFactory().createSolderingPenOperation(this).execute();
+          op = getOperationFactory().createSolderingPenOperation(this);
 	  }
 	if (e.getKeyCode() == e.VK_C) 
 	  {
@@ -139,45 +142,36 @@ public boolean KeyUp(KeyEvent e)
 	  }
 	if (e.getKeyCode() == e.VK_SLASH) 
 	  {
-	     if (level.helpCam == null) return false;
-	     if (level.player != level.helpCam)
-	       {
-		  level.player = level.helpCam;
-		  level.currentViewer = level.helpCam;
-	       }
+         op = getOperationFactory().createHelpOperation(this);
 	  }
 	if (e.getKeyCode() == e.VK_RIGHT) 
 	  {
-	     if (carriedBy==null)
-	       MoveRight(e.isControlDown());
-	     repeating=0;
-	     return true;
+	     op = getOperationFactory().createMoveOperation(this, Direction.Right,
+                 e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
 	if (e.getKeyCode() == e.VK_LEFT) 
 	  {
-	     if (carriedBy==null)
-	       MoveLeft(e.isControlDown());
-	     repeating=0;
-	     return true;
+          op = getOperationFactory().createMoveOperation(this, Direction.Left,
+                  e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
 	if (e.getKeyCode() == e.VK_UP) 
 	  {
-	     if (carriedBy==null)
-	       MoveUp(e.isControlDown());
-	     repeating=0;
-	     return true;
+          op = getOperationFactory().createMoveOperation(this, Direction.Up,
+                  e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
 	if (e.getKeyCode() == e.VK_DOWN) 
 	  {
-	     if (carriedBy==null)
-	       MoveDown(e.isControlDown());
-	     repeating=0;
-	     return true;
+          op = getOperationFactory().createMoveOperation(this, Direction.Down,
+                  e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
 	if (e.getKeyCode() == e.VK_SPACE) 
 	  {
 	     level.electricity = ! level.electricity;
 	  }
+
+    if (op != null && op.canExecute()) {
+        op.execute();
+    }
 	return false;
   }
 

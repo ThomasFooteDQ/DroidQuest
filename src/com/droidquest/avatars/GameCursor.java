@@ -10,13 +10,13 @@ import java.awt.image.BufferedImage;
 
 import com.droidquest.Room;
 import com.droidquest.devices.Device;
-import com.droidquest.devices.GenericChip;
 import com.droidquest.items.GenericRobot;
 import com.droidquest.items.Item;
 import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.move.Direction;
+import com.droidquest.operation.api.move.Distance;
 
-public class GameCursor extends Item 
-{
+public class GameCursor extends Item {
 	private int walk = 0; // 0 or 1, used in animation
 
 	public GameCursor(int X, int Y, Room r)
@@ -389,57 +389,45 @@ public class GameCursor extends Item
 		{
             op = getOperationFactory().createToggleToolboxOperation(this);
 		}
-		if (e.getKeyCode() == e.VK_SLASH)
+		if (e.getKeyCode() == KeyEvent.VK_SLASH)
 		{
-			if (carrying != null)
-				if (carrying.getClass().toString().endsWith("Chip"))
-				{
-					((GenericChip)carrying).ShowText(true);
-					return false;
-				}
-			if (level.helpCam == null) return false;
-			level.player = level.helpCam;
-			level.currentViewer = level.helpCam;
+            op = getOperationFactory().createHelpOperation(this);
 		}
-		if (e.getKeyCode() == e.VK_RIGHT) 
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 		{
-			if (level.cheatmode)
-				if (e.isShiftDown())
-					SetRoom(room.rightRoom);
-			if (carriedBy==null)
-				MoveRight(e.isControlDown());
-			repeating=0;
-			return true;
+            if (e.isShiftDown()) {
+                op = getOperationFactory().createSetRoomOperation(this, Direction.Right, true);
+            } else {
+                op = getOperationFactory().createMoveOperation(this, Direction.Right,
+                        e.isControlDown() ? Distance.Nudge : Distance.Step);
+            }
 		}
 		if (e.getKeyCode() == e.VK_LEFT) 
 		{
-			if (level.cheatmode)
-				if (e.isShiftDown())
-					SetRoom(room.leftRoom);
-			if (carriedBy==null)
-				MoveLeft(e.isControlDown());
-			repeating=0;
-			return true;
+            if (e.isShiftDown()) {
+                op = getOperationFactory().createSetRoomOperation(this, Direction.Left, true);
+            } else {
+                op = getOperationFactory().createMoveOperation(this, Direction.Left,
+                        e.isControlDown() ? Distance.Nudge : Distance.Step);
+            }
 		}
 		if (e.getKeyCode() == e.VK_UP) 
 		{
-			if (level.cheatmode)
-				if (e.isShiftDown())
-					SetRoom(room.upRoom);
-			if (carriedBy==null)
-				MoveUp(e.isControlDown());
-			repeating=0;
-			return true;
+            if (e.isShiftDown()) {
+                op = getOperationFactory().createSetRoomOperation(this, Direction.Up, true);
+            } else {
+                op = getOperationFactory().createMoveOperation(this, Direction.Up,
+                        e.isControlDown() ? Distance.Nudge : Distance.Step);
+            }
 		}
 		if (e.getKeyCode() == e.VK_DOWN) 
 		{
-			if (level.cheatmode)
-				if (e.isShiftDown())
-					SetRoom(room.downRoom);
-			if (carriedBy==null)
-				MoveDown(e.isControlDown());
-			repeating=0;
-			return true;
+            if (e.isShiftDown()) {
+                op = getOperationFactory().createSetRoomOperation(this, Direction.Down, true);
+            } else {
+                op = getOperationFactory().createMoveOperation(this, Direction.Down,
+                        e.isControlDown() ? Distance.Nudge : Distance.Step);
+            }
 		}
 		if (e.getKeyCode() == e.VK_SPACE) 
 		{

@@ -80,7 +80,7 @@ public void readRef(ObjectInputStream s) throws IOException
 	  {
 	     Wire wire = new Wire();
 	     wires.addElement(wire);
-	     wire.readRef(s,level);
+	     wire.readRef(s, level);
 	  }
 	
 	GenerateArray();
@@ -183,22 +183,22 @@ public void AddGraphix(String[] t, int X, int Y)
 	graphix.addElement(newGraphix);
   }
 
-public Room getUpRoom(Item item)
+public Room getUpRoom()
   {
 	return upRoom;
   }
 
-public Room getDownRoom(Item item) 
+public Room getDownRoom()
   {
 	return downRoom;
   }
 
-public Room getLeftRoom(Item item) 
+public Room getLeftRoom()
   {
 	return leftRoom;
   }
 
-public Room getRightRoom(Item item) 
+public Room getRightRoom()
   {
 	return rightRoom;
   }

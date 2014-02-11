@@ -11,6 +11,9 @@ import com.droidquest.items.GenericRobot;
 import com.droidquest.items.Item;
 import com.droidquest.materials.Material;
 import com.droidquest.materials.RobotBlocker;
+import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.move.Direction;
+import com.droidquest.operation.api.move.Distance;
 
 public class PaintBrush extends Item 
 {
@@ -111,6 +114,7 @@ public class PaintBrush extends Item
 
 	public boolean KeyUp(KeyEvent e) 
 	  {
+        Operation op = null;
 		if (e.getKeyCode() == e.VK_C) 
 		  {
 		     level.gameCursor.x = x;
@@ -123,7 +127,7 @@ public class PaintBrush extends Item
 		  }
 		if (e.getKeyCode() == e.VK_S) 
 		  {
-             getOperationFactory().createSolderingPenOperation(this).execute();
+             op = getOperationFactory().createSolderingPenOperation(this);
 		  }
 		if (e.getKeyCode() == e.VK_R) 
 		  {
@@ -138,45 +142,23 @@ public class PaintBrush extends Item
 		  }
 		if (e.getKeyCode() == e.VK_SLASH) 
 		  {
-		     if (level.helpCam == null) return false;
-		     level.player = level.helpCam;
-		     level.currentViewer = level.helpCam;
+             op = getOperationFactory().createHelpOperation(this);
 		  }
 		if (e.getKeyCode() == e.VK_RIGHT) 
 		  {
-		     if (e.isShiftDown())
-		       SetRoom(room.rightRoom);
-		     if (carriedBy==null)
-		       MoveRight(e.isControlDown());
-		     repeating=0;
-		     return true;
-		  }
+              op = getMoveOperation(e, Direction.Right);
+          }
 		if (e.getKeyCode() == e.VK_LEFT) 
 		  {
-		     if (e.isShiftDown())
-		       SetRoom(room.leftRoom);
-		     if (carriedBy==null)
-		       MoveLeft(e.isControlDown());
-		     repeating=0;
-		     return true;
+              op = getMoveOperation(e, Direction.Left);
 		  }
 		if (e.getKeyCode() == e.VK_UP) 
 		  {
-		     if (e.isShiftDown())
-		       SetRoom(room.upRoom);
-		     if (carriedBy==null)
-		       MoveUp(e.isControlDown());
-		     repeating=0;
-		     return true;
+              op = getMoveOperation(e, Direction.Up);
 		  }
 		if (e.getKeyCode() == e.VK_DOWN) 
 		  {
-		     if (e.isShiftDown())
-		       SetRoom(room.downRoom);
-		     if (carriedBy==null)
-		       MoveDown(e.isControlDown());
-		     repeating=0;
-		     return true;
+              op = getMoveOperation(e, Direction.Down);
 		  }
 		if (e.getKeyCode() == e.VK_P) 
 		  {
@@ -195,20 +177,35 @@ public class PaintBrush extends Item
 		     else
 		       room.SetMaterial(bigX,bigY,emptyIndex);
 		  }
+
+        if (op != null && op.canExecute()) {
+            op.execute();
+        }
 		return false;
 	  }
 
-	public void MoveUp(boolean nudge) 
+    private Operation getMoveOperation(KeyEvent e, Direction direction) {
+        Operation op;
+        if (e.isShiftDown()) {
+            op = getOperationFactory().createSetRoomOperation(this, direction, false);
+        } else {
+            op = getOperationFactory().createMoveOperation(this,
+                    Direction.Right, e.isControlDown() ? Distance.Nudge : Distance.Step);
+        }
+        return op;
+    }
+
+    public void MoveUp(boolean nudge)
 	  {
 		int dist = 32;
 		if (nudge) dist = 2;
 		y=y-dist;
 		if (y<0)
 		  {
-		     if (room.getUpRoom(this) != null)
+		     if (room.getUpRoom() != null)
 		       { // change Rooms
 			  y=y+384;
-			  SetRoom(room.getUpRoom(this));
+			  SetRoom(room.getUpRoom());
 		       }
 		     else // stop at top
 		       y=0;
@@ -222,10 +219,10 @@ public class PaintBrush extends Item
 		y=y+dist;
 		if (y>383)
 		  {
-		     if (room.getDownRoom(this) != null)
+		     if (room.getDownRoom() != null)
 		       { // change Rooms
 			  y=y-384;
-			  SetRoom(room.getDownRoom(this));
+			  SetRoom(room.getDownRoom());
 		       }
 		     else // stop at bottom
 		       y=384-32;
@@ -239,10 +236,10 @@ public class PaintBrush extends Item
 		x=x-dist;
 		if (x<0)
 		  {
-		     if (room.getLeftRoom(this) != null)
+		     if (room.getLeftRoom() != null)
 		       { // change Rooms
 			  x=x+560;
-			  SetRoom(room.getLeftRoom(this));
+			  SetRoom(room.getLeftRoom());
 		       }
 		     else // stop at left
 		       x=0;
@@ -256,10 +253,10 @@ public class PaintBrush extends Item
 		x=x+dist;
 		if (x>559)
 		  {
-		     if (room.getRightRoom(this) != null)
+		     if (room.getRightRoom() != null)
 		       { // change Rooms
 			  x=x-560;
-			  SetRoom(room.getRightRoom(this));
+			  SetRoom(room.getRightRoom());
 		       }
 		     else // stop at right
 		       x=560-28;

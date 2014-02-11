@@ -10,12 +10,12 @@ import java.awt.image.BufferedImage;
 
 import com.droidquest.Room;
 import com.droidquest.devices.Device;
-import com.droidquest.devices.GenericChip;
 import com.droidquest.items.Item;
 import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.move.Direction;
+import com.droidquest.operation.api.move.Distance;
 
-public class LabCursor extends Item 
-{
+public class LabCursor extends Item {
 public boolean hot;
 
 public LabCursor(){}
@@ -115,43 +115,27 @@ public boolean KeyUp(KeyEvent e)
 	  }
 	if (e.getKeyCode() == e.VK_SLASH) 
 	  {
-	     if (carrying != null)
-	       if (carrying.getClass().toString().endsWith("Chip"))
-		 {
-		    ((GenericChip)carrying).ShowText(true);
-		    return false;
-		 }
-	     if (level.helpCam == null) return false;
-	     level.player = level.helpCam;
-	     level.currentViewer = level.helpCam;
+         op = getOperationFactory().createHelpOperation(this);
 	  }
 	if (e.getKeyCode() == e.VK_RIGHT) 
 	  {
-	     if (carriedBy==null)
-	       MoveRight(e.isControlDown());
-	     repeating=0;
-	     return true;
+         op = getOperationFactory().createMoveOperation(this, Direction.Right,
+                 e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
 	if (e.getKeyCode() == e.VK_LEFT) 
 	  {
-	     if (carriedBy==null)
-	       MoveLeft(e.isControlDown());
-	     repeating=0;
-	     return true;
+          op = getOperationFactory().createMoveOperation(this, Direction.Left,
+                  e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
 	if (e.getKeyCode() == e.VK_UP) 
 	  {
-	     if (carriedBy==null)
-	       MoveUp(e.isControlDown());
-	     repeating=0;
-	     return true;
+          op = getOperationFactory().createMoveOperation(this, Direction.Up,
+                  e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
 	if (e.getKeyCode() == e.VK_DOWN) 
 	  {
-	     if (carriedBy==null)
-	       MoveDown(e.isControlDown());
-	     repeating=0;
-	     return true;
+          op = getOperationFactory().createMoveOperation(this, Direction.Down,
+                  e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
 	if (e.getKeyCode() == e.VK_SPACE) 
 	  {

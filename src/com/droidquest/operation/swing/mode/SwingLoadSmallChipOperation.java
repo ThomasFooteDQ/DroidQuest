@@ -30,7 +30,7 @@ public class SwingLoadSmallChipOperation implements Operation {
         JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(getViewComponent());
         FileDialog fd = new FileDialog(parent,"Load Chip", FileDialog.LOAD);
         fd.setDirectory("chips");
-        fd.show();
+        fd.setVisible(true);
         System.out.println("Dialog returned with "
                 + fd.getDirectory()
                 + fd.getFile());

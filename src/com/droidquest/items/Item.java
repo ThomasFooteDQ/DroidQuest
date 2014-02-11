@@ -320,10 +320,10 @@ public class Item implements Serializable, Cloneable
 		y=y-dist;
 		if (y<0)
 		{
-			if (room.getUpRoom(this) != null)
+			if (room.getUpRoom() != null)
 			{ // change Rooms
 				y=y+384;
-				SetRoom(room.getUpRoom(this));
+				SetRoom(room.getUpRoom());
 			}
 			else if (this==level.player && room.portalItem != null)
 			{ // Exit item, Player only
@@ -359,10 +359,10 @@ public class Item implements Serializable, Cloneable
 		y=y+dist;
 		if (y>383)
 		{
-			if (room.getDownRoom(this) != null)
+			if (room.getDownRoom() != null)
 			{ // change Rooms
 				y=y-384;
-				SetRoom(room.getDownRoom(this));
+				SetRoom(room.getDownRoom());
 			}
 			else if (this==level.player && room.portalItem != null)
 			{ // Exit item, GameCursor only
@@ -398,10 +398,10 @@ public class Item implements Serializable, Cloneable
 		x=x-dist;
 		if (x<0)
 		{
-			if (room.getLeftRoom(this) != null)
+			if (room.getLeftRoom() != null)
 			{ // change Rooms
 				x=x+560;
-				SetRoom(room.getLeftRoom(this));
+				SetRoom(room.getLeftRoom());
 			}
 			else if (this==level.player && room.portalItem != null)
 			{ // Exit item, GameCursor only
@@ -420,7 +420,7 @@ public class Item implements Serializable, Cloneable
 		ItemEffectsMaterials();
 	}
 
-	public void MoveRight(int dist) 
+	public void MoveRight(int dist)
 	{
 		int bigX = (x+getWidth()-1+dist)/28;
 		int bigYt = y/32;
@@ -438,10 +438,10 @@ public class Item implements Serializable, Cloneable
 		x=x+dist;
 		if (x>559)
 		{
-			if (room.getRightRoom(this) != null)
+			if (room.getRightRoom() != null)
 			{ // change Rooms
 				x=x-560;
-				SetRoom(room.getRightRoom(this));
+				SetRoom(room.getRightRoom());
 			}
 			else if (this==level.player && room.portalItem != null)
 			{ // Exit item, GameCursor only
@@ -735,4 +735,11 @@ public class Item implements Serializable, Cloneable
         return carrying;
     }
 
+    public Item getCarriedBy() {
+        return carriedBy;
+    }
+
+    public void setRepeating(int repeated) {
+        this.repeating = repeated;
+    }
 }

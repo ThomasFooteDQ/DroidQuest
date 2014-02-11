@@ -5,9 +5,14 @@ import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
 import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.OperationFactory;
+import com.droidquest.operation.api.mode.HelpOperation;
 import com.droidquest.operation.api.mode.SolderingPenOperation;
 import com.droidquest.operation.api.mode.ToggleRemoteOperation;
 import com.droidquest.operation.api.mode.ToggleToolboxOperation;
+import com.droidquest.operation.api.move.Direction;
+import com.droidquest.operation.api.move.Distance;
+import com.droidquest.operation.api.move.MoveOperation;
+import com.droidquest.operation.api.move.SetRoomOperation;
 import com.droidquest.operation.swing.mode.SwingLoadSmallChipOperation;
 import com.droidquest.operation.swing.mode.SwingSaveChipOperation;
 import com.droidquest.view.View;
@@ -23,6 +28,11 @@ public class SwingOperationFactory implements OperationFactory {
     }
 
     @Override
+    public Operation createHelpOperation(Item avatar) {
+        return new HelpOperation(getCurrentLevel(), avatar);
+    }
+
+    @Override
     public Operation createLabSolderingPenOperation(Item currentAvatar) {
         return new SolderingPenOperation(getCurrentLevel(), currentAvatar, createSaveChipOperation(currentAvatar));
     }
@@ -32,8 +42,18 @@ public class SwingOperationFactory implements OperationFactory {
         return new SwingLoadSmallChipOperation(avatar, getView());
     }
 
+    @Override
+    public Operation createMoveOperation(Item avatar, Direction direction, Distance distance) {
+        return new MoveOperation(avatar, direction, distance);
+    }
+
     private Operation createSaveChipOperation(Item currentAvatar) {
         return new SwingSaveChipOperation(currentAvatar, getView());
+    }
+
+    @Override
+    public Operation createSetRoomOperation(Item avatar, Direction direction, boolean cheatRequired) {
+        return new SetRoomOperation(getCurrentLevel(), avatar, direction, cheatRequired);
     }
 
     @Override
