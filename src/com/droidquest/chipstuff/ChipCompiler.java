@@ -48,22 +48,22 @@ public ChipCompiler(PrototypeChip pc, SmallChip sc)
 		    Device device = (Device) item;
 		    Gate gate=null;
 		    String type = item.getClass().toString();
-		    if (type.endsWith("ANDGate"))
+		    if (device instanceof com.droidquest.devices.ANDGate)
 		      gate = new Gate("AND");
-		    if (type.endsWith("ORGate"))
+		    if (device instanceof com.droidquest.devices.ORGate)
 		      gate = new Gate("OR");
-		    if (type.endsWith("NOTGate"))
+		    if (device instanceof com.droidquest.devices.NOTGate)
 		      gate = new Gate("NOT");
-		    if (type.endsWith("XORGate"))
+		    if (device instanceof com.droidquest.devices.XORGate)
 		      gate = new Gate("XOR");
-		    if (type.endsWith("FlipFlop"))
+		    if (device instanceof com.droidquest.devices.FlipFlop)
 		      {
 			 gate = new Gate("FF");
 			 gate.state = ((FlipFlop)device).state;
 		      }
-		    if (type.endsWith("Node"))
+		    if (device instanceof com.droidquest.devices.Node)
 		      gate = new Gate("NODE");
-		    if (type.endsWith("SmallChip"))
+		    if (device instanceof com.droidquest.devices.SmallChip)
 		      gate = new Gate((SmallChip)device);
 		    if (gate != null)
 		      {
@@ -99,7 +99,7 @@ public ChipCompiler(PrototypeChip pc, SmallChip sc)
 		  for (int ap=1; ap<4; ap++) // For every output Signal in the Node
 		    {
 		       Signal s1 = gate1.portSignals[ap].externalSignal;
-		       if (s1!= null)
+		       if (s1!= null && s1!=dummy)
 			 {
 			    for (int b=0; b<sc.gates.size(); b++) // For every other Gate in the Chip
 			      {
