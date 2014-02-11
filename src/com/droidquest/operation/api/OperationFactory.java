@@ -4,11 +4,14 @@ import com.droidquest.items.Item;
 import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.move.Direction;
 import com.droidquest.operation.api.move.Distance;
+import com.droidquest.operation.api.move.Rotation;
 
 /**
  * Factory interface for creating operations.
  */
 public interface OperationFactory {
+
+    Operation createFlipCarriedDeviceOperation(Item avatar);
 
     Operation createHelpOperation(Item avatar);
 
@@ -17,6 +20,8 @@ public interface OperationFactory {
     Operation createLoadSmallChipOperation(Item avatar);
 
     Operation createMoveOperation(Item avatar, Direction direction, Distance distance);
+
+    Operation createRotateCarriedDeviceOperation(Item avatar, Rotation direction);
 
     Operation createSetRoomOperation(Item avatar, Direction direction, boolean cheatRequired);
 

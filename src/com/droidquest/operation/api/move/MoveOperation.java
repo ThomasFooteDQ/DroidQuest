@@ -4,7 +4,7 @@ import com.droidquest.items.Item;
 import com.droidquest.operation.Operation;
 
 /**
- * Operation which moves a player avatar to the right.
+ * Operation which moves a player avatar in a given direction.
  */
 public class MoveOperation implements Operation {
     private final Item avatar;

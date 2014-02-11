@@ -9,12 +9,12 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import com.droidquest.Room;
-import com.droidquest.devices.Device;
 import com.droidquest.items.GenericRobot;
 import com.droidquest.items.Item;
 import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.move.Direction;
 import com.droidquest.operation.api.move.Distance;
+import com.droidquest.operation.api.move.Rotation;
 
 public class GameCursor extends Item {
 	private int walk = 0; // 0 or 1, used in animation
@@ -455,17 +455,11 @@ public class GameCursor extends Item {
 		}
 		if (e.getKeyCode() == e.VK_CLOSE_BRACKET) 
 		{
-			if (carrying !=null)
-				if (carrying.isDevice())
-					((Device) carrying).rotate(1);
-			return false;
+            op = getOperationFactory().createRotateCarriedDeviceOperation(this, Rotation.Clockwise);
 		}
 		if (e.getKeyCode() == e.VK_OPEN_BRACKET) 
 		{
-			if (carrying !=null)
-				if (carrying.isDevice())
-					((Device) carrying).rotate(-1);
-			return false;
+            op = getOperationFactory().createRotateCarriedDeviceOperation(this, Rotation.CounterClockwise);
 		}
 		if (e.getKeyCode() == e.VK_E) 
 		{
@@ -506,9 +500,7 @@ public class GameCursor extends Item {
 		}
 		if (e.getKeyCode() == e.VK_F) 
 		{
-			if (carrying != null)
-				if (carrying instanceof Device)
-					((Device)carrying).flip();
+			op = getOperationFactory().createFlipCarriedDeviceOperation(this);
 		}
 		if (e.getKeyCode() == e.VK_M) 
 		{
