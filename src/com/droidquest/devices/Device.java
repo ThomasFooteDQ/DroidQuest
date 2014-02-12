@@ -202,5 +202,9 @@ public class Device extends Item
     public int getRotation() {
         return rotation;
     }
+
+    public Port getPort(int portIndex) {
+        return ports[portIndex];
+    }
 }
 

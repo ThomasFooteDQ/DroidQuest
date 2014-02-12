@@ -957,5 +957,13 @@ public class Level implements ImageObserver, Serializable {
     public void setCurrentViewer(Item currentViewer) {
         this.currentViewer = currentViewer;
     }
+
+    public Item getCurrentViewer() {
+        return currentViewer;
+    }
+
+    public void setPlayer(Item player) {
+        this.player = player;
+    }
 }
 

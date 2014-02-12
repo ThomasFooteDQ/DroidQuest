@@ -747,6 +747,10 @@ public class Item implements Serializable, Cloneable
         return carriedBy;
     }
 
+    public void setCarriedBy(Item carriedBy) {
+        this.carriedBy = carriedBy;
+    }
+
     public void setRepeating(int repeated) {
         this.repeating = repeated;
     }
@@ -754,4 +758,9 @@ public class Item implements Serializable, Cloneable
     public Room getInternalRoom() {
         return InternalRoom;
     }
+
+    public void setCurrentIcon(Image currentIcon) {
+        this.currentIcon = currentIcon;
+    }
+
 }

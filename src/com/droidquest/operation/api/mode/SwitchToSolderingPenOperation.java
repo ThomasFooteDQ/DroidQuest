@@ -7,12 +7,12 @@ import com.droidquest.operation.Operation;
 /**
  * Operation which switches to the SolderingPen avatar.
  */
-public class SolderingPenOperation implements Operation {
+public class SwitchToSolderingPenOperation implements Operation {
     private final Level level;
     private final Item currentAvatar;
     private final Operation saveChipOperation;
 
-    public SolderingPenOperation(Level level, Item currentAvatar, Operation saveChipOperation) {
+    public SwitchToSolderingPenOperation(Level level, Item currentAvatar, Operation saveChipOperation) {
         this.level = level;
         this.currentAvatar = currentAvatar;
         this.saveChipOperation = saveChipOperation;

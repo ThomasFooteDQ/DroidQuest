@@ -1,13 +1,18 @@
 package com.droidquest.operation.swing;
 
 import com.droidquest.Game;
+import com.droidquest.avatars.LabCursor;
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
 import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.OperationFactory;
 import com.droidquest.operation.api.PickUpItemOperation;
 import com.droidquest.operation.api.mode.HelpOperation;
-import com.droidquest.operation.api.mode.SolderingPenOperation;
+import com.droidquest.operation.api.mode.SwitchToGameCursorOperation;
+import com.droidquest.operation.api.mode.SwitchToPaintbrushOperation;
+import com.droidquest.operation.api.mode.SwitchToRemoteOperation;
+import com.droidquest.operation.api.mode.SwitchToSolderingPenOperation;
+import com.droidquest.operation.api.mode.ToggleHotStateOperation;
 import com.droidquest.operation.api.mode.ToggleRemoteOperation;
 import com.droidquest.operation.api.mode.ToggleToolboxOperation;
 import com.droidquest.operation.api.move.Direction;
@@ -55,7 +60,7 @@ public class SwingOperationFactory implements OperationFactory {
 
     @Override
     public Operation createLabSolderingPenOperation(Item currentAvatar) {
-        return new SolderingPenOperation(getCurrentLevel(), currentAvatar, createSaveChipOperation(currentAvatar));
+        return new SwitchToSolderingPenOperation(getCurrentLevel(), currentAvatar, createSaveChipOperation(currentAvatar));
     }
 
     @Override
@@ -66,6 +71,11 @@ public class SwingOperationFactory implements OperationFactory {
     @Override
     public Operation createMoveOperation(Item avatar, Direction direction, Distance distance) {
         return new MoveOperation(avatar, direction, distance);
+    }
+
+    @Override
+    public Operation createOutputMemoryUsageOperation() {
+        return new OutputMemoryUsageOperation();
     }
 
     @Override
@@ -88,8 +98,28 @@ public class SwingOperationFactory implements OperationFactory {
     }
 
     @Override
-    public Operation createSolderingPenOperation(Item currentAvatar) {
-        return new SolderingPenOperation(getCurrentLevel(), currentAvatar, null);
+    public Operation createSwitchToGameCursorOperation(Item avatar) {
+        return new SwitchToGameCursorOperation(getCurrentLevel(), avatar);
+    }
+
+    @Override
+    public Operation createSwitchToSolderingPenOperation(Item currentAvatar) {
+        return new SwitchToSolderingPenOperation(getCurrentLevel(), currentAvatar, null);
+    }
+
+    @Override
+    public Operation createSwitchToPaintbrushOperation(Item avatar) {
+        return new SwitchToPaintbrushOperation(getCurrentLevel(), avatar);
+    }
+
+    @Override
+    public Operation createSwitchToRemoteOperation(Item avatar) {
+        return new SwitchToRemoteOperation(getCurrentLevel(), avatar);
+    }
+
+    @Override
+    public Operation createToggleHotStateOperation(LabCursor avatar) {
+        return new ToggleHotStateOperation(avatar);
     }
 
     @Override

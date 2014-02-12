@@ -213,4 +213,8 @@ public class Port implements Serializable
     public int getRotation() {
         return rotation;
     }
+
+    public Wire getWire() {
+        return myWire;
+    }
 }

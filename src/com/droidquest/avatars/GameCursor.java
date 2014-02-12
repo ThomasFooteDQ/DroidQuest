@@ -378,7 +378,7 @@ public class GameCursor extends Item {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_S)
 		{
-            op = getOperationFactory().createSolderingPenOperation(this);
+            op = getOperationFactory().createSwitchToSolderingPenOperation(this);
 		}
 		if (e.getKeyCode() == KeyEvent.VK_R)
 		{
@@ -454,15 +454,7 @@ public class GameCursor extends Item {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_M)
 		{
-			Runtime runtime = Runtime.getRuntime();
-			long freemem = runtime.freeMemory();
-			long totalmem = runtime.totalMemory();
-			System.out.println("Total Memory = "+ totalmem
-					+ ", (" + totalmem/1024 + "K), ("
-					+ totalmem/1024/1024 + "M)");
-			System.out.println("Free Memory = "+ freemem
-					+ ", (" + freemem/1024 + "K), ("
-					+ freemem/1024/1024 + "M)");
+            op = getOperationFactory().createOutputMemoryUsageOperation();
 		}
 
         if (op != null && op.canExecute()) {

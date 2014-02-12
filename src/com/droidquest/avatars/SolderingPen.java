@@ -321,23 +321,10 @@ public boolean CanBePickedUp(Item i)
 
 public boolean KeyUp(KeyEvent e) 
   {
-      Operation op = null;
+    Operation op = null;
 	if (e.getKeyCode() == e.VK_C) 
 	  {
-	     if (ports[0].myWire != null)
-	       ports[0].myWire.Remove();
-	     level.gameCursor.x = x;
-	     level.gameCursor.y = y;
-	     level.gameCursor.room = room;
-	     room = null;
-	     if (level.currentViewer == level.player)
-	       level.currentViewer=level.gameCursor;
-	     level.player = level.gameCursor;
-	     if (level.remote != null)
-	       if (level.remote.carriedBy != null)
-		 {
-		    level.remote.carriedBy = level.player;
-		 }
+         op = getOperationFactory().createSwitchToGameCursorOperation(this);
 	  }
 	if (e.getKeyCode() == e.VK_R) 
 	  {
@@ -345,16 +332,7 @@ public boolean KeyUp(KeyEvent e)
 	  }
 	if (e.getKeyCode() == e.VK_P) 
 	  {
-	     if (level.paintbrush == null) return false;
-	     if (ports[0].myWire != null)
-	       ports[0].myWire.Remove();
-	     level.paintbrush.x = x;
-	     level.paintbrush.y = y;
-	     level.paintbrush.room = room;
-	     room = null;
-	     if (level.currentViewer == level.player)
-	       level.currentViewer=level.paintbrush;
-	     level.player = level.paintbrush;
+          op = getOperationFactory().createSwitchToPaintbrushOperation(this);
 	  }
 	if (e.getKeyCode() == e.VK_SLASH) 
 	  {

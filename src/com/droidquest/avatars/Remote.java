@@ -117,28 +117,15 @@ public boolean KeyUp(KeyEvent e)
     Operation op = null;
 	if (e.getKeyCode() == e.VK_S) 
 	  {
-          op = getOperationFactory().createSolderingPenOperation(this);
+         op = getOperationFactory().createSwitchToSolderingPenOperation(this);
 	  }
 	if (e.getKeyCode() == e.VK_C) 
 	  {
-	     level.gameCursor.x = x;
-	     level.gameCursor.y = y;
-	     level.gameCursor.room = room;
-	     room = null;
-	     if (level.currentViewer == level.player)
-	       level.currentViewer=level.gameCursor;
-	     level.player = level.gameCursor;
+         op = getOperationFactory().createSwitchToGameCursorOperation(this);
 	  }
 	if (e.getKeyCode() == e.VK_P) 
 	  {
-	     if (level.paintbrush == null) return false;
-	     level.paintbrush.x = x;
-	     level.paintbrush.y = y;
-	     level.paintbrush.room = room;
-	     room = null;
-	     if (level.currentViewer == level.player)
-	       level.currentViewer=level.paintbrush;
-	     level.player = level.paintbrush;
+         op = getOperationFactory().createSwitchToPaintbrushOperation(this);
 	  }
 	if (e.getKeyCode() == e.VK_SLASH) 
 	  {

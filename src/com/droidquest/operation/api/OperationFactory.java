@@ -1,5 +1,6 @@
 package com.droidquest.operation.api;
 
+import com.droidquest.avatars.LabCursor;
 import com.droidquest.items.Item;
 import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.move.Direction;
@@ -25,13 +26,23 @@ public interface OperationFactory {
 
     Operation createMoveOperation(Item avatar, Direction direction, Distance distance);
 
+    Operation createOutputMemoryUsageOperation();
+
     Operation createPickUpItemOperation(Item avatar);
 
     Operation createRotateCarriedDeviceOperation(Item avatar, Rotation direction);
 
     Operation createSetRoomOperation(Item avatar, Direction direction, boolean cheatRequired);
 
-    Operation createSolderingPenOperation(Item currentAvatar);
+    Operation createSwitchToGameCursorOperation(Item avatar);
+
+    Operation createSwitchToPaintbrushOperation(Item avatar);
+
+    Operation createSwitchToRemoteOperation(Item avatare);
+
+    Operation createSwitchToSolderingPenOperation(Item currentAvatar);
+
+    Operation createToggleHotStateOperation(LabCursor avatar);
 
     Operation createToggleRemoteOperation();
 

@@ -15,7 +15,7 @@ import com.droidquest.operation.api.move.Distance;
 import com.droidquest.operation.api.move.Rotation;
 
 public class LabCursor extends Item {
-public boolean hot;
+private boolean hot;
 
 public LabCursor(){}
 
@@ -80,12 +80,7 @@ public boolean KeyUp(KeyEvent e)
 	  }
 	if (e.getKeyCode() == e.VK_H) 
 	  {
-	     hot = !hot;
-	     if (hot)
-	       currentIcon = icons[1].getImage();
-	     else
-	       currentIcon = icons[0].getImage();
-	     return false;
+         op = getOperationFactory().createToggleHotStateOperation(this);
 	  }
 	if (e.getKeyCode() == e.VK_S) 
 	  {
@@ -97,16 +92,7 @@ public boolean KeyUp(KeyEvent e)
 	  }
 	if (e.getKeyCode() == e.VK_P) 
 	  {
-	     if (level.paintbrush == null) return false;
-	     if (carrying != null)
-	       Drops();
-	     level.paintbrush.x = (x/28)*28;
-	     level.paintbrush.y = (y/32)*32;
-	     level.paintbrush.room = room;
-	     room = null;
-	     if (level.currentViewer == level.player)
-	       level.currentViewer=level.paintbrush;
-	     level.player = level.paintbrush;
+          op = getOperationFactory().createSwitchToPaintbrushOperation(this);
 	  }
 	if (e.getKeyCode() == e.VK_T) 
 	  {
@@ -162,15 +148,7 @@ public boolean KeyUp(KeyEvent e)
 	  }
 	if (e.getKeyCode() == e.VK_M) 
 	  {
-	     Runtime runtime = Runtime.getRuntime();
-	     long freemem = runtime.freeMemory();
-	     long totalmem = runtime.totalMemory();
-	     System.out.println("Total Memory = "+ totalmem
-				+ ", (" + totalmem/1024 + "K), ("
-				+ totalmem/1024/1024 + "M)");
-	     System.out.println("Free Memory = "+ freemem
-				+ ", (" + freemem/1024 + "K), ("
-				+ freemem/1024/1024 + "M)");
+          op = getOperationFactory().createOutputMemoryUsageOperation();
 	  }
 
     if (op != null && op.canExecute()) {
@@ -303,4 +281,11 @@ public void MoveRight(boolean nudge)
 	super.MoveRight( nudge);
   }
 
+    public boolean isHot() {
+        return hot;
+    }
+
+    public void setHot(boolean hot) {
+        this.hot = hot;
+    }
 }
