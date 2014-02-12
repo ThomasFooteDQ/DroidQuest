@@ -139,16 +139,7 @@ public boolean KeyUp(KeyEvent e)
 	  }
 	if (e.getKeyCode() == e.VK_SPACE) 
 	  {
-	     if (carrying != null)
-	       Drops();
-	     else
-	       {
-		  Item item = level.FindNearestItem(level.gameCursor);
-		  if (item != null)
-		    if (item.CanBePickedUp(level.gameCursor))
-		      PicksUp(item);
-	       }
-	     return false;
+          op = getOperationFactory().createPickUpItemOperation(this);
 	  }
 	if (e.getKeyCode() == e.VK_CLOSE_BRACKET) 
 	  {

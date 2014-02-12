@@ -402,7 +402,7 @@ public class GameCursor extends Item {
                         e.isControlDown() ? Distance.Nudge : Distance.Step);
             }
 		}
-		if (e.getKeyCode() == e.VK_LEFT) 
+		if (e.getKeyCode() == KeyEvent.VK_LEFT)
 		{
             if (e.isShiftDown()) {
                 op = getOperationFactory().createSetRoomOperation(this, Direction.Left, true);
@@ -411,7 +411,7 @@ public class GameCursor extends Item {
                         e.isControlDown() ? Distance.Nudge : Distance.Step);
             }
 		}
-		if (e.getKeyCode() == e.VK_UP) 
+		if (e.getKeyCode() == KeyEvent.VK_UP)
 		{
             if (e.isShiftDown()) {
                 op = getOperationFactory().createSetRoomOperation(this, Direction.Up, true);
@@ -420,7 +420,7 @@ public class GameCursor extends Item {
                         e.isControlDown() ? Distance.Nudge : Distance.Step);
             }
 		}
-		if (e.getKeyCode() == e.VK_DOWN) 
+		if (e.getKeyCode() == KeyEvent.VK_DOWN)
 		{
             if (e.isShiftDown()) {
                 op = getOperationFactory().createSetRoomOperation(this, Direction.Down, true);
@@ -429,39 +429,19 @@ public class GameCursor extends Item {
                         e.isControlDown() ? Distance.Nudge : Distance.Step);
             }
 		}
-		if (e.getKeyCode() == e.VK_SPACE) 
+		if (e.getKeyCode() == KeyEvent.VK_SPACE)
 		{
-			{
-				Item item = level.FindNearestItem(level.gameCursor);
-				if (item!=null)
-					if (item.getClass().toString().endsWith("Train"))
-					{
-						item.CanBePickedUp(this);
-						return false;
-					}
-			}
-
-			if (carrying != null)
-				Drops();
-			else
-			{
-				Item item = level.FindNearestItem(level.gameCursor);
-				if (item != null)
-					if (item.CanBePickedUp(level.gameCursor))
-						PicksUp(item);
-			}
-			outline = null;
-			return false;
+            op = getOperationFactory().createPickUpItemOperation(this);
 		}
-		if (e.getKeyCode() == e.VK_CLOSE_BRACKET) 
+		if (e.getKeyCode() == KeyEvent.VK_CLOSE_BRACKET)
 		{
             op = getOperationFactory().createRotateCarriedDeviceOperation(this, Rotation.Clockwise);
 		}
-		if (e.getKeyCode() == e.VK_OPEN_BRACKET) 
+		if (e.getKeyCode() == KeyEvent.VK_OPEN_BRACKET)
 		{
             op = getOperationFactory().createRotateCarriedDeviceOperation(this, Rotation.CounterClockwise);
 		}
-		if (e.getKeyCode() == e.VK_E) 
+		if (e.getKeyCode() == KeyEvent.VK_E)
 		{
 			boolean found=false;
 			Item item = level.FindNearestItem(this);
@@ -481,7 +461,7 @@ public class GameCursor extends Item {
 							found=true;
 						}
 		}
-		if (e.getKeyCode() == e.VK_X) 
+		if (e.getKeyCode() == KeyEvent.VK_X)
 		{
 			if (room.portalItem!=null)
 			{
@@ -498,11 +478,11 @@ public class GameCursor extends Item {
 				level.currentViewer = level.player;
 			}
 		}
-		if (e.getKeyCode() == e.VK_F) 
+		if (e.getKeyCode() == KeyEvent.VK_F)
 		{
 			op = getOperationFactory().createFlipCarriedDeviceOperation(this);
 		}
-		if (e.getKeyCode() == e.VK_M) 
+		if (e.getKeyCode() == KeyEvent.VK_M)
 		{
 			Runtime runtime = Runtime.getRuntime();
 			long freemem = runtime.freeMemory();
@@ -524,7 +504,7 @@ public class GameCursor extends Item {
 
     public boolean KeyDown(KeyEvent e)
 	{
-		if (e.getKeyCode() == e.VK_RIGHT) 
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 		{
 			repeating++;
 			if (repeating>5)
@@ -535,7 +515,7 @@ public class GameCursor extends Item {
 			}
 			return false;
 		}
-		if (e.getKeyCode() == e.VK_LEFT) 
+		if (e.getKeyCode() == KeyEvent.VK_LEFT)
 		{
 			repeating++;
 			if (repeating>5)
@@ -546,7 +526,7 @@ public class GameCursor extends Item {
 			}
 			return false;
 		}
-		if (e.getKeyCode() == e.VK_UP) 
+		if (e.getKeyCode() == KeyEvent.VK_UP)
 		{
 			repeating++;
 			if (repeating>5)
@@ -557,7 +537,7 @@ public class GameCursor extends Item {
 			}
 			return false;
 		}
-		if (e.getKeyCode() == e.VK_DOWN) 
+		if (e.getKeyCode() == KeyEvent.VK_DOWN)
 		{
 			repeating++;
 			if (repeating>5)
@@ -568,7 +548,7 @@ public class GameCursor extends Item {
 			}
 			return false;
 		}
-		if (e.getKeyCode() == e.VK_SPACE) 
+		if (e.getKeyCode() == KeyEvent.VK_SPACE)
 		{
 			if (level.player == level.gameCursor)
 				outline = Color.white;

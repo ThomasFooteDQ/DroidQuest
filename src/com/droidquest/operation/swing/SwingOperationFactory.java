@@ -5,6 +5,7 @@ import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
 import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.OperationFactory;
+import com.droidquest.operation.api.PickUpItemOperation;
 import com.droidquest.operation.api.mode.HelpOperation;
 import com.droidquest.operation.api.mode.SolderingPenOperation;
 import com.droidquest.operation.api.mode.ToggleRemoteOperation;
@@ -53,6 +54,11 @@ public class SwingOperationFactory implements OperationFactory {
     @Override
     public Operation createMoveOperation(Item avatar, Direction direction, Distance distance) {
         return new MoveOperation(avatar, direction, distance);
+    }
+
+    @Override
+    public Operation createPickUpItemOperation(Item avatar) {
+        return new PickUpItemOperation(getCurrentLevel(), avatar);
     }
 
     @Override

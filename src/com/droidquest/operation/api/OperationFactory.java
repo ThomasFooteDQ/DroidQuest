@@ -21,6 +21,8 @@ public interface OperationFactory {
 
     Operation createMoveOperation(Item avatar, Direction direction, Distance distance);
 
+    Operation createPickUpItemOperation(Item avatar);
+
     Operation createRotateCarriedDeviceOperation(Item avatar, Rotation direction);
 
     Operation createSetRoomOperation(Item avatar, Direction direction, boolean cheatRequired);
