@@ -4,33 +4,19 @@ import com.droidquest.Game;
 import com.droidquest.avatars.LabCursor;
 import com.droidquest.avatars.PaintBrush;
 import com.droidquest.avatars.SolderingPen;
+import com.droidquest.items.Handle;
 import com.droidquest.items.Item;
+import com.droidquest.items.SpyCam;
+import com.droidquest.items.Train;
 import com.droidquest.levels.Level;
 import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.OperationFactory;
-import com.droidquest.operation.api.avatar.PickUpItemOperation;
-import com.droidquest.operation.api.avatar.FlipPortOperation;
-import com.droidquest.operation.api.avatar.HelpOperation;
-import com.droidquest.operation.api.avatar.PaintMaterialOperation;
-import com.droidquest.operation.api.avatar.ReturnToGameCursorOperation;
-import com.droidquest.operation.api.avatar.SwitchToGameCursorOperation;
-import com.droidquest.operation.api.avatar.SwitchToPaintbrushOperation;
-import com.droidquest.operation.api.avatar.SwitchToRemoteOperation;
-import com.droidquest.operation.api.avatar.SwitchToSolderingPenOperation;
-import com.droidquest.operation.api.avatar.ToggleHotStateOperation;
-import com.droidquest.operation.api.avatar.TogglePaintColorOperation;
-import com.droidquest.operation.api.avatar.ToggleRemoteOperation;
-import com.droidquest.operation.api.avatar.ToggleToolboxOperation;
-import com.droidquest.operation.api.avatar.WirePortOperation;
-import com.droidquest.operation.api.avatar.Direction;
-import com.droidquest.operation.api.avatar.Distance;
-import com.droidquest.operation.api.avatar.EnterItemOperation;
-import com.droidquest.operation.api.avatar.ExitItemOperation;
-import com.droidquest.operation.api.avatar.FlipCarriedDeviceOperation;
-import com.droidquest.operation.api.avatar.MoveOperation;
-import com.droidquest.operation.api.avatar.RotateCarriedDeviceOperation;
-import com.droidquest.operation.api.avatar.Rotation;
-import com.droidquest.operation.api.avatar.SetRoomOperation;
+import com.droidquest.operation.api.avatar.*;
+import com.droidquest.operation.api.item.handle.HandleDropOperation;
+import com.droidquest.operation.api.item.handle.HandleLeftOperation;
+import com.droidquest.operation.api.item.handle.HandleRightOperation;
+import com.droidquest.operation.api.item.spycam.ExitCameraOperation;
+import com.droidquest.operation.api.item.train.ExitTrainOperation;
 import com.droidquest.operation.swing.avatar.SwingLoadSmallChipOperation;
 import com.droidquest.operation.swing.avatar.SwingSaveChipOperation;
 import com.droidquest.operation.swing.util.OutputMemoryUsageOperation;
@@ -52,8 +38,18 @@ public class SwingOperationFactory implements OperationFactory {
     }
 
     @Override
+    public Operation createExitCameraOperation(SpyCam spyCam) {
+        return new ExitCameraOperation(spyCam);
+    }
+
+    @Override
     public Operation createExitItemOperation(Item avatar) {
         return new ExitItemOperation(getCurrentLevel(), avatar);
+    }
+
+    @Override
+    public Operation createExitTrainOperation(Train train) {
+        return new ExitTrainOperation(train);
     }
 
     @Override
@@ -64,6 +60,21 @@ public class SwingOperationFactory implements OperationFactory {
     @Override
     public Operation createFlipPortOperation(SolderingPen solderingPen) {
         return new FlipPortOperation(solderingPen);
+    }
+
+    @Override
+    public Operation createHandleDropOperation(Handle handle) {
+        return new HandleDropOperation(handle);
+    }
+
+    @Override
+    public Operation createHandleLeftOperation(Handle handle) {
+        return new HandleLeftOperation(handle);
+    }
+
+    @Override
+    public Operation createHandleRightOperation(Handle handle) {
+        return new HandleRightOperation(handle);
     }
 
     @Override

@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import com.droidquest.Room;
+import com.droidquest.operation.Operation;
 
 public class Handle extends Item 
 {
@@ -55,38 +56,54 @@ public class Handle extends Item
 
 	public boolean KeyUp(KeyEvent e) 
 	  {
+        Operation op = null;
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 		  {
-		     if (x<15*28)
-		       {
-			  room.SetMaterial(x/28-12, 4, 0);
-			  MoveRight(28);
-			  room.SetMaterial(x/28-1, 4, 8);
-		       }
+             op = getOperationFactory().createHandleRightOperation(this);
 		  }
 
 		if (e.getKeyCode() == KeyEvent.VK_LEFT)
 		  {
-		     if (x>13*28)
-		       {
-			  room.SetMaterial(x/28-13, 4, 8);
-			  room.SetMaterial(x/28-1, 4, 0);
-			  MoveLeft(28);
-		       }
-		  }
+             op = getOperationFactory().createHandleLeftOperation(this);
+          }
 
 		if (e.getKeyCode() == KeyEvent.VK_SPACE)
 		  {
-		     level.player=carrying;
-		     Drops();
-		     room.SetMaterial(1, 4, 8);
-		     room.SetMaterial(2, 4, 8);
-		     room.SetMaterial(13, 4, 0);
-		     room.SetMaterial(14, 4, 0);
-		     x=13*28;
+             op = getOperationFactory().createHandleDropOperation(this);
 		  }
+
+        if (op != null && op.canExecute()) {
+            op.execute();
+        }
 		return false;
 	  }
 
-	}
+    public void dropHandle() {
+        level.player=carrying;
+        Drops();
+        room.SetMaterial(1, 4, 8);
+        room.SetMaterial(2, 4, 8);
+        room.SetMaterial(13, 4, 0);
+        room.SetMaterial(14, 4, 0);
+        x=13*28;
+    }
+
+    public void pullWallLeft() {
+        if (x>13*28)
+          {
+         room.SetMaterial(x/28-13, 4, 8);
+         room.SetMaterial(x/28-1, 4, 0);
+         MoveLeft(28);
+          }
+    }
+
+    public void pullWallRight() {
+        if (x<15*28)
+        {
+            room.SetMaterial(x/28-12, 4, 0);
+            MoveRight(28);
+            room.SetMaterial(x/28-1, 4, 8);
+        }
+    }
+}
 

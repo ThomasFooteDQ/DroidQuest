@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import com.droidquest.materials.Material;
+import com.droidquest.operation.Operation;
 
 public class Train extends Item 
 {
@@ -71,27 +72,36 @@ public boolean CanBePickedUp(Item item)
 
 public boolean KeyUp(KeyEvent e) 
   {
+    Operation op = null;
 	if (e.getKeyCode() == KeyEvent.VK_SPACE)
 	  {
-	     if (level.rooms.indexOf(room)==14)
-	       {
-		  room.SetMaterial(8,0,0);
-		  room.SetMaterial(9,0,0);
-		  room.SetMaterial(10,0,0);
-		  room.SetMaterial(11,0,0);
-		  room.SetMaterial(18,8,0);
-		  room.SetMaterial(18,9,0);
-	       }
-	     level.player=carrying;
-	     Drops();
-	     room=null;
-	     Material mat = (Material) level.materials.elementAt(8);
-	     mat.passable=false;
+          op = getOperationFactory().createExitTrainOperation(this);
 	  }
+
+    if (op != null && op.canExecute()) {
+        op.execute();
+    }
 	return false;
   }
 
-public void Animate() 
+public void exitTrain() {
+    if (level.rooms.indexOf(room)==14)
+      {
+     room.SetMaterial(8,0,0);
+     room.SetMaterial(9,0,0);
+     room.SetMaterial(10,0,0);
+     room.SetMaterial(11,0,0);
+     room.SetMaterial(18,8,0);
+     room.SetMaterial(18,9,0);
+      }
+    level.player=carrying;
+    Drops();
+    room=null;
+    Material mat = (Material) level.materials.elementAt(8);
+    mat.passable=false;
+}
+
+    public void Animate()
   {
 	if (room != null)
 	  if (carrying != null)

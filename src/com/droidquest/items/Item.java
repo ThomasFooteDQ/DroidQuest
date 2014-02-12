@@ -248,7 +248,7 @@ public class Item implements Serializable, Cloneable
 
 	public boolean KeyUp(KeyEvent e) 
 	{
-		// Handles keybord input.
+		// Handles keyboard input.
 		// Return TRUE if repaint is needed (usually for movement)
 		return false;
 	}
@@ -259,7 +259,7 @@ public class Item implements Serializable, Cloneable
 
     public boolean KeyDown(KeyEvent e)
 	{
-		// Handles keybord input.
+		// Handles keyboard input.
 		// Return TRUE if repaint is needed (usually for movement)
 		return false;
 	}

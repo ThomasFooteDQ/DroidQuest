@@ -3,7 +3,10 @@ package com.droidquest.operation.api;
 import com.droidquest.avatars.LabCursor;
 import com.droidquest.avatars.PaintBrush;
 import com.droidquest.avatars.SolderingPen;
+import com.droidquest.items.Handle;
 import com.droidquest.items.Item;
+import com.droidquest.items.SpyCam;
+import com.droidquest.items.Train;
 import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.avatar.Direction;
 import com.droidquest.operation.api.avatar.Distance;
@@ -16,11 +19,21 @@ public interface OperationFactory {
 
     Operation createEnterItemOperation(Item avatar);
 
+    Operation createExitCameraOperation(SpyCam spyCam);
+
     Operation createExitItemOperation(Item item);
+
+    Operation createExitTrainOperation(Train train);
 
     Operation createFlipCarriedDeviceOperation(Item avatar);
 
     Operation createFlipPortOperation(SolderingPen solderingPen);
+
+    Operation createHandleDropOperation(Handle handle);
+
+    Operation createHandleLeftOperation(Handle handle);
+
+    Operation createHandleRightOperation(Handle handle);
 
     Operation createHelpOperation(Item avatar);
 
