@@ -1,5 +1,7 @@
 package com.droidquest.operation.api.mode;
 
+import com.droidquest.avatars.Remote;
+import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
 import com.droidquest.operation.Operation;
 
@@ -8,9 +10,11 @@ import com.droidquest.operation.Operation;
  */
 public class ToggleRemoteOperation implements Operation {
     private final Level level;
+    private final Item avatar;
 
-    public ToggleRemoteOperation(Level level) {
+    public ToggleRemoteOperation(Level level, Item avatar) {
         this.level = level;
+        this.avatar = avatar;
     }
 
     @Override
@@ -20,28 +24,26 @@ public class ToggleRemoteOperation implements Operation {
 
     @Override
     public void execute() {
-        if (level.remote.carriedBy == null)
-        { // Summon Remote
-            level.remote.x = 28;
-            level.remote.y = -20;
-            level.remote.carriedBy = level.player;
-            level.remote.room = level.player.room;
-            level.electricity = true;
+        if (!(avatar instanceof Remote)) {
+            if (level.isElectricityEnabled()) {
+                hideRemote();
+            } else {
+                summonRemote();
+            }
         }
-        else
-        { // Hide Remote
-            level.remote.carriedBy = null;
-            level.remote.room = null;
-            level.electricity = false;
-        }
-        //	     if (carrying != null)
-        //	       Drops();
-        //	     level.remote.x = x;
-        //	     level.remote.y = y;
-        //	     level.remote.room = room;
-        //	     room = null;
-        //	     if (level.currentViewer == level.player)
-        //	       level.currentViewer=level.remote;
-        //	     level.player = level.remote;
+
+        level.setElectricityEnabled(!level.isElectricityEnabled());
+    }
+
+    private void hideRemote() {
+        level.remote.carriedBy = null;
+        level.remote.room = null;
+    }
+
+    private void summonRemote() {
+        level.remote.x = 28;
+        level.remote.y = -20;
+        level.remote.carriedBy = level.player;
+        level.remote.room = level.player.room;
     }
 }

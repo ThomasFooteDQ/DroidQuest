@@ -18,27 +18,27 @@ public SpyCam(Room r)
 
 public boolean KeyUp(KeyEvent e)
   {
-	if (e.getKeyCode() == e.VK_RIGHT) 
+	if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 	  {
 	     SetRoom(room.rightRoom);
 	     return true;
 	  }
-	if (e.getKeyCode() == e.VK_LEFT) 
+	if (e.getKeyCode() == KeyEvent.VK_LEFT)
 	  {
 	     SetRoom(room.leftRoom);
 	     return true;
 	  }
-	if (e.getKeyCode() == e.VK_UP) 
+	if (e.getKeyCode() == KeyEvent.VK_UP)
 	  {
 	     SetRoom(room.upRoom);
 	     return true;
 	  }
-	if (e.getKeyCode() == e.VK_DOWN) 
+	if (e.getKeyCode() == KeyEvent.VK_DOWN)
 	  {
 	     SetRoom(room.downRoom);
 	     return true;
 	  }
-	if (e.getKeyCode() == e.VK_SPACE) 
+	if (e.getKeyCode() == KeyEvent.VK_SPACE)
 	  {
 	     level.player=level.gameCursor;
 	     level.currentViewer=level.player;

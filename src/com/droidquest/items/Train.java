@@ -1,12 +1,11 @@
 package com.droidquest.items;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.materials.Material;
 
@@ -72,7 +71,7 @@ public boolean CanBePickedUp(Item item)
 
 public boolean KeyUp(KeyEvent e) 
   {
-	if (e.getKeyCode() == e.VK_SPACE) 
+	if (e.getKeyCode() == KeyEvent.VK_SPACE)
 	  {
 	     if (level.rooms.indexOf(room)==14)
 	       {

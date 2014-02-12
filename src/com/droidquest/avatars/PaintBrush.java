@@ -27,10 +27,10 @@ public class PaintBrush extends Item
 	// Undetectable, blocks White  White
 	// Undetectable, blocks Blue   Blue
 
-	int emptyIndex=0;
-	int paintIndex; // Which paintMats[] am I using?
-	transient Material[] paintMats;
-	int matIndex;   // index of chosen paintMax in level.materials
+	private int emptyIndex=0;
+	private int paintIndex; // Which paintMats[] am I using?
+	private transient Material[] paintMats;
+	private int matIndex;   // index of chosen paintMax in level.materials
 
 	public PaintBrush() 
 	  {
@@ -115,61 +115,65 @@ public class PaintBrush extends Item
 	public boolean KeyUp(KeyEvent e) 
 	  {
         Operation op = null;
-		if (e.getKeyCode() == e.VK_C) 
+		if (e.getKeyCode() == KeyEvent.VK_C)
 		  {
              op = getOperationFactory().createSwitchToGameCursorOperation(this);
 		  }
-		if (e.getKeyCode() == e.VK_S) 
+		if (e.getKeyCode() == KeyEvent.VK_S)
 		  {
              op = getOperationFactory().createSwitchToSolderingPenOperation(this);
 		  }
-		if (e.getKeyCode() == e.VK_R) 
+		if (e.getKeyCode() == KeyEvent.VK_R)
 		  {
              op = getOperationFactory().createSwitchToRemoteOperation(this);
 		  }
-		if (e.getKeyCode() == e.VK_SLASH) 
+		if (e.getKeyCode() == KeyEvent.VK_SLASH)
 		  {
              op = getOperationFactory().createHelpOperation(this);
 		  }
-		if (e.getKeyCode() == e.VK_RIGHT) 
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 		  {
               op = getMoveOperation(e, Direction.Right);
           }
-		if (e.getKeyCode() == e.VK_LEFT) 
+		if (e.getKeyCode() == KeyEvent.VK_LEFT)
 		  {
               op = getMoveOperation(e, Direction.Left);
 		  }
-		if (e.getKeyCode() == e.VK_UP) 
+		if (e.getKeyCode() == KeyEvent.VK_UP)
 		  {
               op = getMoveOperation(e, Direction.Up);
 		  }
-		if (e.getKeyCode() == e.VK_DOWN) 
+		if (e.getKeyCode() == KeyEvent.VK_DOWN)
 		  {
               op = getMoveOperation(e, Direction.Down);
 		  }
-		if (e.getKeyCode() == e.VK_P) 
+		if (e.getKeyCode() == KeyEvent.VK_P)
 		  {
-		     paintIndex++;
-		     if (paintIndex==5) paintIndex=0;
-		     matIndex = level.materials.indexOf(paintMats[paintIndex]);
-		     currentIcon=icons[paintIndex].getImage();
+              op = getOperationFactory().createTogglePaintColorOperation(this);
 		  }
-		if (e.getKeyCode() == e.VK_SPACE) 
+		if (e.getKeyCode() == KeyEvent.VK_SPACE)
 		  {
-		     if (!room.editable) return false;
-		     int bigX=(x+14)/28;
-		     int bigY=(y+16)/32;
-		     if (room.RoomArray[bigY][bigX]==emptyIndex)
-		       room.SetMaterial(bigX,bigY,matIndex);
-		     else
-		       room.SetMaterial(bigX,bigY,emptyIndex);
-		  }
+              op = getOperationFactory().createPaintMaterialOperation(this);
+          }
 
         if (op != null && op.canExecute()) {
             op.execute();
         }
 		return false;
 	  }
+
+    public void paintMaterial() {
+        if (!room.editable) {
+            return;
+        }
+
+        int bigX=(x+14)/28;
+        int bigY=(y+16)/32;
+        if (room.RoomArray[bigY][bigX]==emptyIndex)
+          room.SetMaterial(bigX,bigY,matIndex);
+        else
+          room.SetMaterial(bigX,bigY,emptyIndex);
+    }
 
     private Operation getMoveOperation(KeyEvent e, Direction direction) {
         Operation op;
@@ -250,4 +254,13 @@ public class PaintBrush extends Item
 		  }
 	  }
 
-	}
+    public int getPaintIndex() {
+        return paintIndex;
+    }
+
+    public void setPaintIndex(int paintIndex) {
+        this.paintIndex = paintIndex;
+
+        matIndex = level.materials.indexOf(paintMats[paintIndex]);
+    }
+}

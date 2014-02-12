@@ -60,14 +60,14 @@ public class RoomDisplay extends JPanel implements View
 				if (getLevel().player.KeyUp(e))
 					repaint();
 
-				if (e.getKeyCode() == e.VK_Q)
+				if (e.getKeyCode() == KeyEvent.VK_Q)
 				{
 					if (timerspeed>1)
 						timerspeed /= 2;
 					timer.setDelay(timerspeed);
 				}
 
-				if (e.getKeyCode() == e.VK_W)
+				if (e.getKeyCode() == KeyEvent.VK_W)
 				{
 					if (timerspeed<128) 
 						timerspeed*=2;

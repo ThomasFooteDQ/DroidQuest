@@ -1,12 +1,11 @@
 package com.droidquest.items;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.Room;
 
@@ -56,7 +55,7 @@ public class Handle extends Item
 
 	public boolean KeyUp(KeyEvent e) 
 	  {
-		if (e.getKeyCode() == e.VK_RIGHT) 
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 		  {
 		     if (x<15*28)
 		       {
@@ -66,7 +65,7 @@ public class Handle extends Item
 		       }
 		  }
 
-		if (e.getKeyCode() == e.VK_LEFT) 
+		if (e.getKeyCode() == KeyEvent.VK_LEFT)
 		  {
 		     if (x>13*28)
 		       {
@@ -76,7 +75,7 @@ public class Handle extends Item
 		       }
 		  }
 
-		if (e.getKeyCode() == e.VK_SPACE) 
+		if (e.getKeyCode() == KeyEvent.VK_SPACE)
 		  {
 		     level.player=carrying;
 		     Drops();

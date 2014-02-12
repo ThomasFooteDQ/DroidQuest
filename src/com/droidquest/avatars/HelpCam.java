@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import com.droidquest.Room;
 import com.droidquest.items.Item;
+import com.droidquest.operation.Operation;
 
 public class HelpCam extends Item 
 {
@@ -27,11 +28,15 @@ public void GenerateIcons()
 
 public boolean KeyUp(KeyEvent e) 
   {
-	if (e.getKeyCode() == e.VK_ENTER) 
-	  {
-	     level.player = level.gameCursor;
-	     level.currentViewer = level.gameCursor;
-	  }
+    Operation op = null;
+	if (e.getKeyCode() == KeyEvent.VK_ENTER)
+	{
+       op = getOperationFactory().createReturnToGameCursorOperation();
+	}
+
+    if (op != null && op.canExecute()) {
+       op.execute();
+    }
 	return false;
   }
 

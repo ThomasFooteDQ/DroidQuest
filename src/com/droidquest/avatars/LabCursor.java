@@ -74,79 +74,79 @@ public boolean CanBePickedUp(Item i)
 public boolean KeyUp(KeyEvent e) 
   {
       Operation op = null;
-	if (e.getKeyCode() == e.VK_L) 
+	if (e.getKeyCode() == KeyEvent.VK_L)
 	  {
          op = getOperationFactory().createLoadSmallChipOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_H) 
+	if (e.getKeyCode() == KeyEvent.VK_H)
 	  {
          op = getOperationFactory().createToggleHotStateOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_S) 
+	if (e.getKeyCode() == KeyEvent.VK_S)
 	  {
           op = getOperationFactory().createLabSolderingPenOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_R) 
+	if (e.getKeyCode() == KeyEvent.VK_R)
 	  {
-          op = getOperationFactory().createToggleRemoteOperation();
+          op = getOperationFactory().createToggleRemoteOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_P) 
+	if (e.getKeyCode() == KeyEvent.VK_P)
 	  {
           op = getOperationFactory().createSwitchToPaintbrushOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_T) 
+	if (e.getKeyCode() == KeyEvent.VK_T)
 	  {
          op = getOperationFactory().createToggleToolboxOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_SLASH) 
+	if (e.getKeyCode() == KeyEvent.VK_SLASH)
 	  {
          op = getOperationFactory().createHelpOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_RIGHT) 
+	if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 	  {
          op = getOperationFactory().createMoveOperation(this, Direction.Right,
                  e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
-	if (e.getKeyCode() == e.VK_LEFT) 
+	if (e.getKeyCode() == KeyEvent.VK_LEFT)
 	  {
           op = getOperationFactory().createMoveOperation(this, Direction.Left,
                   e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
-	if (e.getKeyCode() == e.VK_UP) 
+	if (e.getKeyCode() == KeyEvent.VK_UP)
 	  {
           op = getOperationFactory().createMoveOperation(this, Direction.Up,
                   e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
-	if (e.getKeyCode() == e.VK_DOWN) 
+	if (e.getKeyCode() == KeyEvent.VK_DOWN)
 	  {
           op = getOperationFactory().createMoveOperation(this, Direction.Down,
                   e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
-	if (e.getKeyCode() == e.VK_SPACE) 
+	if (e.getKeyCode() == KeyEvent.VK_SPACE)
 	  {
           op = getOperationFactory().createPickUpItemOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_CLOSE_BRACKET) 
+	if (e.getKeyCode() == KeyEvent.VK_CLOSE_BRACKET)
 	  {
           op = getOperationFactory().createRotateCarriedDeviceOperation(this, Rotation.Clockwise);
 	  }
-	if (e.getKeyCode() == e.VK_OPEN_BRACKET) 
+	if (e.getKeyCode() == KeyEvent.VK_OPEN_BRACKET)
 	  {
           op = getOperationFactory().createRotateCarriedDeviceOperation(this, Rotation.CounterClockwise);
 	  }
-	if (e.getKeyCode() == e.VK_E) 
+	if (e.getKeyCode() == KeyEvent.VK_E)
 	  {
 	     op = getOperationFactory().createEnterItemOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_X) 
+	if (e.getKeyCode() == KeyEvent.VK_X)
 	  {
          op = getOperationFactory().createExitItemOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_F) 
+	if (e.getKeyCode() == KeyEvent.VK_F)
 	  {
           op = getOperationFactory().createFlipCarriedDeviceOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_M) 
+	if (e.getKeyCode() == KeyEvent.VK_M)
 	  {
           op = getOperationFactory().createOutputMemoryUsageOperation();
 	  }
@@ -160,7 +160,7 @@ public boolean KeyUp(KeyEvent e)
 
 public boolean KeyDown(KeyEvent e) 
   {
-	if (e.getKeyCode() == e.VK_RIGHT) 
+	if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 	  {
 	     repeating++;
 	     if (repeating>10)
@@ -171,7 +171,7 @@ public boolean KeyDown(KeyEvent e)
 	       }
 	     return false;
 	  }
-	if (e.getKeyCode() == e.VK_LEFT) 
+	if (e.getKeyCode() == KeyEvent.VK_LEFT)
 	  {
 	     repeating++;
 	     if (repeating>10)
@@ -182,7 +182,7 @@ public boolean KeyDown(KeyEvent e)
 	       }
 	     return false;
 	  }
-	if (e.getKeyCode() == e.VK_UP) 
+	if (e.getKeyCode() == KeyEvent.VK_UP)
 	  {
 	     repeating++;
 	     if (repeating>10)
@@ -193,7 +193,7 @@ public boolean KeyDown(KeyEvent e)
 	       }
 	     return false;
 	  }
-	if (e.getKeyCode() == e.VK_DOWN) 
+	if (e.getKeyCode() == KeyEvent.VK_DOWN)
 	  {
 	     repeating++;
 	     if (repeating>10)

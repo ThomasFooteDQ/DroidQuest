@@ -115,45 +115,45 @@ public boolean CanBePickedUp(Item i)
 public boolean KeyUp(KeyEvent e) 
   {
     Operation op = null;
-	if (e.getKeyCode() == e.VK_S) 
+	if (e.getKeyCode() == KeyEvent.VK_S)
 	  {
          op = getOperationFactory().createSwitchToSolderingPenOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_C) 
+	if (e.getKeyCode() == KeyEvent.VK_C)
 	  {
          op = getOperationFactory().createSwitchToGameCursorOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_P) 
+	if (e.getKeyCode() == KeyEvent.VK_P)
 	  {
          op = getOperationFactory().createSwitchToPaintbrushOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_SLASH) 
+	if (e.getKeyCode() == KeyEvent.VK_SLASH)
 	  {
          op = getOperationFactory().createHelpOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_RIGHT) 
+	if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 	  {
 	     op = getOperationFactory().createMoveOperation(this, Direction.Right,
                  e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
-	if (e.getKeyCode() == e.VK_LEFT) 
+	if (e.getKeyCode() == KeyEvent.VK_LEFT)
 	  {
           op = getOperationFactory().createMoveOperation(this, Direction.Left,
                   e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
-	if (e.getKeyCode() == e.VK_UP) 
+	if (e.getKeyCode() == KeyEvent.VK_UP)
 	  {
           op = getOperationFactory().createMoveOperation(this, Direction.Up,
                   e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
-	if (e.getKeyCode() == e.VK_DOWN) 
+	if (e.getKeyCode() == KeyEvent.VK_DOWN)
 	  {
           op = getOperationFactory().createMoveOperation(this, Direction.Down,
                   e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
-	if (e.getKeyCode() == e.VK_SPACE) 
+	if (e.getKeyCode() == KeyEvent.VK_SPACE)
 	  {
-	     level.electricity = ! level.electricity;
+          op = getOperationFactory().createToggleRemoteOperation(this);
 	  }
 
     if (op != null && op.canExecute()) {
@@ -164,7 +164,7 @@ public boolean KeyUp(KeyEvent e)
 
 public boolean KeyDown(KeyEvent e) 
   {
-	if (e.getKeyCode() == e.VK_RIGHT) 
+	if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 	  {
 	     repeating++;
 	     if (repeating>10)
@@ -174,7 +174,7 @@ public boolean KeyDown(KeyEvent e)
 	       }
 	     return false;
 	  }
-	if (e.getKeyCode() == e.VK_LEFT) 
+	if (e.getKeyCode() == KeyEvent.VK_LEFT)
 	  {
 	     repeating++;
 	     if (repeating>10)
@@ -184,7 +184,7 @@ public boolean KeyDown(KeyEvent e)
 	       }
 	     return false;
 	  }
-	if (e.getKeyCode() == e.VK_UP) 
+	if (e.getKeyCode() == KeyEvent.VK_UP)
 	  {
 	     repeating++;
 	     if (repeating>10)
@@ -194,7 +194,7 @@ public boolean KeyDown(KeyEvent e)
 	       }
 	     return false;
 	  }
-	if (e.getKeyCode() == e.VK_DOWN) 
+	if (e.getKeyCode() == KeyEvent.VK_DOWN)
 	  {
 	     repeating++;
 	     if (repeating>10)

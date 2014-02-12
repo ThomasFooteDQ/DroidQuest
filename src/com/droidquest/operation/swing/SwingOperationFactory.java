@@ -2,19 +2,26 @@ package com.droidquest.operation.swing;
 
 import com.droidquest.Game;
 import com.droidquest.avatars.LabCursor;
+import com.droidquest.avatars.PaintBrush;
+import com.droidquest.avatars.SolderingPen;
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
 import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.OperationFactory;
 import com.droidquest.operation.api.PickUpItemOperation;
+import com.droidquest.operation.api.mode.FlipPortOperation;
 import com.droidquest.operation.api.mode.HelpOperation;
+import com.droidquest.operation.api.mode.PaintMaterialOperation;
+import com.droidquest.operation.api.mode.ReturnToGameCursorOperation;
 import com.droidquest.operation.api.mode.SwitchToGameCursorOperation;
 import com.droidquest.operation.api.mode.SwitchToPaintbrushOperation;
 import com.droidquest.operation.api.mode.SwitchToRemoteOperation;
 import com.droidquest.operation.api.mode.SwitchToSolderingPenOperation;
 import com.droidquest.operation.api.mode.ToggleHotStateOperation;
+import com.droidquest.operation.api.mode.TogglePaintColorOperation;
 import com.droidquest.operation.api.mode.ToggleRemoteOperation;
 import com.droidquest.operation.api.mode.ToggleToolboxOperation;
+import com.droidquest.operation.api.mode.WirePortOperation;
 import com.droidquest.operation.api.move.Direction;
 import com.droidquest.operation.api.move.Distance;
 import com.droidquest.operation.api.move.EnterItemOperation;
@@ -54,6 +61,11 @@ public class SwingOperationFactory implements OperationFactory {
     }
 
     @Override
+    public Operation createFlipPortOperation(SolderingPen solderingPen) {
+        return new FlipPortOperation(solderingPen);
+    }
+
+    @Override
     public Operation createHelpOperation(Item avatar) {
         return new HelpOperation(getCurrentLevel(), avatar);
     }
@@ -79,8 +91,18 @@ public class SwingOperationFactory implements OperationFactory {
     }
 
     @Override
+    public Operation createPaintMaterialOperation(PaintBrush paintBrush) {
+        return new PaintMaterialOperation(paintBrush);
+    }
+
+    @Override
     public Operation createPickUpItemOperation(Item avatar) {
         return new PickUpItemOperation(getCurrentLevel(), avatar);
+    }
+
+    @Override
+    public Operation createReturnToGameCursorOperation() {
+        return new ReturnToGameCursorOperation(getCurrentLevel());
     }
 
     @Override
@@ -123,13 +145,23 @@ public class SwingOperationFactory implements OperationFactory {
     }
 
     @Override
-    public Operation createToggleRemoteOperation() {
-        return new ToggleRemoteOperation(getCurrentLevel());
+    public Operation createTogglePaintColorOperation(PaintBrush avatar) {
+        return new TogglePaintColorOperation(avatar);
+    }
+
+    @Override
+    public Operation createToggleRemoteOperation(Item avatar) {
+        return new ToggleRemoteOperation(getCurrentLevel(), avatar);
     }
 
     @Override
     public Operation createToggleToolboxOperation(Item avatar) {
         return new ToggleToolboxOperation(getCurrentLevel(), avatar);
+    }
+
+    @Override
+    public Operation createWirePortOperation(SolderingPen solderingPen) {
+        return new WirePortOperation(solderingPen);
     }
 
     protected Level getCurrentLevel() {

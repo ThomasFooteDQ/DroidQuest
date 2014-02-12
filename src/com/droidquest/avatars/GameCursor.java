@@ -382,7 +382,7 @@ public class GameCursor extends Item {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_R)
 		{
-            op = getOperationFactory().createToggleRemoteOperation();
+            op = getOperationFactory().createToggleRemoteOperation(this);
 		}
 		if (e.getKeyCode() == KeyEvent.VK_T)
 		{

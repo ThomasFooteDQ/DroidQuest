@@ -965,5 +965,13 @@ public class Level implements ImageObserver, Serializable {
     public void setPlayer(Item player) {
         this.player = player;
     }
+
+    public boolean isElectricityEnabled() {
+        return electricity;
+    }
+
+    public void setElectricityEnabled(boolean electricity) {
+        this.electricity = electricity;
+    }
 }
 

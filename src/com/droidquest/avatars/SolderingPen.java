@@ -302,6 +302,39 @@ public void WirePort()
 	  }
   }
 
+public void flipPort() {
+    if (hot)
+    {
+        if (ports[0].myWire != null) // If SP is wired
+        {
+            // Flip wire attached to SP
+            Port tempPort = ports[0].myWire.fromPort;
+            ports[0].myWire.fromPort = ports[0].myWire.toPort;
+            ports[0].myWire.toPort = tempPort;
+        }
+        else if (ports[0].myWire == null) // If SP is not wired
+        {
+            // Flip wire attached to CurrentPort
+            if (currentPort.myWire != null)
+            {
+                Port tempPort = currentPort.myWire.fromPort;
+                currentPort.myWire.fromPort = currentPort.myWire.toPort;
+                currentPort.myWire.toPort = tempPort;
+            }
+        }
+    }
+    else
+    {
+        if (ports[0].myWire != null) // If SP is wired
+        {
+            // Flip wire attached to SP
+            Port tempPort = ports[0].myWire.fromPort;
+            ports[0].myWire.fromPort = ports[0].myWire.toPort;
+            ports[0].myWire.toPort = tempPort;
+        }
+    }
+}
+
 public boolean Function () 
   {
 	if (ports[0].myWire == null)
@@ -322,79 +355,50 @@ public boolean CanBePickedUp(Item i)
 public boolean KeyUp(KeyEvent e) 
   {
     Operation op = null;
-	if (e.getKeyCode() == e.VK_C) 
+	if (e.getKeyCode() == KeyEvent.VK_C)
 	  {
          op = getOperationFactory().createSwitchToGameCursorOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_R) 
+	if (e.getKeyCode() == KeyEvent.VK_R)
 	  {
-          op = getOperationFactory().createToggleRemoteOperation();
+          op = getOperationFactory().createToggleRemoteOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_P) 
+	if (e.getKeyCode() == KeyEvent.VK_P)
 	  {
           op = getOperationFactory().createSwitchToPaintbrushOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_SLASH) 
+	if (e.getKeyCode() == KeyEvent.VK_SLASH)
 	  {
 	     op = getOperationFactory().createHelpOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_RIGHT) 
+	if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 	  {
          op = getOperationFactory().createMoveOperation(this, Direction.Right,
                  e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
-	if (e.getKeyCode() == e.VK_LEFT) 
+	if (e.getKeyCode() == KeyEvent.VK_LEFT)
 	  {
           op = getOperationFactory().createMoveOperation(this, Direction.Left,
                   e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
-	if (e.getKeyCode() == e.VK_UP) 
+	if (e.getKeyCode() == KeyEvent.VK_UP)
 	  {
           op = getOperationFactory().createMoveOperation(this, Direction.Up,
                   e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
-	if (e.getKeyCode() == e.VK_DOWN) 
+	if (e.getKeyCode() == KeyEvent.VK_DOWN)
 	  {
           op = getOperationFactory().createMoveOperation(this, Direction.Down,
                   e.isControlDown() ? Distance.Nudge : Distance.Step);
 	  }
-	if (e.getKeyCode() == e.VK_SPACE) 
+	if (e.getKeyCode() == KeyEvent.VK_SPACE)
 	  {
-	     WirePort();
+          op = getOperationFactory().createWirePortOperation(this);
 	  }
-	if (e.getKeyCode() == e.VK_F) 
+	if (e.getKeyCode() == KeyEvent.VK_F)
 	  {
-	     if (hot)
-	       {
-		  if (ports[0].myWire != null) // If SP is wired
-		    {
-		       // Flip wire attached to SP
-		       Port tempPort = ports[0].myWire.fromPort;
-		       ports[0].myWire.fromPort = ports[0].myWire.toPort;
-		       ports[0].myWire.toPort = tempPort;
-		    }
-		  else if (ports[0].myWire == null) // If SP is not wired
-		    {
-		       // Flip wire attached to CurrentPort
-		       if (currentPort.myWire != null)
-			 {
-			    Port tempPort = currentPort.myWire.fromPort;
-			    currentPort.myWire.fromPort = currentPort.myWire.toPort;
-			    currentPort.myWire.toPort = tempPort;
-			 }
-		    }
-	       }
-	     else
-	       {
-		  if (ports[0].myWire != null) // If SP is wired
-		    {
-		       // Flip wire attached to SP
-		       Port tempPort = ports[0].myWire.fromPort;
-		       ports[0].myWire.fromPort = ports[0].myWire.toPort;
-		       ports[0].myWire.toPort = tempPort;
-		    }
-	       }
-	  }
+          op = getOperationFactory().createFlipPortOperation(this);
+      }
 
       if (op != null && op.canExecute()) {
           op.execute();
@@ -402,9 +406,9 @@ public boolean KeyUp(KeyEvent e)
 	return false;
   }
 
-public boolean KeyDown(KeyEvent e) 
+    public boolean KeyDown(KeyEvent e)
   {
-	if (e.getKeyCode() == e.VK_RIGHT) 
+	if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 	  {
 	     repeating++;
 	     if (repeating>10)
@@ -414,7 +418,7 @@ public boolean KeyDown(KeyEvent e)
 	       }
 	     return false;
 	  }
-	if (e.getKeyCode() == e.VK_LEFT) 
+	if (e.getKeyCode() == KeyEvent.VK_LEFT)
 	  {
 	     repeating++;
 	     if (repeating>10)
@@ -424,7 +428,7 @@ public boolean KeyDown(KeyEvent e)
 	       }
 	     return false;
 	  }
-	if (e.getKeyCode() == e.VK_UP) 
+	if (e.getKeyCode() == KeyEvent.VK_UP)
 	  {
 	     repeating++;
 	     if (repeating>10)
@@ -434,7 +438,7 @@ public boolean KeyDown(KeyEvent e)
 	       }
 	     return false;
 	  }
-	if (e.getKeyCode() == e.VK_DOWN) 
+	if (e.getKeyCode() == KeyEvent.VK_DOWN)
 	  {
 	     repeating++;
 	     if (repeating>10)
