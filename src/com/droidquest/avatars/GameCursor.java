@@ -11,9 +11,9 @@ import com.droidquest.Room;
 import com.droidquest.items.GenericRobot;
 import com.droidquest.items.Item;
 import com.droidquest.operation.Operation;
-import com.droidquest.operation.api.move.Direction;
-import com.droidquest.operation.api.move.Distance;
-import com.droidquest.operation.api.move.Rotation;
+import com.droidquest.operation.api.avatar.Direction;
+import com.droidquest.operation.api.avatar.Distance;
+import com.droidquest.operation.api.avatar.Rotation;
 
 public class GameCursor extends Item {
 	private int walk = 0; // 0 or 1, used in animation

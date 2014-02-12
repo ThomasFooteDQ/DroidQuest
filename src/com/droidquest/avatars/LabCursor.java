@@ -10,9 +10,9 @@ import java.awt.image.BufferedImage;
 import com.droidquest.Room;
 import com.droidquest.items.Item;
 import com.droidquest.operation.Operation;
-import com.droidquest.operation.api.move.Direction;
-import com.droidquest.operation.api.move.Distance;
-import com.droidquest.operation.api.move.Rotation;
+import com.droidquest.operation.api.avatar.Direction;
+import com.droidquest.operation.api.avatar.Distance;
+import com.droidquest.operation.api.avatar.Rotation;
 
 public class LabCursor extends Item {
 private boolean hot;

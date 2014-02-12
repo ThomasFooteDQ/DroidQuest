@@ -1,4 +1,4 @@
-package com.droidquest.operation.swing.mode;
+package com.droidquest.operation.swing.avatar;
 
 import javax.swing.*;
 import java.awt.FileDialog;

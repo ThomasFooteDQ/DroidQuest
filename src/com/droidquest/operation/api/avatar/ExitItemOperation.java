@@ -1,4 +1,4 @@
-package com.droidquest.operation.api.move;
+package com.droidquest.operation.api.avatar;
 
 import java.awt.Dimension;
 

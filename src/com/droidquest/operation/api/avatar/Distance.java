@@ -1,4 +1,4 @@
-package com.droidquest.operation.api.move;
+package com.droidquest.operation.api.avatar;
 
 /**
  * Enum for the distance a move should cover.

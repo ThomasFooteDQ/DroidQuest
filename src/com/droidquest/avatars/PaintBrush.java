@@ -12,8 +12,8 @@ import com.droidquest.items.Item;
 import com.droidquest.materials.Material;
 import com.droidquest.materials.RobotBlocker;
 import com.droidquest.operation.Operation;
-import com.droidquest.operation.api.move.Direction;
-import com.droidquest.operation.api.move.Distance;
+import com.droidquest.operation.api.avatar.Direction;
+import com.droidquest.operation.api.avatar.Distance;
 
 public class PaintBrush extends Item 
 {

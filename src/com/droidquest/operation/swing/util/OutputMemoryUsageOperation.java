@@ -1,4 +1,4 @@
-package com.droidquest.operation.swing;
+package com.droidquest.operation.swing.util;
 
 import com.droidquest.operation.Operation;
 

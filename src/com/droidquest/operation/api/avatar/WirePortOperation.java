@@ -1,4 +1,4 @@
-package com.droidquest.operation.api.mode;
+package com.droidquest.operation.api.avatar;
 
 import com.droidquest.avatars.SolderingPen;
 import com.droidquest.operation.Operation;

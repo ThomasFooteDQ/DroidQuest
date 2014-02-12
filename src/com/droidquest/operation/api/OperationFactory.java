@@ -5,9 +5,9 @@ import com.droidquest.avatars.PaintBrush;
 import com.droidquest.avatars.SolderingPen;
 import com.droidquest.items.Item;
 import com.droidquest.operation.Operation;
-import com.droidquest.operation.api.move.Direction;
-import com.droidquest.operation.api.move.Distance;
-import com.droidquest.operation.api.move.Rotation;
+import com.droidquest.operation.api.avatar.Direction;
+import com.droidquest.operation.api.avatar.Distance;
+import com.droidquest.operation.api.avatar.Rotation;
 
 /**
  * Factory interface for creating operations.
