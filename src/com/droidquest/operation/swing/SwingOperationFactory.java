@@ -12,6 +12,8 @@ import com.droidquest.operation.api.mode.ToggleRemoteOperation;
 import com.droidquest.operation.api.mode.ToggleToolboxOperation;
 import com.droidquest.operation.api.move.Direction;
 import com.droidquest.operation.api.move.Distance;
+import com.droidquest.operation.api.move.EnterItemOperation;
+import com.droidquest.operation.api.move.ExitItemOperation;
 import com.droidquest.operation.api.move.FlipCarriedDeviceOperation;
 import com.droidquest.operation.api.move.MoveOperation;
 import com.droidquest.operation.api.move.RotateCarriedDeviceOperation;
@@ -29,6 +31,16 @@ public class SwingOperationFactory implements OperationFactory {
 
     public SwingOperationFactory(Game game) {
         this.game = game;
+    }
+
+    @Override
+    public Operation createEnterItemOperation(Item avatar) {
+        return new EnterItemOperation(getCurrentLevel(), avatar);
+    }
+
+    @Override
+    public Operation createExitItemOperation(Item avatar) {
+        return new ExitItemOperation(getCurrentLevel(), avatar);
     }
 
     @Override

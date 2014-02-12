@@ -953,5 +953,9 @@ public class Level implements ImageObserver, Serializable {
     public Game getGame() {
         return game;
     }
+
+    public void setCurrentViewer(Item currentViewer) {
+        this.currentViewer = currentViewer;
+    }
 }
 

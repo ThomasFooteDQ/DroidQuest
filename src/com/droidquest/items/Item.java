@@ -100,10 +100,18 @@ public class Item implements Serializable, Cloneable
 		return (x-orgX);
 	}
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
 	public int getY() 
 	{
 		return (y-orgY);
 	}
+
+    public void setY(int y) {
+        this.y = y;
+    }
 
 	public Room getRoom() 
 	{
@@ -741,5 +749,9 @@ public class Item implements Serializable, Cloneable
 
     public void setRepeating(int repeated) {
         this.repeating = repeated;
+    }
+
+    public Room getInternalRoom() {
+        return InternalRoom;
     }
 }

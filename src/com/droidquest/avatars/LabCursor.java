@@ -2,7 +2,6 @@ package com.droidquest.avatars;
 
 import javax.swing.*;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -151,37 +150,11 @@ public boolean KeyUp(KeyEvent e)
 	  }
 	if (e.getKeyCode() == e.VK_E) 
 	  {
-	     boolean found=false;
-	     Item item = level.FindNearestItem(this);
-	     if (item!=null)
-	       if (item.InternalRoom!=null)
-		 if (Overlaps(item))
-		   if (!item.OverWall())
-		     {
-			int newX = 280; // 10 * 28
-			int newY = 176; // 5.5 * 32
-			x = newX;
-			y = newY;
-			SetRoom(item.InternalRoom);
-			found=true;
-		     }
+	     op = getOperationFactory().createEnterItemOperation(this);
 	  }
 	if (e.getKeyCode() == e.VK_X) 
 	  {
-	     if (room.portalItem!=null)
-	       {
-		  Dimension d = room.portalItem.GetXY();
-		  int newX = d.width
-		    + room.portalItem.getWidth()/2 
-		    - width/2;
-		  int newY = d.height
-		    + room.portalItem.getHeight()/4*2 
-		    - height/2;
-		  x = newX;
-		  y = newY;
-		  SetRoom(room.portalItem.room);
-		  level.currentViewer = level.player;
-	       }
+         op = getOperationFactory().createExitItemOperation(this);
 	  }
 	if (e.getKeyCode() == e.VK_F) 
 	  {

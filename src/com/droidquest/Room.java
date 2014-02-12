@@ -259,4 +259,8 @@ public void Erase()
     public List<Wire> getWires() {
         return wires;
     }
+
+    public Item getPortalItem() {
+        return portalItem;
+    }
 }

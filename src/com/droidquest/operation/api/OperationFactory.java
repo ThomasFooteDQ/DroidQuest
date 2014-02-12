@@ -11,6 +11,10 @@ import com.droidquest.operation.api.move.Rotation;
  */
 public interface OperationFactory {
 
+    Operation createEnterItemOperation(Item avatar);
+
+    Operation createExitItemOperation(Item item);
+
     Operation createFlipCarriedDeviceOperation(Item avatar);
 
     Operation createHelpOperation(Item avatar);
