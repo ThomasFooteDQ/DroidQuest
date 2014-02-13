@@ -34,7 +34,6 @@ public class Item implements Serializable, Cloneable
 	public transient int autoY; // Destination of automovement
 	public Room InternalRoom = null; // Room inside this item, if any.
 
-	protected int repeating=0; // Keyboard repeat.
 	public int charge =0; // Battery Charge of this item, if any.
 	public boolean grabbable=true; // Can this item be picked up?
 	public int x,y; // Position X,Y
@@ -253,7 +252,7 @@ public class Item implements Serializable, Cloneable
 		return false;
 	}
 
-    public OperationFactory getOperationFactory() {
+    protected OperationFactory getOperationFactory() {
         return level.getGame().getOperationFactory();
     }
 
@@ -749,10 +748,6 @@ public class Item implements Serializable, Cloneable
 
     public void setCarriedBy(Item carriedBy) {
         this.carriedBy = carriedBy;
-    }
-
-    public void setRepeating(int repeated) {
-        this.repeating = repeated;
     }
 
     public Room getInternalRoom() {

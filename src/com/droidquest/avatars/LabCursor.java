@@ -1,5 +1,7 @@
 package com.droidquest.avatars;
 
+import static com.droidquest.operation.swing.util.DirectionUtil.getDirection;
+
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -160,51 +162,20 @@ public boolean KeyUp(KeyEvent e)
 
 public boolean KeyDown(KeyEvent e) 
   {
-	if (e.getKeyCode() == KeyEvent.VK_RIGHT)
-	  {
-	     repeating++;
-	     if (repeating>10)
-	       {
-		  if (carriedBy==null)
-		    MoveRight(e.isControlDown());
-		  return true;
-	       }
-	     return false;
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_LEFT)
-	  {
-	     repeating++;
-	     if (repeating>10)
-	       {
-		  if (carriedBy==null)
-		    MoveLeft(e.isControlDown());
-		  return true;
-	       }
-	     return false;
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_UP)
-	  {
-	     repeating++;
-	     if (repeating>10)
-	       {
-		  if (carriedBy==null)
-		    MoveUp(e.isControlDown());
-		  return true;
-	       }
-	     return false;
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_DOWN)
-	  {
-	     repeating++;
-	     if (repeating>10)
-	       {
-		  if (carriedBy==null)
-		    MoveDown(e.isControlDown());
-		  return true;
-	       }
-	     return false;
-	  }
-	return false;
+      Operation op = null;
+      switch (e.getKeyCode()) {
+          case KeyEvent.VK_RIGHT:
+          case KeyEvent.VK_LEFT:
+          case KeyEvent.VK_UP:
+          case KeyEvent.VK_DOWN:
+              op = getOperationFactory().createMoveRepeatOperation(
+                      this, getDirection(e.getKeyCode()), e.isControlDown() ? Distance.Nudge : Distance.Step);
+      }
+
+      if (op != null && op.canExecute()) {
+          op.execute();
+      }
+      return false;
   }
 
 public void MoveUp(boolean nudge) 

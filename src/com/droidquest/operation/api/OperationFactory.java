@@ -43,6 +43,8 @@ public interface OperationFactory {
 
     Operation createMoveOperation(Item avatar, Direction direction, Distance distance);
 
+    Operation createMoveRepeatOperation(Item avatar, Direction direction, Distance distance);
+
     Operation createOutputMemoryUsageOperation();
 
     Operation createPaintMaterialOperation(PaintBrush paintBrush);

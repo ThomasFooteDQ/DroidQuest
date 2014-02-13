@@ -14,6 +14,7 @@ import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.avatar.Direction;
 import com.droidquest.operation.api.avatar.Distance;
 import com.droidquest.operation.api.avatar.Rotation;
+import com.droidquest.operation.swing.util.DirectionUtil;
 
 public class GameCursor extends Item {
 	private int walk = 0; // 0 or 1, used in animation
@@ -466,59 +467,27 @@ public class GameCursor extends Item {
 
     public boolean KeyDown(KeyEvent e)
 	{
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
-		{
-			repeating++;
-			if (repeating>5)
-			{
-				if (carriedBy==null)
-					MoveRight(e.isControlDown());
-				return true;
-			}
-			return false;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_LEFT)
-		{
-			repeating++;
-			if (repeating>5)
-			{
-				if (carriedBy==null)
-					MoveLeft(e.isControlDown());
-				return true;
-			}
-			return false;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_UP)
-		{
-			repeating++;
-			if (repeating>5)
-			{
-				if (carriedBy==null)
-					MoveUp(e.isControlDown());
-				return true;
-			}
-			return false;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_DOWN)
-		{
-			repeating++;
-			if (repeating>5)
-			{
-				if (carriedBy==null)
-					MoveDown(e.isControlDown());
-				return true;
-			}
-			return false;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_SPACE)
-		{
-			if (level.player == level.gameCursor)
-				outline = Color.white;
-		}
+        Operation op = null;
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_RIGHT:
+            case KeyEvent.VK_LEFT:
+            case KeyEvent.VK_UP:
+            case KeyEvent.VK_DOWN:
+                op = getOperationFactory().createMoveRepeatOperation(
+                        this, DirectionUtil.getDirection(e.getKeyCode()), e.isControlDown() ? Distance.Nudge : Distance.Step);
+
+            case KeyEvent.VK_SPACE:
+                if (level.player == level.gameCursor)
+                    outline = Color.white;
+        }
+
+        if (op != null && op.canExecute()) {
+            op.execute();
+        }
 		return false;
 	}
 
-	public void Animate() 
+    public void Animate()
 	{
 		if (automove==1 && room == null)
 			automove=0;

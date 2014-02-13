@@ -17,6 +17,7 @@ import com.droidquest.items.Item;
 import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.avatar.Direction;
 import com.droidquest.operation.api.avatar.Distance;
+import com.droidquest.operation.swing.util.DirectionUtil;
 
 public class SolderingPen extends Device 
 {
@@ -408,47 +409,20 @@ public boolean KeyUp(KeyEvent e)
 
     public boolean KeyDown(KeyEvent e)
   {
-	if (e.getKeyCode() == KeyEvent.VK_RIGHT)
-	  {
-	     repeating++;
-	     if (repeating>10)
-	       {
-		  MoveRight(e.isControlDown());
-		  return true;
-	       }
-	     return false;
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_LEFT)
-	  {
-	     repeating++;
-	     if (repeating>10)
-	       {
-		  MoveLeft(e.isControlDown());
-		  return true;
-	       }
-	     return false;
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_UP)
-	  {
-	     repeating++;
-	     if (repeating>10)
-	       {
-		  MoveUp(e.isControlDown());
-		  return true;
-	       }
-	     return false;
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_DOWN)
-	  {
-	     repeating++;
-	     if (repeating>10)
-	       {
-		  MoveDown(e.isControlDown());
-		  return true;
-	       }
-	     return false;
-	  }
-	return false;
+      Operation op = null;
+      switch (e.getKeyCode()) {
+          case KeyEvent.VK_RIGHT:
+          case KeyEvent.VK_LEFT:
+          case KeyEvent.VK_UP:
+          case KeyEvent.VK_DOWN:
+              op = getOperationFactory().createMoveRepeatOperation(
+                      this, DirectionUtil.getDirection(e.getKeyCode()), e.isControlDown() ? Distance.Nudge : Distance.Step);
+      }
+
+      if (op != null && op.canExecute()) {
+          op.execute();
+      }
+      return false;
   }
 
 public void MouseClick(MouseEvent e) 

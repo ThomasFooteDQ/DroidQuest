@@ -223,7 +223,7 @@ public class ClockTickHandler {
                                         && device.ports[b].x+device.x <= getLevel().gameCursor.x + getLevel().gameCursor.getWidth()
                                         && device.ports[b].y+device.y >= getLevel().gameCursor.y
                                         && device.ports[b].y+device.y <= getLevel().gameCursor.y + getLevel().gameCursor.getHeight())
-                                    if (((LabCursor)getLevel().gameCursor).hot)
+                                    if (((LabCursor)getLevel().gameCursor).isHot())
                                         device.ports[b].value = true;
                     }
                 }
@@ -271,7 +271,7 @@ public class ClockTickHandler {
                                             && device.ports[b].x+device.x <= getLevel().gameCursor.x + getLevel().gameCursor.getWidth()
                                             && device.ports[b].y+device.y >= getLevel().gameCursor.y
                                             && device.ports[b].y+device.y <= getLevel().gameCursor.y + getLevel().gameCursor.getHeight())
-                                        if (((LabCursor)getLevel().gameCursor).hot)
+                                        if (((LabCursor)getLevel().gameCursor).isHot())
                                             device.ports[b].value = true;
                         }
                     }

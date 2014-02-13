@@ -5,15 +5,15 @@ import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.KeyRepeatTracker;
 
 /**
- * Operation which moves a player avatar in a given direction.
+ * The Repeated (KeyDown) version of the move operation.
  */
-public class MoveOperation implements Operation {
+public class MoveRepeatOperation implements Operation {
     private final Item avatar;
-    private final Distance distance;
     private final Direction direction;
+    private final Distance distance;
     private final KeyRepeatTracker keyRepeatTracker;
 
-    public MoveOperation(Item avatar, Direction direction, Distance distance, KeyRepeatTracker keyRepeatTracker) {
+    public MoveRepeatOperation(Item avatar, Direction direction, Distance distance, KeyRepeatTracker keyRepeatTracker) {
         this.avatar = avatar;
         this.direction = direction;
         this.distance = distance;
@@ -27,7 +27,14 @@ public class MoveOperation implements Operation {
 
     @Override
     public void execute() {
-        keyRepeatTracker.reset();
+        if (!keyRepeatTracker.isStarted()) {
+            keyRepeatTracker.start();
+            return;
+        }
+
+        if (!keyRepeatTracker.isRepeating()) {
+            return;
+        }
 
         switch (direction) {
             case Up:

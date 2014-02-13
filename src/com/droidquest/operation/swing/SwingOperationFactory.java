@@ -10,6 +10,7 @@ import com.droidquest.items.SpyCam;
 import com.droidquest.items.Train;
 import com.droidquest.levels.Level;
 import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.KeyRepeatTracker;
 import com.droidquest.operation.api.OperationFactory;
 import com.droidquest.operation.api.avatar.*;
 import com.droidquest.operation.api.item.handle.HandleDropOperation;
@@ -27,6 +28,7 @@ import com.droidquest.view.View;
  */
 public class SwingOperationFactory implements OperationFactory {
     private final Game game;
+    private final KeyRepeatTracker keyRepeatTracker = new KeyRepeatTracker(500);
 
     public SwingOperationFactory(Game game) {
         this.game = game;
@@ -94,7 +96,12 @@ public class SwingOperationFactory implements OperationFactory {
 
     @Override
     public Operation createMoveOperation(Item avatar, Direction direction, Distance distance) {
-        return new MoveOperation(avatar, direction, distance);
+        return new MoveOperation(avatar, direction, distance, keyRepeatTracker);
+    }
+
+    @Override
+    public Operation createMoveRepeatOperation(Item avatar, Direction direction, Distance distance) {
+        return new MoveRepeatOperation(avatar, direction, distance, keyRepeatTracker);
     }
 
     @Override
