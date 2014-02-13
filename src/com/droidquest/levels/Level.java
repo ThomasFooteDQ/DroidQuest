@@ -19,12 +19,14 @@ import com.droidquest.Wire;
 import com.droidquest.chipstuff.Port;
 import com.droidquest.devices.Device;
 import com.droidquest.devices.SmallChip;
+import com.droidquest.event.PlayerChangeEvent;
 import com.droidquest.items.Initializer;
 import com.droidquest.items.Item;
 import com.droidquest.items.ToolBox;
 import com.droidquest.materials.Material;
 import com.droidquest.materials.Portal;
 import com.droidquest.view.api.sound.SoundPlayer;
+import com.google.common.eventbus.EventBus;
 
 public class Level implements ImageObserver, Serializable {
     private final transient Game game;
@@ -919,8 +921,8 @@ public class Level implements ImageObserver, Serializable {
 	public void InitSounds() 
 	{
         game.getSoundPlayer().unloadAll();
-		for (int a=0; a<soundFiles.length; a++)
-            game.getSoundPlayer().load(soundFiles[a]);
+		for (String soundFile : soundFiles)
+            game.getSoundPlayer().load(soundFile);
 	}
 
     public void Init()
@@ -967,7 +969,10 @@ public class Level implements ImageObserver, Serializable {
     }
 
     public void setPlayer(Item player) {
+        Item oldPlayer = this.player;
         this.player = player;
+
+        getEventBus().post(new PlayerChangeEvent(this, oldPlayer, player));
     }
 
     public boolean isElectricityEnabled() {
@@ -976,6 +981,10 @@ public class Level implements ImageObserver, Serializable {
 
     public void setElectricityEnabled(boolean electricity) {
         this.electricity = electricity;
+    }
+
+    private EventBus getEventBus() {
+        return getGame().getEventBus();
     }
 }
 

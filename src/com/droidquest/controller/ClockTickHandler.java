@@ -1,4 +1,4 @@
-package com.droidquest;
+package com.droidquest.controller;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+import com.droidquest.Game;
+import com.droidquest.Room;
+import com.droidquest.Wire;
 import com.droidquest.avatars.LabCursor;
 import com.droidquest.chipstuff.Port;
 import com.droidquest.decorations.Graphix;

@@ -1,177 +1,44 @@
 package com.droidquest;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
-import com.droidquest.items.Item;
+import com.droidquest.controller.ClockTickHandler;
 import com.droidquest.levels.Level;
-import com.droidquest.materials.Material;
 import com.droidquest.operation.api.OperationFactory;
 import com.droidquest.view.api.sound.SoundPlayer;
+import com.google.common.eventbus.EventBus;
 
 /**
- * Singleton context object containing game-wide variables and resources.
+ * Game Interface.  Game is a single context object containing game-wide variables and resources.
  */
-public class Game {
-    private Level currentLevel;
-    private boolean suspended;
-    private ClockTickHandler clockTickHandler;
-    private SoundPlayer soundPlayer;
-    private RoomDisplay view;
-    private OperationFactory operationFactory;
+public interface Game {
+    Level getCurrentLevel();
 
-    public Game() {
-        clockTickHandler = new ClockTickHandler(this);
-    }
+    void setCurrentLevel(Level level);
 
-    public Level getCurrentLevel() {
-        return currentLevel;
-    }
+    void loadLevel(String filename);
 
-    public void setCurrentLevel(Level currentLevel) {
-        this.currentLevel = currentLevel;
-    }
+    void saveLevel();
 
-    public void loadLevel(String filename)
-    {
-        suspend();
+    void saveLevel(String filename);
 
-        try {
-            getCurrentLevel().Empty();
-            setCurrentLevel(new Level(this));
-            Item.level = getCurrentLevel();
-            Room.level = getCurrentLevel();
-            Material.level = getCurrentLevel();
+    boolean isSuspended();
 
-            // Add flags for loading Object inventories or running Init()
-            try
-            {
-                FileInputStream in = new FileInputStream(filename);
-                ObjectInputStream s = new ObjectInputStream(in);
-                getCurrentLevel().readObject(s);
-                s.close();
-                in.close();
-            }
-            catch (FileNotFoundException e)
-            {
-                System.out.println("File Not Found");
-                return;
-            }
-            catch (IOException e)
-            {
-                System.out.println("IO Exception");
-                System.out.println(e.getMessage());
-                e.printStackTrace();
-                return;
-            }
+    void suspend();
 
-            if (getCurrentLevel().remote != null)
-            {
-                if (getCurrentLevel().electricity)
-                {
-                    getCurrentLevel().remote.x = 28;
-                    getCurrentLevel().remote.y = -20;
-                    getCurrentLevel().remote.carriedBy = getCurrentLevel().getPlayer();
-                    getCurrentLevel().remote.room = getCurrentLevel().getPlayer().room;
-                }
-                else // Electricity is off
-                {
-                    getCurrentLevel().remote.carriedBy = null;
-                    getCurrentLevel().remote.room = null;
-                }
-            }
-        } finally {
-            restart();
-        }
-    }
+    void restart();
 
-    public void saveLevel()
-    {
-        String temp = getCurrentLevel().getClass().toString();
-        System.out.println("Class name is " + temp);
-        String[] path = temp.split("\\.");
-        for (int a=0; a< path.length; a++)
-            System.out.println(a + " = " + path[a]);
-        //	String filename = temp.substring(6);
-        String filename = path[path.length-1];
-        saveLevel(filename + ".lvl");
-    }
+    SoundPlayer getSoundPlayer();
 
-    public void saveLevel(String filename)
-    {
-        System.out.println("Saving level " + filename);
-        try
-        {
-            FileOutputStream out = new FileOutputStream(filename);
-            ObjectOutputStream s = new ObjectOutputStream(out);
-            getCurrentLevel().writeObject(s);
-            s.flush();
-            s.close();
-            out.close();
-        }
-        catch (FileNotFoundException e)
-        {
-            System.out.println("File Not Found");
-        }
-        catch (IOException e)
-        {
-            System.out.println("IO Exception");
-            System.out.println(e.getMessage());
-        }
-    }
+    void setSoundPlayer(SoundPlayer soundPlayer);
 
-    /**
-     * @return true if the game action and animations are currently suspended.
-     */
-    public boolean isSuspended() {
-        return suspended;
-    }
+    ClockTickHandler getClockTickHandler();
 
-    /**
-     * Set true to temporarily suspend the game.
-     * @param suspended true if the game should be suspended, false to restart the world
-     */
-    private void setSuspended(boolean suspended) {
-        this.suspended = suspended;
-    }
+    void setView(RoomDisplay view);
 
-    public void suspend() {
-        setSuspended(true);
-    }
+    RoomDisplay getView();
 
-    public void restart() {
-        setSuspended(false);
-    }
+    OperationFactory getOperationFactory();
 
-    public SoundPlayer getSoundPlayer() {
-        return soundPlayer;
-    }
+    void setOperationFactory(OperationFactory operationFactory);
 
-    public void setSoundPlayer(SoundPlayer soundPlayer) {
-        this.soundPlayer = soundPlayer;
-    }
-
-    public ClockTickHandler getClockTickHandler() {
-        return clockTickHandler;
-    }
-
-    public void setView(RoomDisplay view) {
-        this.view = view;
-    }
-
-    public RoomDisplay getView() {
-        return view;
-    }
-
-    public OperationFactory getOperationFactory() {
-        return operationFactory;
-    }
-
-    public void setOperationFactory(OperationFactory operationFactory) {
-        this.operationFactory = operationFactory;
-    }
+    EventBus getEventBus();
 }

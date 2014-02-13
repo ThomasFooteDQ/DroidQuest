@@ -11,7 +11,7 @@ public class DQ
 {
 	public static void main(String[] args)
 	{
-        Game game = new Game();
+        Game game = new GameImpl();
         game.setSoundPlayer(new SwingSoundPlayer(game));
         game.setOperationFactory(new SwingOperationFactory(game));
         game.setCurrentLevel(new MainMenu(game));
