@@ -475,10 +475,11 @@ public class GameCursor extends Item {
             case KeyEvent.VK_DOWN:
                 op = getOperationFactory().createMoveRepeatOperation(
                         this, DirectionUtil.getDirection(e.getKeyCode()), e.isControlDown() ? Distance.Nudge : Distance.Step);
+                break;
 
             case KeyEvent.VK_SPACE:
-                if (level.player == level.gameCursor)
-                    outline = Color.white;
+                op = getOperationFactory().createOutlineItemOperation(this);
+                break;
         }
 
         if (op != null && op.canExecute()) {

@@ -170,6 +170,7 @@ public boolean KeyDown(KeyEvent e)
           case KeyEvent.VK_DOWN:
               op = getOperationFactory().createMoveRepeatOperation(
                       this, getDirection(e.getKeyCode()), e.isControlDown() ? Distance.Nudge : Distance.Step);
+              break;
       }
 
       if (op != null && op.canExecute()) {

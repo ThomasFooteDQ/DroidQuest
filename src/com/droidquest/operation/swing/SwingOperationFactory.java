@@ -13,6 +13,7 @@ import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.KeyRepeatTracker;
 import com.droidquest.operation.api.OperationFactory;
 import com.droidquest.operation.api.avatar.*;
+import com.droidquest.operation.api.item.OutlineItemOperation;
 import com.droidquest.operation.api.item.handle.HandleDropOperation;
 import com.droidquest.operation.api.item.handle.HandleLeftOperation;
 import com.droidquest.operation.api.item.handle.HandleRightOperation;
@@ -102,6 +103,11 @@ public class SwingOperationFactory implements OperationFactory {
     @Override
     public Operation createMoveRepeatOperation(Item avatar, Direction direction, Distance distance) {
         return new MoveRepeatOperation(avatar, direction, distance, keyRepeatTracker);
+    }
+
+    @Override
+    public Operation createOutlineItemOperation(Item item) {
+        return new OutlineItemOperation(item);
     }
 
     @Override
