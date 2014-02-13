@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import com.droidquest.Room;
@@ -178,6 +179,15 @@ public boolean KeyDown(KeyEvent e)
       }
       return false;
   }
+
+@Override
+protected Operation getMouseClickOperation(MouseEvent e) {
+    if (SwingUtilities.isRightMouseButton(e)) {
+        return getOperationFactory().createPickUpItemOperation(this);
+    }
+
+    return super.getMouseClickOperation(e);
+}
 
 public void MoveUp(boolean nudge) 
   {

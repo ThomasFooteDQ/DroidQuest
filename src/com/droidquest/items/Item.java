@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Rectangle;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -18,7 +17,9 @@ import com.droidquest.Wire;
 import com.droidquest.devices.Device;
 import com.droidquest.levels.Level;
 import com.droidquest.materials.ChipTrash;
+import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.OperationFactory;
+import com.droidquest.operation.api.avatar.Direction;
 
 public class Item implements Serializable, Cloneable 
 {
@@ -265,52 +266,28 @@ public class Item implements Serializable, Cloneable
 
 	public void MouseClick(MouseEvent e) 
 	{
-		int button=0;
-		if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK)
-			button = 1;
-		if ((e.getModifiers() & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK)
-			button = 3;
-
-		if (button==1)
-		{
-			if (e.getClickCount()==1)
-			{
-				autoX = e.getX() - width/2;
-				autoY = e.getY() - height/2;
-				autoX -= autoX%2; // Even numbered pixel only!
-				autoY -= autoY%2;
-				automove = 1;
-			}
-			else if (e.getClickCount()==2)
-			{
-				int dx = e.getX() - width/2 - x;
-				int dy = e.getY() - height/2 - y;
-				if (Math.abs(dx) > Math.abs(dy))
-				{
-					autoY=0; autoX=28;
-					if (dx<0) autoX=-28;
-					automove=2;
-				}
-				else
-				{
-					autoX=0; autoY=32;
-					if (dy<0) autoY=-32;
-					automove=2;
-				}
-			}
-		}
-
-		if (button==3)
-		{
-			KeyEvent k = new KeyEvent(e.getComponent(), e.getID(), 
-					e.getWhen(), 0, 
-					KeyEvent.VK_SPACE,' ');
-			KeyUp(k);
-		}
-
+        Operation op = getMouseClickOperation(e);
+        if (op != null && op.canExecute()) {
+            op.execute();
+        }
 	}
 
-	public void MoveUp(int dist) 
+    protected Operation getMouseClickOperation(MouseEvent e) {
+        if (SwingUtilities.isLeftMouseButton(e))
+        {
+            if (e.getClickCount()==1)
+            {
+                return getOperationFactory().createMoveToPixelOperation(this, e.getX(), e.getY());
+            }
+            else if (e.getClickCount()==2)
+            {
+                return getOperationFactory().createMoveDirectionalOperation(this, e.getX(), e.getY());
+            }
+        }
+        return null;
+    }
+
+    public void MoveUp(int dist)
 	{
 		int bigXl = x/28;
 		int bigXr = (x+getWidth()-1)/28;
@@ -758,4 +735,35 @@ public class Item implements Serializable, Cloneable
         this.currentIcon = currentIcon;
     }
 
+    public void autoMoveToLocation(int x, int y) {
+        this.autoX = x;
+        this.autoY = y;
+        this.automove = 1;
+    }
+
+    public void autoMoveInDirection(Direction moveDirection) {
+        switch (moveDirection) {
+            case Left:
+                autoX = -28;
+                autoY = 0;
+                break;
+
+            case Right:
+                autoX = 28;
+                autoY = 0;
+                break;
+
+            case Up:
+                autoX = 0;
+                autoY = -28;
+                break;
+
+            case Down:
+                autoX = 0;
+                autoY = 28;
+                break;
+        }
+
+        this.automove = 2;
+    }
 }

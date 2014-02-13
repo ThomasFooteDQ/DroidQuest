@@ -1,6 +1,8 @@
 package com.droidquest.items;
 
+import javax.swing.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import com.droidquest.Room;
 import com.droidquest.decorations.TextBox;
@@ -47,6 +49,16 @@ public boolean KeyUp(KeyEvent e)
     }
 	return false;
   }
+
+
+    @Override
+    protected Operation getMouseClickOperation(MouseEvent e) {
+        if (SwingUtilities.isRightMouseButton(e)) {
+            return getOperationFactory().createExitCameraOperation(this);
+        }
+
+        return super.getMouseClickOperation(e);
+    }
 
 public void exitCamera() {
     level.player=level.gameCursor;

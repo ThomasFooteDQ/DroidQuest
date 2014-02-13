@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -426,49 +425,23 @@ public boolean KeyUp(KeyEvent e)
       return false;
   }
 
-public void MouseClick(MouseEvent e) 
-  {
-	int button=0;
-	if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK)
-	  button = 1;
-	if ((e.getModifiers() & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK)
-	  button = 3;
-	
-	if (button==1)
-	  {
-	     if (e.getClickCount()==1)
-	       {
-		  autoX = e.getX() - 2;
-		  autoY = e.getY() - 20;
-		  automove = 1;
-	       }
-	     else if (e.getClickCount()==2)
-	       {
-		  int dx = e.getX() - 2 - x;
-		  int dy = e.getY() - 20 - y;
-		  if (Math.abs(dx) > Math.abs(dy))
-		    {
-		       autoY=0; autoX=28;
-		       if (dx<0) autoX=-28;
-		       automove=2;
-		    }
-		  else
-		    {
-		       autoX=0; autoY=32;
-		       if (dy<0) autoY=-32;
-		       automove=2;
-		    }
-	       }
-	  }
-		
-	if (button==3)
-	  {
-	     KeyEvent k = new KeyEvent(e.getComponent(), e.getID(), 
-				       e.getWhen(), 0, 
-				       KeyEvent.VK_SPACE, ' ');
-	     KeyUp(k);
-	  }
-	
-  }
+
+    @Override
+    protected Operation getMouseClickOperation(MouseEvent e) {
+        if (SwingUtilities.isLeftMouseButton(e)) {
+            if (e.getClickCount()==1)
+            {
+                return getOperationFactory().createMoveSolderingPenToPixelOperation(this, e.getX(), e.getY());
+            }
+            else if (e.getClickCount()==2)
+            {
+                return getOperationFactory().createMoveSolderingPenDirectionalOperation(this, e.getX(), e.getY());
+            }
+        } else if (SwingUtilities.isRightMouseButton(e)) {
+            return getOperationFactory().createWirePortOperation(this);
+        }
+
+        return null;
+    }
 
 }

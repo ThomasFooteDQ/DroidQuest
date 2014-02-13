@@ -41,9 +41,17 @@ public interface OperationFactory {
 
     Operation createLoadSmallChipOperation(Item avatar);
 
+    Operation createMoveDirectionalOperation(Item avatar, int x, int y);
+
     Operation createMoveOperation(Item avatar, Direction direction, Distance distance);
 
     Operation createMoveRepeatOperation(Item avatar, Direction direction, Distance distance);
+
+    Operation createMoveSolderingPenDirectionalOperation(SolderingPen solderingPen, int x, int y);
+
+    Operation createMoveSolderingPenToPixelOperation(SolderingPen solderingPen, int x, int y);
+
+    Operation createMoveToPixelOperation(Item avatar, int x, int y);
 
     Operation createOutlineItemOperation(Item item);
 

@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import com.droidquest.materials.Material;
@@ -83,6 +84,16 @@ public boolean KeyUp(KeyEvent e)
     }
 	return false;
   }
+
+
+@Override
+protected Operation getMouseClickOperation(MouseEvent e) {
+    if (SwingUtilities.isRightMouseButton(e)) {
+        return getOperationFactory().createExitTrainOperation(this);
+    }
+
+    return super.getMouseClickOperation(e);
+}
 
 public void exitTrain() {
     if (level.rooms.indexOf(room)==14)

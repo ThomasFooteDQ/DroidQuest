@@ -96,6 +96,11 @@ public class SwingOperationFactory implements OperationFactory {
     }
 
     @Override
+    public Operation createMoveDirectionalOperation(Item avatar, int x, int y) {
+        return new MoveDirectionalOperation(avatar, x, y);
+    }
+
+    @Override
     public Operation createMoveOperation(Item avatar, Direction direction, Distance distance) {
         return new MoveOperation(avatar, direction, distance, keyRepeatTracker);
     }
@@ -103,6 +108,21 @@ public class SwingOperationFactory implements OperationFactory {
     @Override
     public Operation createMoveRepeatOperation(Item avatar, Direction direction, Distance distance) {
         return new MoveRepeatOperation(avatar, direction, distance, keyRepeatTracker);
+    }
+
+    @Override
+    public Operation createMoveSolderingPenDirectionalOperation(SolderingPen solderingPen, int x, int y) {
+        return new MoveSolderingPenDirectionalOperation(solderingPen, x, y);
+    }
+
+    @Override
+    public Operation createMoveSolderingPenToPixelOperation(SolderingPen solderingPen, int x, int y) {
+        return new MoveSolderingPenToPixelOperation(solderingPen, x, y);
+    }
+
+    @Override
+    public Operation createMoveToPixelOperation(Item avatar, int x, int y) {
+        return new MoveToPixelOperation(avatar, x, y);
     }
 
     @Override
