@@ -53,7 +53,7 @@ public class WallHandle extends Item
 
 	public boolean CanBePickedUp(Item item) 
 	  {
-		if (item == level.player) return false;	
+		if (item == getPlayer()) return false;
 		return true;
 	  }
 

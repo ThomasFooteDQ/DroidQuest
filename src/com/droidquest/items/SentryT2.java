@@ -28,9 +28,9 @@ public class SentryT2 extends Sentry
 		else
 		  currentIcon = icons[animation].getImage();
 		
-		if (level.player.room==room) 
-		  if (level.player.x>=112) 
-		    if (level.player.carrying==level.toolbox)
+		if (getPlayer().room==room)
+		  if (getPlayer().x>=112)
+		    if (getPlayer().carrying==level.toolbox)
 		      {
 			 previousBehavior = behavior;
 			 behavior=2;
@@ -51,13 +51,13 @@ public class SentryT2 extends Sentry
 		     if (x>56) MoveLeft(4);
 		     break;
 		   case 2:
-		     if (level.player.room != room)
+		     if (getPlayer().room != room)
 		       {
 			  behavior = previousBehavior;
 			  break;
 		       }
-		     int dx=level.player.x - x;
-		     int dy=level.player.y - y;
+		     int dx= getPlayer().x - x;
+		     int dy= getPlayer().y - y;
 		     if (dx<-50) dx=-50;
 		     if (dx>50) dx=50;
 		     if (dy<-50) dy=-50;
@@ -68,7 +68,7 @@ public class SentryT2 extends Sentry
 		     if (dy>0) MoveDown(dy);
 		     if (dx==0 && dy==0)
 		       {
-			  PicksUp(level.player);
+			  PicksUp(getPlayer());
 			  behavior=3;
 		       }
 		     break;

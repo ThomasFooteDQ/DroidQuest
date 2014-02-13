@@ -14,11 +14,11 @@ public PeriscopeDown()
 public void TouchedByItem(Item item) 
   {
 	
-	if (item == level.player)
+	if (item == getPlayer())
 	  if (item.x < 462 || item.y > 80)
 	  {
-	     GenericRobot gr = (GenericRobot) level.player.room.portalItem;
-	     level.currentViewer = level.player;
+	     GenericRobot gr = (GenericRobot) getPlayer().room.portalItem;
+	     level.currentViewer = getPlayer();
 	     gr.periscope = false;
 	  }
   }

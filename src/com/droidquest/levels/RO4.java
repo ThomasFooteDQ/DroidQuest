@@ -1092,8 +1092,8 @@ public RO4 (Game game)
 	items.addElement(helpCam);
 	items.addElement(solderingPen);
 	items.addElement(remote);
-	player = gameCursor;
-	currentViewer = player;
+	setPlayer(gameCursor);
+	setCurrentViewer(getPlayer());
 	
   }
 

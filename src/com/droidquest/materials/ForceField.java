@@ -19,7 +19,7 @@ public ForceField(String rc, Color c)
 
 public boolean Passable(Item item)
   {
-	if (item == level.player)
+	if (item == getPlayer())
 	  return false;
 	else if (item instanceof GenericRobot)
 	  {

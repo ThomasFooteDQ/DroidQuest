@@ -14,7 +14,7 @@ public SlipperyToken(int X, int Y, Room r)
 
 public boolean CanBePickedUp(Item item) 
   {
-	if (item == level.player && jumping)
+	if (item == getPlayer() && jumping)
 	  return false;
 	else
 	  return true;
@@ -48,7 +48,7 @@ public void Animate()
 	  jumping = false;
 	if (jumping)
 	  {
-	     if (Overlaps(level.player))
+	     if (Overlaps(getPlayer()))
 	       {
 		  x = level.random.nextInt(16*28)+28;
 		  y = level.random.nextInt(8*32)+(2*32);

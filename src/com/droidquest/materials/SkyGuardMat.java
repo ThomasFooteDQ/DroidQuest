@@ -12,12 +12,12 @@ public SkyGuardMat()
 
 public void TouchedByItem(Item item) 
   {
-	if (item==level.player)
+	if (item== getPlayer())
 	  {
-          level.getSoundPlayer().playIfInRoom(level.player.room, Level.DISCHARGESOUND);
-          level.player.x = 2*28;
-	     level.player.y = 8*32;
-	     level.player.SetRoom(level.player.room.downRoom);
+          level.getSoundPlayer().playIfInRoom(getPlayer().room, Level.DISCHARGESOUND);
+          getPlayer().x = 2*28;
+	     getPlayer().y = 8*32;
+	     getPlayer().SetRoom(getPlayer().room.downRoom);
 	  }
   }
 

@@ -18,7 +18,7 @@ public Portal(String ln, boolean bs, boolean il)
 
 public void TouchedByItem(Item item)
   {
-	if (item == level.player && level.player.carriedBy == null)
+	if (item == getPlayer() && getPlayer().carriedBy == null)
 	  {
 	     if (item.x%28==0 && item.y%32==0)
 	       level.portal = this;

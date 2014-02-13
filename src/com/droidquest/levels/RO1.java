@@ -905,8 +905,8 @@ public RO1(Game game)
 	items.addElement(solderingPen);
 	items.addElement(remote);
 	items.addElement(helpCam);
-	player = gameCursor;
-	currentViewer = player;
+	setPlayer(gameCursor);
+	setCurrentViewer(getPlayer());
 	items.addElement(new BlackCrystal(2*28,7*32, (Room) rooms.elementAt(3)));
 	
   }

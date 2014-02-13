@@ -40,8 +40,8 @@ public class ClockTickHandler {
             String filename = getLevel().portal.levelName;
             boolean bringStuff = getLevel().portal.bringStuff;
             boolean initLevel = getLevel().portal.initLevel;
-            int x = getLevel().player.x + getLevel().player.getWidth()/2;
-            int y = getLevel().player.y + getLevel().player.getHeight()/2;
+            int x = getPlayer().x + getPlayer().getWidth()/2;
+            int y = getPlayer().y + getPlayer().getHeight()/2;
             game.getSoundPlayer().play(Level.TELEPORTSOUND);
             boolean tempsound = game.getSoundPlayer().isAudioEnabled();
             game.getSoundPlayer().setAudioEnabled(false);
@@ -137,8 +137,8 @@ public class ClockTickHandler {
                 System.out.println("Loading carried items.");
                 getLevel().LoadInventory();
             }
-            x = getLevel().player.x + getLevel().player.getWidth()/2;
-            y = getLevel().player.y + getLevel().player.getHeight()/2;
+            x = getPlayer().x + getPlayer().getWidth()/2;
+            y = getPlayer().y + getPlayer().getHeight()/2;
 
             //		     for (int a=560; a>0; a-=2)
             //		       {
@@ -191,6 +191,10 @@ public class ClockTickHandler {
                 a--;
             }
         }
+    }
+
+    public Item getPlayer() {
+        return getLevel().getPlayer();
     }
 
     private void electricity()

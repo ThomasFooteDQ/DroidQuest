@@ -19,7 +19,7 @@ public class AntiPlayer extends Material
 	public void TouchedByItem(Item item) 
 	  {
 		boolean trigger = false;
-		if (item == level.player)
+		if (item == getPlayer())
 		  trigger = true;
 		else if (item instanceof GenericRobot)
 		  {
@@ -30,11 +30,11 @@ public class AntiPlayer extends Material
 		
 		if (trigger)
 		  {
-		     level.player.room = (Room) level.rooms.elementAt(40);
-		     level.player.x = 10*28;
-		     level.player.y = 5*32;
-		     level.currentViewer = level.player;
+		     getPlayer().room = (Room) level.rooms.elementAt(40);
+		     getPlayer().x = 10*28;
+		     getPlayer().y = 5*32;
+		     level.currentViewer = getPlayer();
 		  }
 	  }
 
-	}
+}

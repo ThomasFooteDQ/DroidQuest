@@ -75,8 +75,8 @@ public class Game {
                 {
                     getCurrentLevel().remote.x = 28;
                     getCurrentLevel().remote.y = -20;
-                    getCurrentLevel().remote.carriedBy = getCurrentLevel().player;
-                    getCurrentLevel().remote.room = getCurrentLevel().player.room;
+                    getCurrentLevel().remote.carriedBy = getCurrentLevel().getPlayer();
+                    getCurrentLevel().remote.room = getCurrentLevel().getPlayer().room;
                 }
                 else // Electricity is off
                 {

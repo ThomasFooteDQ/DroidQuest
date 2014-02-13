@@ -30,7 +30,7 @@ public class HelpOperation implements Operation {
             return;
         }
 
-        level.player = level.helpCam;
-        level.currentViewer = level.helpCam;
+        level.setPlayer(level.helpCam);
+        level.setCurrentViewer(level.helpCam);
     }
 }

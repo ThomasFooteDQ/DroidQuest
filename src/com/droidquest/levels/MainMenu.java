@@ -288,8 +288,8 @@ public MainMenu(Game game)
 	helpCam = new HelpCam( (Room) rooms.elementAt(0));
 	items.addElement(gameCursor);
 	items.addElement(helpCam);
-	player = gameCursor;
-	currentViewer = player;
+	setPlayer(gameCursor);
+	currentViewer = getPlayer();
 	
 	File f = new File("ROlevels/");
 	if (!f.exists())

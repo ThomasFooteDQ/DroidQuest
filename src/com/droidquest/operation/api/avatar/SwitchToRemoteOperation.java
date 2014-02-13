@@ -28,7 +28,7 @@ public class SwitchToRemoteOperation implements Operation {
         level.remote.setRoom(avatar.getRoom());
         avatar.setRoom(null);
 
-        if (level.getCurrentViewer() == level.player)
+        if (level.getCurrentViewer() == level.getPlayer())
             level.setCurrentViewer(level.remote);
         level.setPlayer(level.remote);
     }

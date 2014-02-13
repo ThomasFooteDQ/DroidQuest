@@ -44,7 +44,7 @@ public class SwitchToPaintbrushOperation implements Operation {
         level.paintbrush.setRoom(avatar.getRoom());
         avatar.setRoom(null);
 
-        if (level.getCurrentViewer() == level.player)
+        if (level.getCurrentViewer() == level.getPlayer())
             level.setCurrentViewer(level.paintbrush);
         level.setPlayer(level.paintbrush);
     }

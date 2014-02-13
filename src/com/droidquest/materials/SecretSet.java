@@ -11,7 +11,7 @@ public SecretSet()
 
 public void TouchedByItem(Item item) 
   {
-	if (item==level.player)
+	if (item== getPlayer())
 	  {
 	     level.LinkRoomsUpDown(2,7);
 	     level.LinkRoomsUpDown(8,2);

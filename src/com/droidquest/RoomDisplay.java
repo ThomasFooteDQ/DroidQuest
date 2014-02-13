@@ -57,7 +57,7 @@ public class RoomDisplay extends JPanel implements View
 		addKeyListener(new KeyAdapter() { 
 			public void keyReleased(KeyEvent e) {
 				// Event Handler for KeyReleased here
-				if (getLevel().player.KeyUp(e))
+				if (getLevel().getPlayer().KeyUp(e))
 					repaint();
 
 				if (e.getKeyCode() == KeyEvent.VK_Q)
@@ -71,7 +71,7 @@ public class RoomDisplay extends JPanel implements View
 				{
 					if (timerspeed<128) 
 						timerspeed*=2;
-					if ( (timerspeed>=128) && (getLevel().player instanceof LabCursor) )
+					if ( (timerspeed>=128) && (getLevel().getPlayer() instanceof LabCursor) )
 						timerspeed*=2;
 					timer.setDelay(timerspeed);
 				}
@@ -82,7 +82,7 @@ public class RoomDisplay extends JPanel implements View
 		// Key Pressed Functions
 		addKeyListener(new KeyAdapter() { 
 			public void keyPressed(KeyEvent e) {
-				if (getLevel().player.KeyDown(e))
+				if (getLevel().getPlayer().KeyDown(e))
 					repaint();
 				return;
 			}
@@ -96,7 +96,7 @@ public class RoomDisplay extends JPanel implements View
 				int deltaX = newX - e.getX();
 				int deltaY = newY - e.getY();
 				e.translatePoint(deltaX,deltaY);
-				getLevel().player.MouseClick(e);
+				getLevel().getPlayer().MouseClick(e);
 			}
 		});
 

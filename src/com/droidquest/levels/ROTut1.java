@@ -664,8 +664,8 @@ public ROTut1(Game game)
 	items.addElement(gameCursor);
 	items.addElement(helpCam);
 
-	player = gameCursor;
-	currentViewer = player;
+	setPlayer(gameCursor);
+	setCurrentViewer(getPlayer());
 	electricity=true;
   }
 

@@ -92,4 +92,8 @@ public class Material implements Serializable, Cloneable
     public Color getColor() {
         return color;
     }
+
+    protected Item getPlayer() {
+        return level.getPlayer();
+    }
 }

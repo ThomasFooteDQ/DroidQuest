@@ -35,12 +35,12 @@ public class SwitchToGameCursorOperation implements Operation {
         level.gameCursor.setRoom(avatar.getRoom());
         avatar.setRoom(null);
 
-        if (level.getCurrentViewer() == level.player)
+        if (level.getCurrentViewer() == level.getPlayer())
             level.setCurrentViewer(level.gameCursor);
         level.setPlayer(level.gameCursor);
 
         if (level.remote != null && level.remote.getCarriedBy() != null) {
-            level.remote.setCarriedBy(level.player);
+            level.remote.setCarriedBy(level.getPlayer());
         }
     }
 }

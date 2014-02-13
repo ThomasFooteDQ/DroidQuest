@@ -12,7 +12,7 @@ public ElevatorInPortal()
 
 public void TouchedByItem(Item item)
   {
-	if (item == level.player)
+	if (item == getPlayer())
 	  {
 	     Room elevatorRoom = (Room) level.rooms.elementAt(35);
 	     item.x = 28;

@@ -11,7 +11,7 @@ public SecretReset()
 
 public void TouchedByItem(Item item) 
   {
-	if (item==level.player)
+	if (item== getPlayer())
 	  {
 	     level.LinkRoomsUpDown(8,7);
 	  }

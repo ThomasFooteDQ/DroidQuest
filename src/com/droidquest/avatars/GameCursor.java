@@ -568,10 +568,10 @@ public class GameCursor extends Item {
 	{
 		if (robot==null)
 		{
-			if (level.player.room.portalItem!=null)
+			if (getPlayer().room.portalItem!=null)
 			{
-				if (level.player.room.portalItem.getClass().toString().endsWith("Robot"))
-					return (PlayerInRobot ((GenericRobot) level.player.room.portalItem));
+				if (getPlayer().room.portalItem.getClass().toString().endsWith("Robot"))
+					return (PlayerInRobot ((GenericRobot) getPlayer().room.portalItem));
 				else return (null);
 			}
 			else

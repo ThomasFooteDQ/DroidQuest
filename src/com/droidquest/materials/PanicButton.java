@@ -20,7 +20,7 @@ public PanicButton(int n)
 
 public void TouchedByItem(Item item)
   {
-	if (item == level.player && level.player.carriedBy == null)
+	if (item == getPlayer() && getPlayer().carriedBy == null)
 	  {
 	     if (sentry==null)
 	       {

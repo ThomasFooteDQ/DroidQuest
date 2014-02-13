@@ -309,7 +309,7 @@ public class Item implements Serializable, Cloneable
 				y=y+384;
 				SetRoom(room.getUpRoom());
 			}
-			else if (this==level.player && room.portalItem != null)
+			else if (this==getPlayer() && room.portalItem != null)
 			{ // Exit item, Player only
 				Dimension d = room.portalItem.GetXY();
 				x = d.width + (room.portalItem.width - width)/2;
@@ -348,7 +348,7 @@ public class Item implements Serializable, Cloneable
 				y=y-384;
 				SetRoom(room.getDownRoom());
 			}
-			else if (this==level.player && room.portalItem != null)
+			else if (this==getPlayer() && room.portalItem != null)
 			{ // Exit item, GameCursor only
 				Dimension d = room.portalItem.GetXY();
 				x = d.width + (room.portalItem.width - width)/2;
@@ -387,7 +387,7 @@ public class Item implements Serializable, Cloneable
 				x=x+560;
 				SetRoom(room.getLeftRoom());
 			}
-			else if (this==level.player && room.portalItem != null)
+			else if (this==getPlayer() && room.portalItem != null)
 			{ // Exit item, GameCursor only
 				Dimension d = room.portalItem.GetXY();
 				x = d.width + (room.portalItem.width - width)/2;
@@ -427,7 +427,7 @@ public class Item implements Serializable, Cloneable
 				x=x-560;
 				SetRoom(room.getRightRoom());
 			}
-			else if (this==level.player && room.portalItem != null)
+			else if (this==getPlayer() && room.portalItem != null)
 			{ // Exit item, GameCursor only
 				Dimension d = room.portalItem.GetXY();
 				x = d.width + (room.portalItem.width - width)/2;
@@ -765,5 +765,9 @@ public class Item implements Serializable, Cloneable
         }
 
         this.automove = 2;
+    }
+
+    protected Item getPlayer() {
+        return level.getPlayer();
     }
 }

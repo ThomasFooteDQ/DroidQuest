@@ -12,10 +12,10 @@ public PeriscopeUp()
 
 public void TouchedByItem(Item item)
   {
-	if (item == level.player)
+	if (item == getPlayer())
 	  if (item.x > 462 && item.y < 80)
 	    {
-	       GenericRobot gr = (GenericRobot) level.player.room.portalItem;
+	       GenericRobot gr = (GenericRobot) getPlayer().room.portalItem;
 	       level.currentViewer = gr;
 	       gr.periscope = true;
 	    }

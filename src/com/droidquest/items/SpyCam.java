@@ -61,8 +61,8 @@ public boolean KeyUp(KeyEvent e)
     }
 
 public void exitCamera() {
-    level.player=level.gameCursor;
-    level.currentViewer=level.player;
+    level.setPlayer(level.gameCursor);
+    level.currentViewer= getPlayer();
     for (int a=5; a<60; a++)
       {
      Room r = (Room) level.rooms.elementAt(a);

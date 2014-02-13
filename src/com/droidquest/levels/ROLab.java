@@ -578,8 +578,8 @@ public ROLab(Game game)
 	items.addElement(solderingPen);
 	items.addElement(remote);
 	items.addElement(helpCam);
-	player = gameCursor;
-	currentViewer = player;
+	setPlayer(gameCursor);
+	setCurrentViewer(getPlayer());
   }
 
 }

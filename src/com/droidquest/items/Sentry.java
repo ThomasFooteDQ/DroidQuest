@@ -245,7 +245,7 @@ public class Sentry extends Item
 		  }
 		
 		if (behavior >=0 && behavior < pounce)
-		  if (protect.length >0 && level.player.room == room)
+		  if (protect.length >0 && getPlayer().room == room)
 		    {
 		       for (int p=0; p<protect.length/6; p++)
 			 {
@@ -256,10 +256,10 @@ public class Sentry extends Item
 			    int x3= protect[p*6+4];
 			    int y3= protect[p*6+5];
 			    
-			    if (level.player.x >= x1
-				&& level.player.x <= x2
-				&& level.player.y >= y1
-				&& level.player.y <= y2)
+			    if (getPlayer().x >= x1
+				&& getPlayer().x <= x2
+				&& getPlayer().y >= y1
+				&& getPlayer().y <= y2)
 			      {
 				 carryToX = x3;
 				 carryToY = y3;
@@ -300,30 +300,30 @@ public class Sentry extends Item
 		  }
 		else if (behavior == pounce)
 		  {
-		     if (level.player.room != room)
+		     if (getPlayer().room != room)
 		       behavior = previousBehavior;
 		     if (animation==0)
 		       {
-			  x=level.player.x;
-			  y=level.player.y;
+			  x= getPlayer().x;
+			  y= getPlayer().y;
 		       }
-		     if (x != level.player.x)
+		     if (x != getPlayer().x)
 		       {
-			  int diff = Math.abs(level.player.x - x);
-			  int dir  = diff / (level.player.x - x);
+			  int diff = Math.abs(getPlayer().x - x);
+			  int dir  = diff / (getPlayer().x - x);
 			  if (diff > 50) diff /= 2;
 			  MoveRight(diff * dir);
 		       }
-		     if (y != level.player.y)
+		     if (y != getPlayer().y)
 		       {
-			  int diff = Math.abs(level.player.y - y);
-			  int dir  = diff / (level.player.y - y);
+			  int diff = Math.abs(getPlayer().y - y);
+			  int dir  = diff / (getPlayer().y - y);
 			  if (diff > 50) diff /= 2;
 			  MoveDown(diff * dir);
 		       }
-		     if (x == level.player.x && y == level.player.y)
+		     if (x == getPlayer().x && y == getPlayer().y)
 		       {
-			  PicksUp(level.player);
+			  PicksUp(getPlayer());
 //			  if (level.player.carrying != null)
 //			    level.player.Drops();
 			  behavior=drag;
@@ -360,10 +360,10 @@ public class Sentry extends Item
 	  {
 		if (robot==null)
 		  {
-		     if (level.player.room.portalItem!=null)
+		     if (getPlayer().room.portalItem!=null)
 		       {
-			  if (level.player.room.portalItem.getClass().toString().endsWith("Robot"))
-			    return (PlayerInRobot ((GenericRobot) level.player.room.portalItem));
+			  if (getPlayer().room.portalItem.getClass().toString().endsWith("Robot"))
+			    return (PlayerInRobot ((GenericRobot) getPlayer().room.portalItem));
 			  else return (null);
 		       }
 		     else

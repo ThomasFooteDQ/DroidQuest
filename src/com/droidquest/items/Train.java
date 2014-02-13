@@ -61,10 +61,10 @@ public void GenerateIcons()
 
 public boolean CanBePickedUp(Item item) 
   {
-	if (item == level.player)
+	if (item == getPlayer())
 	  {
-	     PicksUp(level.player);
-	     level.player = this;
+	     PicksUp(getPlayer());
+	     level.setPlayer(this);
 	     Material mat = (Material) level.materials.elementAt(8);
 	     mat.passable=true;
 	  }
@@ -105,7 +105,7 @@ public void exitTrain() {
      room.SetMaterial(18,8,0);
      room.SetMaterial(18,9,0);
       }
-    level.player=carrying;
+    level.setPlayer(carrying);
     Drops();
     room=null;
     Material mat = (Material) level.materials.elementAt(8);

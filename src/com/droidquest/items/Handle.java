@@ -49,9 +49,9 @@ public class Handle extends Item
 
 	public boolean CanBePickedUp(Item item) 
 	  {
-		if (item != level.player) return false;
+		if (item != getPlayer()) return false;
 		PicksUp(item);
-		level.player = this;
+		level.setPlayer(this);
 		return false;
 	  }
 
@@ -89,7 +89,7 @@ public class Handle extends Item
     }
 
     public void dropHandle() {
-        level.player=carrying;
+        level.setPlayer(carrying);
         Drops();
         room.SetMaterial(1, 4, 8);
         room.SetMaterial(2, 4, 8);

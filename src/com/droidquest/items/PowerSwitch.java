@@ -85,7 +85,7 @@ public class PowerSwitch extends Item
 
 	public boolean CanBePickedUp(Item i) 
 	  {
-		if (i!=level.player)
+		if (i!= getPlayer())
 		  return false;
 		((GenericRobot)room.portalItem).thrusterPower = !((GenericRobot)room.portalItem).thrusterPower;
 		if (((GenericRobot)room.portalItem).thrusterPower)

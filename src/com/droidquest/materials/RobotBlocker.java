@@ -26,7 +26,7 @@ public class RobotBlocker extends Material
 		     if (gc.PlayerInRobot(null) == robot)
 		       return false;
 		  }
-		if (item == robot || item == level.player)
+		if (item == robot || item == getPlayer())
 		  return false;
 		else
 		  return true;

@@ -40,7 +40,7 @@ public boolean Passable(Item item)
 	     if (gc.PlayerInRobot(null) == item)
 	       return false;
 	  }	
-	if (item == level.player)
+	if (item == getPlayer())
 	  return false;
 	else
 	  return true;

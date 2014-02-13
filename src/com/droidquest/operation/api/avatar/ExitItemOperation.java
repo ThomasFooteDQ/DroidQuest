@@ -39,6 +39,6 @@ public class ExitItemOperation implements Operation {
         avatar.setX(newX);
         avatar.setY(newY);
         avatar.SetRoom(portalItem.getRoom());
-        level.setCurrentViewer(level.player);
+        level.setCurrentViewer(level.getPlayer());
     }
 }

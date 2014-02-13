@@ -78,7 +78,7 @@ public void Animate()
 	     for (int a=0; a<level.items.size(); a++)
 	       {
 		  Item item = (Item) level.items.elementAt(a);
-		  if (item != this && item != level.player)
+		  if (item != this && item != getPlayer())
 		    if (item.room == room && item.carriedBy==null)
 		      {
 			 previousBehavior = behavior;

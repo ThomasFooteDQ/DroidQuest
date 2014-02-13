@@ -43,7 +43,7 @@ public class ToggleRemoteOperation implements Operation {
     private void summonRemote() {
         level.remote.x = 28;
         level.remote.y = -20;
-        level.remote.carriedBy = level.player;
-        level.remote.room = level.player.room;
+        level.remote.carriedBy = level.getPlayer();
+        level.remote.room = level.getPlayer().room;
     }
 }

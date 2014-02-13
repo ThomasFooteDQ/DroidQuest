@@ -20,7 +20,7 @@ public void TouchedByItem(Item item)
 	       if (i.getClass().toString().endsWith("HiddenCamera"))
 		 hiddenCamera = i;
 	    }
-	if (item == level.player)
+	if (item == getPlayer())
 	  level.currentViewer = hiddenCamera;
   }
 

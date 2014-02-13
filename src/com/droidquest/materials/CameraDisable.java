@@ -12,8 +12,8 @@ public CameraDisable()
 
 public void TouchedByItem(Item item) 
   {
-	if (item == level.player)
-	  if (level.currentViewer != level.player)
-	    level.currentViewer = level.player;
+	if (item == getPlayer())
+	  if (level.currentViewer != getPlayer())
+	    level.currentViewer = getPlayer();
   }
 }

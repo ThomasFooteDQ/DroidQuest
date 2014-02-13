@@ -1304,8 +1304,8 @@ public ROTut3(Game game)
 	items.addElement(solderingPen);
 	items.addElement(remote);
 	items.addElement(paintbrush);
-	player = gameCursor;
-	currentViewer = player;
+	setPlayer(gameCursor);
+	setCurrentViewer(getPlayer());
 	
   }
 

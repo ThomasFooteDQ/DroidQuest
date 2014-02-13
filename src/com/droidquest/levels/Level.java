@@ -28,7 +28,7 @@ import com.droidquest.view.api.sound.SoundPlayer;
 
 public class Level implements ImageObserver, Serializable {
     private final transient Game game;
-    public Item player;
+    private Item player;
 	public Item gameCursor;
 	public Item solderingPen;
 	public Item remote;
@@ -202,7 +202,7 @@ public class Level implements ImageObserver, Serializable {
 		s.writeBoolean(electricity);
 
 		// Save Player, GameCursor, CurrentViewer
-		s.writeInt(items.indexOf(player));	
+		s.writeInt(items.indexOf(getPlayer()));
 		s.writeInt(items.indexOf(gameCursor));
 		s.writeInt(items.indexOf(currentViewer));
 		s.writeInt(items.indexOf(solderingPen));
@@ -357,9 +357,9 @@ public class Level implements ImageObserver, Serializable {
 
 	public void WriteInventory() 
 	{
-		if (player.carrying==null)
+		if (getPlayer().carrying==null)
 			return;
-		AddItemToInventory(player.carrying);
+		AddItemToInventory(getPlayer().carrying);
 		LinkInventory();
 		SaveInventory();
 	}
@@ -378,19 +378,19 @@ public class Level implements ImageObserver, Serializable {
 		System.out.println( (invItems.size()-1) + ": "
 				+ "Saving " + item.getClass() + ", index=" + items.indexOf(item));
 
-		if (item.carriedBy == player)
+		if (item.carriedBy == getPlayer())
 		{
 			clonedItem.carriedBy = null;
 			clonedItem.room = null;
 		}
 
-		if (item.carriedBy == player.carrying)
+		if (item.carriedBy == getPlayer().carrying)
 		{
 			clonedItem.room = null;
 		}
 
 		// Save carried Item
-		if (item.carrying!=null && item.room == player.room)
+		if (item.carrying!=null && item.room == getPlayer().room)
 			AddItemToInventory(item.carrying);
 
 		if (item.InternalRoom!=null)
@@ -960,6 +960,10 @@ public class Level implements ImageObserver, Serializable {
 
     public Item getCurrentViewer() {
         return currentViewer;
+    }
+
+    public Item getPlayer() {
+        return player;
     }
 
     public void setPlayer(Item player) {
