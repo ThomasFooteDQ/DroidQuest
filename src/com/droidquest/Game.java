@@ -3,6 +3,7 @@ package com.droidquest;
 import com.droidquest.controller.ClockTickHandler;
 import com.droidquest.levels.Level;
 import com.droidquest.operation.api.OperationFactory;
+import com.droidquest.view.api.View;
 import com.droidquest.view.api.sound.SoundPlayer;
 import com.google.common.eventbus.EventBus;
 
@@ -32,9 +33,9 @@ public interface Game {
 
     ClockTickHandler getClockTickHandler();
 
-    void setView(RoomDisplay view);
+    void setView(View view);
 
-    RoomDisplay getView();
+    View getView();
 
     OperationFactory getOperationFactory();
 

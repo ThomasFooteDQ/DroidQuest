@@ -1,21 +1,15 @@
 package com.droidquest.avatars;
 
-import static com.droidquest.operation.swing.util.DirectionUtil.getDirection;
-
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import com.droidquest.Room;
 import com.droidquest.items.Item;
 import com.droidquest.operation.Operation;
-import com.droidquest.operation.api.avatar.Direction;
-import com.droidquest.operation.api.avatar.Distance;
-import com.droidquest.operation.api.avatar.Rotation;
 
 public class LabCursor extends Item {
 private boolean hot;
@@ -72,112 +66,6 @@ public boolean CanBePickedUp(Item i)
 	if (i.getClass().toString().endsWith("Robot"))
 	  return false;
 	return true;
-  }
-
-public boolean KeyUp(KeyEvent e) 
-  {
-      Operation op = null;
-	if (e.getKeyCode() == KeyEvent.VK_L)
-	  {
-         op = getOperationFactory().createLoadSmallChipOperation(this);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_H)
-	  {
-         op = getOperationFactory().createToggleHotStateOperation(this);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_S)
-	  {
-          op = getOperationFactory().createLabSolderingPenOperation(this);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_R)
-	  {
-          op = getOperationFactory().createToggleRemoteOperation(this);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_P)
-	  {
-          op = getOperationFactory().createSwitchToPaintbrushOperation(this);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_T)
-	  {
-         op = getOperationFactory().createToggleToolboxOperation(this);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_SLASH)
-	  {
-         op = getOperationFactory().createHelpOperation(this);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_RIGHT)
-	  {
-         op = getOperationFactory().createMoveOperation(this, Direction.Right,
-                 e.isControlDown() ? Distance.Nudge : Distance.Step);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_LEFT)
-	  {
-          op = getOperationFactory().createMoveOperation(this, Direction.Left,
-                  e.isControlDown() ? Distance.Nudge : Distance.Step);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_UP)
-	  {
-          op = getOperationFactory().createMoveOperation(this, Direction.Up,
-                  e.isControlDown() ? Distance.Nudge : Distance.Step);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_DOWN)
-	  {
-          op = getOperationFactory().createMoveOperation(this, Direction.Down,
-                  e.isControlDown() ? Distance.Nudge : Distance.Step);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_SPACE)
-	  {
-          op = getOperationFactory().createPickUpItemOperation(this);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_CLOSE_BRACKET)
-	  {
-          op = getOperationFactory().createRotateCarriedDeviceOperation(this, Rotation.Clockwise);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_OPEN_BRACKET)
-	  {
-          op = getOperationFactory().createRotateCarriedDeviceOperation(this, Rotation.CounterClockwise);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_E)
-	  {
-	     op = getOperationFactory().createEnterItemOperation(this);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_X)
-	  {
-         op = getOperationFactory().createExitItemOperation(this);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_F)
-	  {
-          op = getOperationFactory().createFlipCarriedDeviceOperation(this);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_M)
-	  {
-          op = getOperationFactory().createOutputMemoryUsageOperation();
-	  }
-
-    if (op != null && op.canExecute()) {
-        op.execute();
-    }
-
-	return false;
-  }
-
-public boolean KeyDown(KeyEvent e) 
-  {
-      Operation op = null;
-      switch (e.getKeyCode()) {
-          case KeyEvent.VK_RIGHT:
-          case KeyEvent.VK_LEFT:
-          case KeyEvent.VK_UP:
-          case KeyEvent.VK_DOWN:
-              op = getOperationFactory().createMoveRepeatOperation(
-                      this, getDirection(e.getKeyCode()), e.isControlDown() ? Distance.Nudge : Distance.Step);
-              break;
-      }
-
-      if (op != null && op.canExecute()) {
-          op.execute();
-      }
-      return false;
   }
 
 @Override

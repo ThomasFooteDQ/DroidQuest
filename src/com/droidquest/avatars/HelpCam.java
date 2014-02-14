@@ -1,12 +1,10 @@
 package com.droidquest.avatars;
 
 import javax.swing.*;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import com.droidquest.Room;
 import com.droidquest.items.Item;
-import com.droidquest.operation.Operation;
 
 public class HelpCam extends Item 
 {
@@ -24,20 +22,6 @@ public void GenerateIcons()
   {
 	icons = new ImageIcon[1];
 	icons[0] = new ImageIcon(new BufferedImage(8,8,BufferedImage.TYPE_4BYTE_ABGR));	
-  }
-
-public boolean KeyUp(KeyEvent e) 
-  {
-    Operation op = null;
-	if (e.getKeyCode() == KeyEvent.VK_ENTER)
-	{
-       op = getOperationFactory().createReturnToGameCursorOperation();
-	}
-
-    if (op != null && op.canExecute()) {
-       op.execute();
-    }
-	return false;
   }
 
 }

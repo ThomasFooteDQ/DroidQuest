@@ -13,6 +13,7 @@ import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
 import com.droidquest.materials.Material;
 import com.droidquest.operation.api.OperationFactory;
+import com.droidquest.view.api.View;
 import com.droidquest.view.api.sound.SoundPlayer;
 import com.google.common.eventbus.EventBus;
 
@@ -24,7 +25,7 @@ public class GameImpl implements Game {
     private boolean suspended;
     private ClockTickHandler clockTickHandler;
     private SoundPlayer soundPlayer;
-    private RoomDisplay view;
+    private View view;
     private OperationFactory operationFactory;
     private EventBus eventBus = new EventBus();
 
@@ -178,12 +179,12 @@ public class GameImpl implements Game {
     }
 
     @Override
-    public void setView(RoomDisplay view) {
+    public void setView(View view) {
         this.view = view;
     }
 
     @Override
-    public RoomDisplay getView() {
+    public View getView() {
         return view;
     }
 

@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
@@ -12,10 +11,6 @@ import com.droidquest.Room;
 import com.droidquest.items.GenericRobot;
 import com.droidquest.items.Item;
 import com.droidquest.operation.Operation;
-import com.droidquest.operation.api.avatar.Direction;
-import com.droidquest.operation.api.avatar.Distance;
-import com.droidquest.operation.api.avatar.Rotation;
-import com.droidquest.operation.swing.util.DirectionUtil;
 
 public class GameCursor extends Item {
 	private int walk = 0; // 0 or 1, used in animation
@@ -368,125 +363,6 @@ public class GameCursor extends Item {
 		if (i.getClass().toString().endsWith("Robot"))
 			return false;
 		return true;
-	}
-
-	public boolean KeyUp(KeyEvent e) 
-	{
-        Operation op = null;
-
-		if (e.getKeyCode() == KeyEvent.VK_L)
-		{
-            op = getOperationFactory().createLoadSmallChipOperation(this);
-		}
-		if (e.getKeyCode() == KeyEvent.VK_S)
-		{
-            op = getOperationFactory().createSwitchToSolderingPenOperation(this);
-		}
-		if (e.getKeyCode() == KeyEvent.VK_R)
-		{
-            op = getOperationFactory().createToggleRemoteOperation(this);
-		}
-		if (e.getKeyCode() == KeyEvent.VK_T)
-		{
-            op = getOperationFactory().createToggleToolboxOperation(this);
-		}
-		if (e.getKeyCode() == KeyEvent.VK_SLASH)
-		{
-            op = getOperationFactory().createHelpOperation(this);
-		}
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
-		{
-            if (e.isShiftDown()) {
-                op = getOperationFactory().createSetRoomOperation(this, Direction.Right, true);
-            } else {
-                op = getOperationFactory().createMoveOperation(this, Direction.Right,
-                        e.isControlDown() ? Distance.Nudge : Distance.Step);
-            }
-		}
-		if (e.getKeyCode() == KeyEvent.VK_LEFT)
-		{
-            if (e.isShiftDown()) {
-                op = getOperationFactory().createSetRoomOperation(this, Direction.Left, true);
-            } else {
-                op = getOperationFactory().createMoveOperation(this, Direction.Left,
-                        e.isControlDown() ? Distance.Nudge : Distance.Step);
-            }
-		}
-		if (e.getKeyCode() == KeyEvent.VK_UP)
-		{
-            if (e.isShiftDown()) {
-                op = getOperationFactory().createSetRoomOperation(this, Direction.Up, true);
-            } else {
-                op = getOperationFactory().createMoveOperation(this, Direction.Up,
-                        e.isControlDown() ? Distance.Nudge : Distance.Step);
-            }
-		}
-		if (e.getKeyCode() == KeyEvent.VK_DOWN)
-		{
-            if (e.isShiftDown()) {
-                op = getOperationFactory().createSetRoomOperation(this, Direction.Down, true);
-            } else {
-                op = getOperationFactory().createMoveOperation(this, Direction.Down,
-                        e.isControlDown() ? Distance.Nudge : Distance.Step);
-            }
-		}
-		if (e.getKeyCode() == KeyEvent.VK_SPACE)
-		{
-            op = getOperationFactory().createPickUpItemOperation(this);
-		}
-		if (e.getKeyCode() == KeyEvent.VK_CLOSE_BRACKET)
-		{
-            op = getOperationFactory().createRotateCarriedDeviceOperation(this, Rotation.Clockwise);
-		}
-		if (e.getKeyCode() == KeyEvent.VK_OPEN_BRACKET)
-		{
-            op = getOperationFactory().createRotateCarriedDeviceOperation(this, Rotation.CounterClockwise);
-		}
-		if (e.getKeyCode() == KeyEvent.VK_E)
-		{
-            op = getOperationFactory().createEnterItemOperation(this);
-		}
-		if (e.getKeyCode() == KeyEvent.VK_X)
-		{
-            op = getOperationFactory().createExitItemOperation(this);
-		}
-		if (e.getKeyCode() == KeyEvent.VK_F)
-		{
-			op = getOperationFactory().createFlipCarriedDeviceOperation(this);
-		}
-		if (e.getKeyCode() == KeyEvent.VK_M)
-		{
-            op = getOperationFactory().createOutputMemoryUsageOperation();
-		}
-
-        if (op != null && op.canExecute()) {
-            op.execute();
-        }
-
-        return false;
-	}
-
-    public boolean KeyDown(KeyEvent e)
-	{
-        Operation op = null;
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_RIGHT:
-            case KeyEvent.VK_LEFT:
-            case KeyEvent.VK_UP:
-            case KeyEvent.VK_DOWN:
-                op = getOperationFactory().createMoveRepeatOperation(
-                        this, DirectionUtil.getDirection(e.getKeyCode()), e.isControlDown() ? Distance.Nudge : Distance.Step);
-                break;
-
-            case KeyEvent.VK_SPACE:
-                op = getOperationFactory().createOutlineItemOperation(this);
-                break;
-        }
-
-        if (op != null && op.canExecute()) {
-            op.execute();
-        }
-		return false;
 	}
 
     @Override

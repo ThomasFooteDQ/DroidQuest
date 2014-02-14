@@ -6,7 +6,7 @@ import java.awt.FileDialog;
 import com.droidquest.devices.SmallChip;
 import com.droidquest.items.Item;
 import com.droidquest.operation.Operation;
-import com.droidquest.view.View;
+import com.droidquest.view.api.View;
 
 /**
  * Operation that saves the state of a chip.

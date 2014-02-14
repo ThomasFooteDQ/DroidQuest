@@ -19,12 +19,12 @@ import com.droidquest.avatars.LabCursor;
 import com.droidquest.decorations.Spark;
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
-import com.droidquest.view.View;
+import com.droidquest.view.swing.SwingView;
 import com.droidquest.view.swing.room.RoomView;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 
-public class RoomDisplay extends JPanel implements View
+public class RoomDisplay extends JPanel implements SwingView
 {
     private final Game game;
     private final RoomView roomView;
@@ -57,9 +57,6 @@ public class RoomDisplay extends JPanel implements View
 		addKeyListener(new KeyAdapter() { 
 			public void keyReleased(KeyEvent e) {
 				// Event Handler for KeyReleased here
-				if (getLevel().getPlayer().KeyUp(e))
-					repaint();
-
 				if (e.getKeyCode() == KeyEvent.VK_Q)
 				{
 					if (timerspeed>1)
@@ -76,15 +73,6 @@ public class RoomDisplay extends JPanel implements View
 					timer.setDelay(timerspeed);
 				}
 
-			}
-		});
-
-		// Key Pressed Functions
-		addKeyListener(new KeyAdapter() { 
-			public void keyPressed(KeyEvent e) {
-				if (getLevel().getPlayer().KeyDown(e))
-					repaint();
-				return;
 			}
 		});
 
@@ -153,5 +141,10 @@ public class RoomDisplay extends JPanel implements View
 
     private Level getLevel() {
         return game.getCurrentLevel();
+    }
+
+    @Override
+    public JComponent getComponent() {
+        return this;
     }
 }

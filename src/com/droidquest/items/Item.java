@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -246,25 +245,11 @@ public class Item implements Serializable, Cloneable
 			carrying.SetRoom(cr);
 	}
 
-	public boolean KeyUp(KeyEvent e) 
-	{
-		// Handles keyboard input.
-		// Return TRUE if repaint is needed (usually for movement)
-		return false;
-	}
-
     protected OperationFactory getOperationFactory() {
         return level.getGame().getOperationFactory();
     }
 
-    public boolean KeyDown(KeyEvent e)
-	{
-		// Handles keyboard input.
-		// Return TRUE if repaint is needed (usually for movement)
-		return false;
-	}
-
-	public void MouseClick(MouseEvent e) 
+	public void MouseClick(MouseEvent e)
 	{
         Operation op = getMouseClickOperation(e);
         if (op != null && op.canExecute()) {

@@ -263,7 +263,7 @@ public class Level implements ImageObserver, Serializable {
 		}
 
 		electricity = s.readBoolean();
-		player = FindItem(s.readInt());	
+		setPlayer(FindItem(s.readInt()));
 		gameCursor = FindItem(s.readInt());
 		currentViewer = FindItem(s.readInt());
 		solderingPen = FindItem(s.readInt());

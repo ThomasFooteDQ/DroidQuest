@@ -53,7 +53,7 @@ public class DQFrame extends JFrame implements ActionListener
 
         addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent e) {
-                getGame().getView().requestFocus();
+                ((SwingView) getGame().getView()).getComponent().requestFocus();
             }
         });
 

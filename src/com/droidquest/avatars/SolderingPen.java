@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
@@ -14,9 +13,6 @@ import com.droidquest.chipstuff.Port;
 import com.droidquest.devices.Device;
 import com.droidquest.items.Item;
 import com.droidquest.operation.Operation;
-import com.droidquest.operation.api.avatar.Direction;
-import com.droidquest.operation.api.avatar.Distance;
-import com.droidquest.operation.swing.util.DirectionUtil;
 
 public class SolderingPen extends Device 
 {
@@ -351,80 +347,6 @@ public boolean CanBePickedUp(Item i)
 	  return false;
 	return true;
   }
-
-public boolean KeyUp(KeyEvent e) 
-  {
-    Operation op = null;
-	if (e.getKeyCode() == KeyEvent.VK_C)
-	  {
-         op = getOperationFactory().createSwitchToGameCursorOperation(this);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_R)
-	  {
-          op = getOperationFactory().createToggleRemoteOperation(this);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_P)
-	  {
-          op = getOperationFactory().createSwitchToPaintbrushOperation(this);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_SLASH)
-	  {
-	     op = getOperationFactory().createHelpOperation(this);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_RIGHT)
-	  {
-         op = getOperationFactory().createMoveOperation(this, Direction.Right,
-                 e.isControlDown() ? Distance.Nudge : Distance.Step);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_LEFT)
-	  {
-          op = getOperationFactory().createMoveOperation(this, Direction.Left,
-                  e.isControlDown() ? Distance.Nudge : Distance.Step);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_UP)
-	  {
-          op = getOperationFactory().createMoveOperation(this, Direction.Up,
-                  e.isControlDown() ? Distance.Nudge : Distance.Step);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_DOWN)
-	  {
-          op = getOperationFactory().createMoveOperation(this, Direction.Down,
-                  e.isControlDown() ? Distance.Nudge : Distance.Step);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_SPACE)
-	  {
-          op = getOperationFactory().createWirePortOperation(this);
-	  }
-	if (e.getKeyCode() == KeyEvent.VK_F)
-	  {
-          op = getOperationFactory().createFlipPortOperation(this);
-      }
-
-      if (op != null && op.canExecute()) {
-          op.execute();
-      }
-	return false;
-  }
-
-    public boolean KeyDown(KeyEvent e)
-  {
-      Operation op = null;
-      switch (e.getKeyCode()) {
-          case KeyEvent.VK_RIGHT:
-          case KeyEvent.VK_LEFT:
-          case KeyEvent.VK_UP:
-          case KeyEvent.VK_DOWN:
-              op = getOperationFactory().createMoveRepeatOperation(
-                      this, DirectionUtil.getDirection(e.getKeyCode()), e.isControlDown() ? Distance.Nudge : Distance.Step);
-              break;
-      }
-
-      if (op != null && op.canExecute()) {
-          op.execute();
-      }
-      return false;
-  }
-
 
     @Override
     protected Operation getMouseClickOperation(MouseEvent e) {

@@ -22,7 +22,7 @@ import com.droidquest.operation.api.item.train.ExitTrainOperation;
 import com.droidquest.operation.swing.avatar.SwingLoadSmallChipOperation;
 import com.droidquest.operation.swing.avatar.SwingSaveChipOperation;
 import com.droidquest.operation.swing.util.OutputMemoryUsageOperation;
-import com.droidquest.view.View;
+import com.droidquest.view.api.View;
 
 /**
  * "Swing" environment implementation of the OperationFactory.

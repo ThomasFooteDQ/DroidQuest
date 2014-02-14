@@ -17,7 +17,7 @@ import com.droidquest.devices.Device;
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
 import com.droidquest.materials.Material;
-import com.droidquest.view.View;
+import com.droidquest.view.api.View;
 
 /**
  * Main event loop handler.

@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
@@ -13,8 +12,6 @@ import com.droidquest.items.Item;
 import com.droidquest.materials.Material;
 import com.droidquest.materials.RobotBlocker;
 import com.droidquest.operation.Operation;
-import com.droidquest.operation.api.avatar.Direction;
-import com.droidquest.operation.api.avatar.Distance;
 
 public class PaintBrush extends Item 
 {
@@ -113,56 +110,6 @@ public class PaintBrush extends Item
 		
 	  }
 
-	public boolean KeyUp(KeyEvent e) 
-	  {
-        Operation op = null;
-		if (e.getKeyCode() == KeyEvent.VK_C)
-		  {
-             op = getOperationFactory().createSwitchToGameCursorOperation(this);
-		  }
-		if (e.getKeyCode() == KeyEvent.VK_S)
-		  {
-             op = getOperationFactory().createSwitchToSolderingPenOperation(this);
-		  }
-		if (e.getKeyCode() == KeyEvent.VK_R)
-		  {
-             op = getOperationFactory().createSwitchToRemoteOperation(this);
-		  }
-		if (e.getKeyCode() == KeyEvent.VK_SLASH)
-		  {
-             op = getOperationFactory().createHelpOperation(this);
-		  }
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
-		  {
-              op = getMoveOperation(e, Direction.Right);
-          }
-		if (e.getKeyCode() == KeyEvent.VK_LEFT)
-		  {
-              op = getMoveOperation(e, Direction.Left);
-		  }
-		if (e.getKeyCode() == KeyEvent.VK_UP)
-		  {
-              op = getMoveOperation(e, Direction.Up);
-		  }
-		if (e.getKeyCode() == KeyEvent.VK_DOWN)
-		  {
-              op = getMoveOperation(e, Direction.Down);
-		  }
-		if (e.getKeyCode() == KeyEvent.VK_P)
-		  {
-              op = getOperationFactory().createTogglePaintColorOperation(this);
-		  }
-		if (e.getKeyCode() == KeyEvent.VK_SPACE)
-		  {
-              op = getOperationFactory().createPaintMaterialOperation(this);
-          }
-
-        if (op != null && op.canExecute()) {
-            op.execute();
-        }
-		return false;
-	  }
-
 
     @Override
     protected Operation getMouseClickOperation(MouseEvent e) {
@@ -184,17 +131,6 @@ public class PaintBrush extends Item
           room.SetMaterial(bigX,bigY,matIndex);
         else
           room.SetMaterial(bigX,bigY,emptyIndex);
-    }
-
-    private Operation getMoveOperation(KeyEvent e, Direction direction) {
-        Operation op;
-        if (e.isShiftDown()) {
-            op = getOperationFactory().createSetRoomOperation(this, direction, false);
-        } else {
-            op = getOperationFactory().createMoveOperation(this,
-                    Direction.Right, e.isControlDown() ? Distance.Nudge : Distance.Step);
-        }
-        return op;
     }
 
     public void MoveUp(boolean nudge)

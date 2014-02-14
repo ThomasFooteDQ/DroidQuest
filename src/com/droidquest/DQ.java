@@ -5,6 +5,7 @@ package com.droidquest;
 import com.droidquest.levels.MainMenu;
 import com.droidquest.operation.swing.SwingOperationFactory;
 import com.droidquest.view.swing.DQFrame;
+import com.droidquest.view.swing.event.SwingEventHandlerFactory;
 import com.droidquest.view.swing.sound.SwingSoundPlayer;
 
 public class DQ
@@ -18,7 +19,9 @@ public class DQ
         game.getCurrentLevel().Init();
 
         DQFrame dq = new DQFrame(game);
-		dq.setVisible(true);
+        SwingEventHandlerFactory.createPlayerEventHandler(game);
+
+        dq.setVisible(true);
 	}
 }
 

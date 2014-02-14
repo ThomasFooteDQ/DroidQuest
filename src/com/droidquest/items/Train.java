@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
@@ -70,21 +69,6 @@ public boolean CanBePickedUp(Item item)
 	  }
 	return false;
   }
-
-public boolean KeyUp(KeyEvent e) 
-  {
-    Operation op = null;
-	if (e.getKeyCode() == KeyEvent.VK_SPACE)
-	  {
-          op = getOperationFactory().createExitTrainOperation(this);
-	  }
-
-    if (op != null && op.canExecute()) {
-        op.execute();
-    }
-	return false;
-  }
-
 
 @Override
 protected Operation getMouseClickOperation(MouseEvent e) {

@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
@@ -52,30 +51,6 @@ public class Handle extends Item
 		if (item != getPlayer()) return false;
 		PicksUp(item);
 		level.setPlayer(this);
-		return false;
-	  }
-
-	public boolean KeyUp(KeyEvent e) 
-	  {
-        Operation op = null;
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
-		  {
-             op = getOperationFactory().createHandleRightOperation(this);
-		  }
-
-		if (e.getKeyCode() == KeyEvent.VK_LEFT)
-		  {
-             op = getOperationFactory().createHandleLeftOperation(this);
-          }
-
-		if (e.getKeyCode() == KeyEvent.VK_SPACE)
-		  {
-             op = getOperationFactory().createHandleDropOperation(this);
-		  }
-
-        if (op != null && op.canExecute()) {
-            op.execute();
-        }
 		return false;
 	  }
 

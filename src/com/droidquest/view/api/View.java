@@ -1,4 +1,4 @@
-package com.droidquest.view;
+package com.droidquest.view.api;
 
 /**
  * Common interface for view classes, across all UIs.
