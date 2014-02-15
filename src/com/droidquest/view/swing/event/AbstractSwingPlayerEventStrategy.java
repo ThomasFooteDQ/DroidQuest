@@ -1,6 +1,8 @@
 package com.droidquest.view.swing.event;
 
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.util.List;
 
 import com.droidquest.items.Item;
 import com.droidquest.operation.api.OperationFactory;
@@ -13,9 +15,10 @@ import com.droidquest.view.swing.SwingView;
  * <P> The avatar class
  */
 public abstract class AbstractSwingPlayerEventStrategy<P extends Item> implements PlayerEventStrategy<P> {
-    protected final OperationFactory operationFactory;
-    protected final SwingView view;
+    private final OperationFactory operationFactory;
+    private final SwingView view;
     private KeyListener keyEventHandler;
+    private List<MouseListener> mouseListeners;
 
     public AbstractSwingPlayerEventStrategy(OperationFactory operationFactory, SwingView view) {
         this.operationFactory = operationFactory;
@@ -25,13 +28,20 @@ public abstract class AbstractSwingPlayerEventStrategy<P extends Item> implement
     @Override
     public void activate(P player) {
         keyEventHandler = createKeyEventHandler(player);
+        mouseListeners = createMouseListeners(player);
 
         view.getComponent().addKeyListener(keyEventHandler);
+        for (MouseListener mouseListener : mouseListeners) {
+            view.getComponent().addMouseListener(mouseListener);
+        }
     }
 
     @Override
     public void deactivate() {
         view.getComponent().removeKeyListener(keyEventHandler);
+        for (MouseListener mouseListener : mouseListeners) {
+            view.getComponent().removeMouseListener(mouseListener);
+        }
     }
 
     protected OperationFactory getOperationFactory() {
@@ -39,4 +49,10 @@ public abstract class AbstractSwingPlayerEventStrategy<P extends Item> implement
     }
 
     protected abstract KeyListener createKeyEventHandler(P player);
+
+    protected abstract List<MouseListener> createMouseListeners(P player);
+
+    public SwingView getView() {
+        return view;
+    }
 }

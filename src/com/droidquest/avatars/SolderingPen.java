@@ -1,10 +1,9 @@
 package com.droidquest.avatars;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import com.droidquest.Room;
@@ -12,7 +11,6 @@ import com.droidquest.Wire;
 import com.droidquest.chipstuff.Port;
 import com.droidquest.devices.Device;
 import com.droidquest.items.Item;
-import com.droidquest.operation.Operation;
 
 public class SolderingPen extends Device 
 {
@@ -347,23 +345,5 @@ public boolean CanBePickedUp(Item i)
 	  return false;
 	return true;
   }
-
-    @Override
-    protected Operation getMouseClickOperation(MouseEvent e) {
-        if (SwingUtilities.isLeftMouseButton(e)) {
-            if (e.getClickCount()==1)
-            {
-                return getOperationFactory().createMoveSolderingPenToPixelOperation(this, e.getX(), e.getY());
-            }
-            else if (e.getClickCount()==2)
-            {
-                return getOperationFactory().createMoveSolderingPenDirectionalOperation(this, e.getX(), e.getY());
-            }
-        } else if (SwingUtilities.isRightMouseButton(e)) {
-            return getOperationFactory().createWirePortOperation(this);
-        }
-
-        return null;
-    }
 
 }

@@ -1,14 +1,12 @@
 package com.droidquest.items;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import com.droidquest.Room;
-import com.droidquest.operation.Operation;
 
 public class Handle extends Item 
 {
@@ -53,15 +51,6 @@ public class Handle extends Item
 		level.setPlayer(this);
 		return false;
 	  }
-
-    @Override
-    protected Operation getMouseClickOperation(MouseEvent e) {
-        if (SwingUtilities.isRightMouseButton(e)) {
-            return getOperationFactory().createHandleDropOperation(this);
-        }
-
-        return super.getMouseClickOperation(e);
-    }
 
     public void dropHandle() {
         level.setPlayer(carrying);

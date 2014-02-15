@@ -3,6 +3,9 @@ package com.droidquest.view.swing.event;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.util.Arrays;
+import java.util.List;
 
 import com.droidquest.avatars.Remote;
 import com.droidquest.operation.Operation;
@@ -87,5 +90,12 @@ public class SwingRemoteEventStrategy extends AbstractSwingPlayerEventStrategy<R
                 }
             }
         };
+    }
+
+    @Override
+    protected List<MouseListener> createMouseListeners(Remote player) {
+        return Arrays.<MouseListener>asList(
+                new DefaultMouseListener(getOperationFactory(), player, getView()),
+                new RightClickMouseListener(getOperationFactory().createToggleRemoteOperation(player)));
     }
 }

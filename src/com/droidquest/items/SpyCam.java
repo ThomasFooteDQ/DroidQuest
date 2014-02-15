@@ -1,11 +1,7 @@
 package com.droidquest.items;
 
-import javax.swing.*;
-import java.awt.event.MouseEvent;
-
 import com.droidquest.Room;
 import com.droidquest.decorations.TextBox;
-import com.droidquest.operation.Operation;
 
 public class SpyCam extends Item 
 {
@@ -17,15 +13,6 @@ public SpyCam(Room r)
 	grabbable=false;
     setVisible(false);
   }
-
-    @Override
-    protected Operation getMouseClickOperation(MouseEvent e) {
-        if (SwingUtilities.isRightMouseButton(e)) {
-            return getOperationFactory().createExitCameraOperation(this);
-        }
-
-        return super.getMouseClickOperation(e);
-    }
 
 public void exitCamera() {
     level.setPlayer(level.gameCursor);

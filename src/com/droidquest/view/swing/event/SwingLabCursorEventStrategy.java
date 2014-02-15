@@ -5,6 +5,9 @@ import static com.droidquest.operation.swing.util.DirectionUtil.getDirection;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.util.Arrays;
+import java.util.List;
 
 import com.droidquest.avatars.LabCursor;
 import com.droidquest.operation.Operation;
@@ -107,5 +110,12 @@ public class SwingLabCursorEventStrategy extends AbstractSwingPlayerEventStrateg
                 }
             }
         };
+    }
+
+    @Override
+    protected List<MouseListener> createMouseListeners(LabCursor player) {
+        return Arrays.<MouseListener>asList(
+                new DefaultMouseListener(getOperationFactory(), player, getView()),
+                new PickUpOnRightClickMouseListener(player, getOperationFactory()));
     }
 }

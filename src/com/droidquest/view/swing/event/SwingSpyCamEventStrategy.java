@@ -3,6 +3,9 @@ package com.droidquest.view.swing.event;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.util.Collections;
+import java.util.List;
 
 import com.droidquest.items.SpyCam;
 import com.droidquest.operation.Operation;
@@ -46,5 +49,11 @@ public class SwingSpyCamEventStrategy extends AbstractSwingPlayerEventStrategy<S
                 }
             }
         };
+    }
+
+    @Override
+    protected List<MouseListener> createMouseListeners(SpyCam player) {
+        return Collections.<MouseListener>singletonList(
+                new RightClickMouseListener(getOperationFactory().createExitCameraOperation(player)));
     }
 }

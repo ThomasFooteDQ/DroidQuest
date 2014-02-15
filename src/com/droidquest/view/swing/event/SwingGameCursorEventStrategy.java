@@ -3,6 +3,9 @@ package com.droidquest.view.swing.event;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.util.Arrays;
+import java.util.List;
 
 import com.droidquest.avatars.GameCursor;
 import com.droidquest.items.Item;
@@ -26,6 +29,13 @@ public class SwingGameCursorEventStrategy extends AbstractSwingPlayerEventStrate
     @Override
     protected KeyListener createKeyEventHandler(GameCursor player) {
         return new SwingGameCursorEventStrategy.KeyEventHandler(player);
+    }
+
+    @Override
+    protected List<MouseListener> createMouseListeners(GameCursor player) {
+        return Arrays.<MouseListener>asList(
+                new DefaultMouseListener(getOperationFactory(), player, getView()),
+                new PickUpOnRightClickMouseListener(player, getOperationFactory()));
     }
 
     private class KeyEventHandler extends KeyAdapter {

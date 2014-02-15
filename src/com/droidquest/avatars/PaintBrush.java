@@ -1,17 +1,15 @@
 package com.droidquest.avatars;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import com.droidquest.items.GenericRobot;
 import com.droidquest.items.Item;
 import com.droidquest.materials.Material;
 import com.droidquest.materials.RobotBlocker;
-import com.droidquest.operation.Operation;
 
 public class PaintBrush extends Item 
 {
@@ -109,16 +107,6 @@ public class PaintBrush extends Item
 		matIndex = level.materials.indexOf(paintMats[paintIndex]);
 		
 	  }
-
-
-    @Override
-    protected Operation getMouseClickOperation(MouseEvent e) {
-        if (SwingUtilities.isRightMouseButton(e)) {
-            return getOperationFactory().createPaintMaterialOperation(this);
-        }
-
-        return super.getMouseClickOperation(e);
-    }
 
     public void paintMaterial() {
         if (!room.editable) {

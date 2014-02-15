@@ -1,8 +1,14 @@
 package com.droidquest.view.swing.event;
 
+import javax.swing.SwingUtilities;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Collections;
+import java.util.List;
 
 import com.droidquest.avatars.SolderingPen;
 import com.droidquest.operation.Operation;
@@ -81,5 +87,30 @@ public class SwingSolderingPenEventStrategy extends AbstractSwingPlayerEventStra
                 }
             }
         };
+    }
+
+    @Override
+    protected List<MouseListener> createMouseListeners(final SolderingPen player) {
+        return Collections.<MouseListener>singletonList(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent event) {
+                Operation op = null;
+                if (SwingUtilities.isLeftMouseButton(event)) {
+                    if (event.getClickCount()==1) {
+                        op = getOperationFactory().createMoveSolderingPenToPixelOperation(player, event.getX(), event.getY());
+                    }
+                    else if (event.getClickCount()==2) {
+                        op = getOperationFactory().createMoveSolderingPenDirectionalOperation(player, event.getX(), event.getY());
+                    }
+                } else if (SwingUtilities.isRightMouseButton(event)) {
+                    op = getOperationFactory().createWirePortOperation(player);
+                }
+
+                if (op != null && op.canExecute()) {
+                    op.execute();
+                    event.consume();
+                }
+            }
+        });
     }
 }

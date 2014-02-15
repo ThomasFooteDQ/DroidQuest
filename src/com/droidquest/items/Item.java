@@ -1,11 +1,10 @@
 package com.droidquest.items;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -16,7 +15,6 @@ import com.droidquest.Wire;
 import com.droidquest.devices.Device;
 import com.droidquest.levels.Level;
 import com.droidquest.materials.ChipTrash;
-import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.OperationFactory;
 import com.droidquest.operation.api.avatar.Direction;
 
@@ -247,29 +245,6 @@ public class Item implements Serializable, Cloneable
 
     protected OperationFactory getOperationFactory() {
         return level.getGame().getOperationFactory();
-    }
-
-	public void MouseClick(MouseEvent e)
-	{
-        Operation op = getMouseClickOperation(e);
-        if (op != null && op.canExecute()) {
-            op.execute();
-        }
-	}
-
-    protected Operation getMouseClickOperation(MouseEvent e) {
-        if (SwingUtilities.isLeftMouseButton(e))
-        {
-            if (e.getClickCount()==1)
-            {
-                return getOperationFactory().createMoveToPixelOperation(this, e.getX(), e.getY());
-            }
-            else if (e.getClickCount()==2)
-            {
-                return getOperationFactory().createMoveDirectionalOperation(this, e.getX(), e.getY());
-            }
-        }
-        return null;
     }
 
     public void MoveUp(int dist)

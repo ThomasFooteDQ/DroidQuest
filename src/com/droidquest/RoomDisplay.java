@@ -1,17 +1,18 @@
 package com.droidquest;
 
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.util.Collection;
 
@@ -76,18 +77,6 @@ public class RoomDisplay extends JPanel implements SwingView
 			}
 		});
 
-		// Mouse Functions
-		addMouseListener(new MouseAdapter() { 
-			public void mouseClicked(MouseEvent e) {
-				int newX = (int) (e.getX() / at.getScaleX());
-				int newY = (int) (e.getY() / at.getScaleY());
-				int deltaX = newX - e.getX();
-				int deltaY = newY - e.getY();
-				e.translatePoint(deltaX,deltaY);
-				getLevel().getPlayer().MouseClick(e);
-			}
-		});
-
         timer = new Timer(timerspeed, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -141,6 +130,20 @@ public class RoomDisplay extends JPanel implements SwingView
 
     private Level getLevel() {
         return game.getCurrentLevel();
+    }
+
+    /**
+     * Takes a point in the swing coordinate space and returns the equivalent point in the game coordinate space.
+     *
+     * @param swingCoordPoint a point in the swing coordinate space
+     *
+     * @return an equivalent point in the game's coordinate space
+     */
+    @Override
+    public Point toGameCoordSpace(final Point swingCoordPoint) {
+        return new Point(
+                (int) (swingCoordPoint.getX() / at.getScaleX()),
+                (int) (swingCoordPoint.getY() / at.getScaleY()));
     }
 
     @Override

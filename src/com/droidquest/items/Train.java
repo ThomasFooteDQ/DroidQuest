@@ -1,14 +1,12 @@
 package com.droidquest.items;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import com.droidquest.materials.Material;
-import com.droidquest.operation.Operation;
 
 public class Train extends Item 
 {
@@ -69,15 +67,6 @@ public boolean CanBePickedUp(Item item)
 	  }
 	return false;
   }
-
-@Override
-protected Operation getMouseClickOperation(MouseEvent e) {
-    if (SwingUtilities.isRightMouseButton(e)) {
-        return getOperationFactory().createExitTrainOperation(this);
-    }
-
-    return super.getMouseClickOperation(e);
-}
 
 public void exitTrain() {
     if (level.rooms.indexOf(room)==14)

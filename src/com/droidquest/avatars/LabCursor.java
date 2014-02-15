@@ -1,15 +1,13 @@
 package com.droidquest.avatars;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import com.droidquest.Room;
 import com.droidquest.items.Item;
-import com.droidquest.operation.Operation;
 
 public class LabCursor extends Item {
 private boolean hot;
@@ -68,16 +66,7 @@ public boolean CanBePickedUp(Item i)
 	return true;
   }
 
-@Override
-protected Operation getMouseClickOperation(MouseEvent e) {
-    if (SwingUtilities.isRightMouseButton(e)) {
-        return getOperationFactory().createPickUpItemOperation(this);
-    }
-
-    return super.getMouseClickOperation(e);
-}
-
-public void MoveUp(boolean nudge) 
+public void MoveUp(boolean nudge)
   {
 	Item item = level.FindNearestItem(this);
 	if (item != null)

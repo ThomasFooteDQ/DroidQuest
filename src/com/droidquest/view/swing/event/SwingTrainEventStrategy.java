@@ -3,6 +3,11 @@ package com.droidquest.view.swing.event;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Collections;
+import java.util.List;
 
 import com.droidquest.items.Train;
 import com.droidquest.operation.Operation;
@@ -33,5 +38,17 @@ public class SwingTrainEventStrategy extends AbstractSwingPlayerEventStrategy<Tr
                 }
             }
         };
+    }
+
+
+    @Override
+    protected List<MouseListener> createMouseListeners(final Train player) {
+        return Collections.<MouseListener>singletonList(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                getOperationFactory().createExitTrainOperation(player).execute();
+                mouseEvent.consume();
+            }
+        });
     }
 }

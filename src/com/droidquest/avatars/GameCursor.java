@@ -1,16 +1,14 @@
 package com.droidquest.avatars;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import com.droidquest.Room;
 import com.droidquest.items.GenericRobot;
 import com.droidquest.items.Item;
-import com.droidquest.operation.Operation;
 
 public class GameCursor extends Item {
 	private int walk = 0; // 0 or 1, used in animation
@@ -364,15 +362,6 @@ public class GameCursor extends Item {
 			return false;
 		return true;
 	}
-
-    @Override
-    protected Operation getMouseClickOperation(MouseEvent e) {
-        if (SwingUtilities.isRightMouseButton(e)) {
-            return getOperationFactory().createPickUpItemOperation(this);
-        }
-
-        return super.getMouseClickOperation(e);
-    }
 
     public void Animate()
 	{

@@ -3,6 +3,9 @@ package com.droidquest.view.swing.event;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.util.Collections;
+import java.util.List;
 
 import com.droidquest.items.Handle;
 import com.droidquest.operation.Operation;
@@ -42,5 +45,11 @@ public class SwingHandleEventStrategy extends AbstractSwingPlayerEventStrategy<H
                 }
             }
         };
+    }
+
+    @Override
+    protected List<MouseListener> createMouseListeners(Handle player) {
+        return Collections.<MouseListener>singletonList(
+                new RightClickMouseListener(getOperationFactory().createHandleDropOperation(player)));
     }
 }
