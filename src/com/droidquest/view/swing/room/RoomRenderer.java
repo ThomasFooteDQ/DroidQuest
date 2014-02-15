@@ -24,7 +24,7 @@ import com.droidquest.view.swing.material.MaterialView;
 /**
  * Swing Renderer class which renders rooms.
  */
-public class RoomView {
+public class RoomRenderer {
     private final ArrowView arrowView;
     private final GraphixView graphixView;
     private final TextBoxView textBoxView;
@@ -33,7 +33,7 @@ public class RoomView {
     private final WireView wireView;
     private final SparkView sparkView;
 
-    public RoomView() {
+    public RoomRenderer() {
         ImageRepository imageRepository = new ImageRepository();
 
         arrowView = new ArrowView();

@@ -30,29 +30,37 @@ public abstract class AbstractSwingPlayerEventStrategy<P extends Item> implement
         keyEventHandler = createKeyEventHandler(player);
         mouseListeners = createMouseListeners(player);
 
-        view.getComponent().addKeyListener(keyEventHandler);
+        view.getRoomPanel().addKeyListener(keyEventHandler);
         for (MouseListener mouseListener : mouseListeners) {
-            view.getComponent().addMouseListener(mouseListener);
+            view.getRoomPanel().addMouseListener(mouseListener);
         }
+
+        addComponents(player);
     }
 
     @Override
     public void deactivate() {
-        view.getComponent().removeKeyListener(keyEventHandler);
+        view.getRoomPanel().removeKeyListener(keyEventHandler);
         for (MouseListener mouseListener : mouseListeners) {
-            view.getComponent().removeMouseListener(mouseListener);
+            view.getRoomPanel().removeMouseListener(mouseListener);
         }
+
+        removeComponents();
     }
 
     protected OperationFactory getOperationFactory() {
         return operationFactory;
     }
 
+    protected SwingView getView() {
+        return view;
+    }
+
+    protected void addComponents(Item player) {}
+
+    protected void removeComponents() {}
+
     protected abstract KeyListener createKeyEventHandler(P player);
 
     protected abstract List<MouseListener> createMouseListeners(P player);
-
-    public SwingView getView() {
-        return view;
-    }
 }

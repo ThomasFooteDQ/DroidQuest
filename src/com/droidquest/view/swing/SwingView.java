@@ -12,5 +12,7 @@ import com.droidquest.view.api.View;
 public interface SwingView extends View {
     Point toGameCoordSpace(Point swingCoordPoint);
 
-    public JComponent getComponent();
+    public JComponent getRoomPanel();
+
+    public JComponent getControlPanel();
 }

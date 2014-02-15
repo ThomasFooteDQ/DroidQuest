@@ -33,12 +33,6 @@ public class DQFrame extends JFrame implements ActionListener
 
         this.game = game;
 
-        setSize(560+8,384+27+24);
-        GraphicsConfiguration gc = getGraphicsConfiguration();
-        Rectangle bounds = gc.getBounds();
-        setLocation(bounds.x + (bounds.width - 568) / 2,
-                bounds.y + (bounds.height - 435) / 2);
-
         addWindowListener( new WindowAdapter()
         {
             public void windowClosing(WindowEvent e)
@@ -53,7 +47,7 @@ public class DQFrame extends JFrame implements ActionListener
 
         addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent e) {
-                ((SwingView) getGame().getView()).getComponent().requestFocus();
+                ((SwingView) getGame().getView()).getRoomPanel().requestFocus();
             }
         });
 
@@ -92,6 +86,13 @@ public class DQFrame extends JFrame implements ActionListener
             System.setErr(System.out);
         }
         catch (SecurityException e) {}
+
+        pack();
+
+        GraphicsConfiguration gc = getGraphicsConfiguration();
+        Rectangle bounds = gc.getBounds();
+        setLocation(bounds.x + (bounds.width - 568) / 2,
+                bounds.y + (bounds.height - 435) / 2);
     }
 
     protected Game getGame() {

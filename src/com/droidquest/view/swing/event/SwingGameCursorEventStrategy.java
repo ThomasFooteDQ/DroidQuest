@@ -16,14 +16,31 @@ import com.droidquest.operation.api.avatar.Distance;
 import com.droidquest.operation.api.avatar.Rotation;
 import com.droidquest.operation.swing.util.DirectionUtil;
 import com.droidquest.view.swing.SwingView;
+import com.droidquest.view.swing.control.CursorPad;
 
 /**
  * Swing handler for GameCursor active events.
  */
 public class SwingGameCursorEventStrategy extends AbstractSwingPlayerEventStrategy<GameCursor> {
 
+    private CursorPad cursorPad;
+
     public SwingGameCursorEventStrategy(OperationFactory operationFactory, SwingView view) {
         super(operationFactory, view);
+    }
+
+    @Override
+    protected void addComponents(Item player) {
+        cursorPad = new CursorPad(getOperationFactory(), player);
+
+        getView().getControlPanel().add(cursorPad);
+    }
+
+    @Override
+    protected void removeComponents() {
+        super.removeComponents();
+
+        getView().getControlPanel().remove(cursorPad);
     }
 
     @Override
