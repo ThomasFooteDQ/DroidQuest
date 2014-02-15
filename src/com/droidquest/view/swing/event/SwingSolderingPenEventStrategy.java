@@ -11,12 +11,14 @@ import java.util.Collections;
 import java.util.List;
 
 import com.droidquest.avatars.SolderingPen;
+import com.droidquest.items.Item;
 import com.droidquest.operation.api.Operation;
 import com.droidquest.operation.api.OperationFactory;
 import com.droidquest.operation.api.avatar.Direction;
 import com.droidquest.operation.api.avatar.Distance;
 import com.droidquest.operation.swing.util.DirectionUtil;
 import com.droidquest.view.swing.SwingView;
+import com.droidquest.view.swing.control.CursorPad;
 
 /**
  * Swing event strategy for SolderingPen related events.
@@ -112,5 +114,10 @@ public class SwingSolderingPenEventStrategy extends AbstractSwingPlayerEventStra
                 }
             }
         });
+    }
+
+    @Override
+    protected void addComponents(Item player) {
+        getView().getControlPanel().add(new CursorPad(getOperationFactory(), player));
     }
 }

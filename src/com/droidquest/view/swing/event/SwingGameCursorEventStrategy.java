@@ -61,12 +61,7 @@ public class SwingGameCursorEventStrategy extends AbstractSwingPlayerEventStrate
     protected void removeComponents() {
         super.removeComponents();
 
-        if (toolButtons != null) {
-            getView().getControlPanel().remove(toolButtons);
-            getView().getControlPanel().remove(actionButtons);
-            getView().getControlPanel().remove(cursorPad);
-        }
-
+        getView().getControlPanel().removeAll();
         toolButtons = null;
         actionButtons = null;
         cursorPad = null;

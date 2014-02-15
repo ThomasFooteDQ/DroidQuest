@@ -74,7 +74,7 @@ public class RoomDisplay extends JPanel implements SwingView
     @Override
     public void render() {
         roomPanel.repaint();
-        controlPanel.repaint();
+        controlPanel.refresh();
     }
 
     /**

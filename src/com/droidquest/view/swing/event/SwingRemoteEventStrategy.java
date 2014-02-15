@@ -8,12 +8,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.droidquest.avatars.Remote;
+import com.droidquest.items.Item;
 import com.droidquest.operation.api.Operation;
 import com.droidquest.operation.api.OperationFactory;
 import com.droidquest.operation.api.avatar.Direction;
 import com.droidquest.operation.api.avatar.Distance;
 import com.droidquest.operation.swing.util.DirectionUtil;
 import com.droidquest.view.swing.SwingView;
+import com.droidquest.view.swing.control.CursorPad;
 
 /**
  * Swing event handling strategy for the Remote.
@@ -97,5 +99,10 @@ public class SwingRemoteEventStrategy extends AbstractSwingPlayerEventStrategy<R
         return Arrays.<MouseListener>asList(
                 new DefaultMouseListener(getOperationFactory(), player, getView()),
                 new RightClickMouseListener(getOperationFactory().createToggleRemoteOperation(player)));
+    }
+
+    @Override
+    protected void addComponents(Item player) {
+        getView().getControlPanel().add(new CursorPad(getOperationFactory(), player));
     }
 }

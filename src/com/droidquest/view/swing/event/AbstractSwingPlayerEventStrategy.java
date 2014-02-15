@@ -56,9 +56,16 @@ public abstract class AbstractSwingPlayerEventStrategy<P extends Item> implement
         return view;
     }
 
-    protected void addComponents(Item player) {}
+    protected void addComponents(Item player) {
+        view.getControlPanel().revalidate();
+        view.getControlPanel().repaint();
+    }
 
-    protected void removeComponents() {}
+    protected void removeComponents() {
+        view.getControlPanel().removeAll();
+        view.getControlPanel().revalidate();
+        view.getControlPanel().repaint();
+    }
 
     protected abstract KeyListener createKeyEventHandler(P player);
 
