@@ -4,7 +4,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import java.awt.event.ActionEvent;
 
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.Operation;
 
 /**
  * An adapter which transforms an operation into a Swing Action.
@@ -12,10 +12,10 @@ import com.droidquest.operation.Operation;
 public class OperationActionAdapter extends AbstractAction {
     private final Operation operation;
 
-    public OperationActionAdapter(String actionName, Operation moveOperation) {
-        operation = moveOperation;
+    public OperationActionAdapter(Operation operation) {
+        this.operation = operation;
 
-        putValue(Action.SHORT_DESCRIPTION, actionName);
+        putValue(Action.SHORT_DESCRIPTION, operation.getName());
     }
 
     @Override

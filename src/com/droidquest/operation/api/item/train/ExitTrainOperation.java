@@ -1,12 +1,12 @@
 package com.droidquest.operation.api.item.train;
 
 import com.droidquest.items.Train;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Somebody stop this train!
  */
-public class ExitTrainOperation implements Operation {
+public class ExitTrainOperation extends OperationAdapter {
     private final Train train;
 
     public ExitTrainOperation(Train train) {

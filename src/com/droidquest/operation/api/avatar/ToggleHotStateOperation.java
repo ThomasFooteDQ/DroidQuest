@@ -1,12 +1,12 @@
 package com.droidquest.operation.api.avatar;
 
 import com.droidquest.avatars.LabCursor;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Operation which toggles the "hot" state of the LabCursor.
  */
-public class ToggleHotStateOperation implements Operation {
+public class ToggleHotStateOperation extends OperationAdapter {
     private final LabCursor avatar;
 
     public ToggleHotStateOperation(LabCursor avatar) {

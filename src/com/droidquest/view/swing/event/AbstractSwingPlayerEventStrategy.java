@@ -30,7 +30,7 @@ public abstract class AbstractSwingPlayerEventStrategy<P extends Item> implement
         keyEventHandler = createKeyEventHandler(player);
         mouseListeners = createMouseListeners(player);
 
-        view.getRoomPanel().addKeyListener(keyEventHandler);
+        view.getViewPanel().addKeyListener(keyEventHandler);
         for (MouseListener mouseListener : mouseListeners) {
             view.getRoomPanel().addMouseListener(mouseListener);
         }
@@ -40,7 +40,7 @@ public abstract class AbstractSwingPlayerEventStrategy<P extends Item> implement
 
     @Override
     public void deactivate() {
-        view.getRoomPanel().removeKeyListener(keyEventHandler);
+        view.getViewPanel().removeKeyListener(keyEventHandler);
         for (MouseListener mouseListener : mouseListeners) {
             view.getRoomPanel().removeMouseListener(mouseListener);
         }

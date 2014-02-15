@@ -1,12 +1,12 @@
 package com.droidquest.operation.api.avatar;
 
 import com.droidquest.avatars.PaintBrush;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Toggles the "color" of the paint painted by the paintbrush.
  */
-public class TogglePaintColorOperation implements Operation {
+public class TogglePaintColorOperation extends OperationAdapter {
     private final PaintBrush avatar;
 
     public TogglePaintColorOperation(PaintBrush avatar) {

@@ -3,16 +3,17 @@ package com.droidquest.operation.api.avatar;
 import com.droidquest.items.Item;
 import com.droidquest.items.Train;
 import com.droidquest.levels.Level;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Operation which lets the current avatar pick up an item.
  */
-public class PickUpItemOperation implements Operation {
+public class PickUpItemOperation extends OperationAdapter {
     private final Item avatar;
     private final Level level;
 
     public PickUpItemOperation(Level level, Item avatar) {
+        super("Pick Up/Drop", "images/icon/hand_tool.png");
         this.level = level;
         this.avatar = avatar;
     }

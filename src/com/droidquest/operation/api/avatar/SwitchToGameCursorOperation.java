@@ -3,12 +3,12 @@ package com.droidquest.operation.api.avatar;
 import com.droidquest.avatars.SolderingPen;
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Switches the current avatar to the regular game cursor.
  */
-public class SwitchToGameCursorOperation implements Operation {
+public class SwitchToGameCursorOperation extends OperationAdapter {
     private final Level level;
     private final Item avatar;
 

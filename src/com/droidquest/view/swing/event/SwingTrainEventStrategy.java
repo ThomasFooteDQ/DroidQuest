@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.droidquest.items.Train;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.Operation;
 import com.droidquest.operation.api.OperationFactory;
 import com.droidquest.view.swing.SwingView;
 

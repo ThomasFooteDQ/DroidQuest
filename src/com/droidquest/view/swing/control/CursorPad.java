@@ -19,18 +19,17 @@ public class CursorPad extends JPanel {
     private JButton nudgeUp, nudgeLeft, nudgeDown, nudgeRight;
 
     public CursorPad(OperationFactory factory, Item avatar) {
-        setOpaque(false);
         setBorder(BorderFactory.createEtchedBorder());
 
-        up = new OperationButton("Move Up", factory.createMoveOperation(avatar, Direction.Up, Distance.Step));
-        down = new OperationButton("Move Down", factory.createMoveOperation(avatar, Direction.Down, Distance.Step));
-        left = new OperationButton("Move Left", factory.createMoveOperation(avatar, Direction.Left, Distance.Step));
-        right = new OperationButton("Move Right", factory.createMoveOperation(avatar, Direction.Right, Distance.Step));
+        up = new OperationButton(factory.createMoveOperation(avatar, Direction.Up, Distance.Step));
+        down = new OperationButton(factory.createMoveOperation(avatar, Direction.Down, Distance.Step));
+        left = new OperationButton(factory.createMoveOperation(avatar, Direction.Left, Distance.Step));
+        right = new OperationButton(factory.createMoveOperation(avatar, Direction.Right, Distance.Step));
 
-        nudgeUp = new OperationButton("Nudge Up", factory.createMoveOperation(avatar, Direction.Up, Distance.Nudge));
-        nudgeDown = new OperationButton("Nudge Down", factory.createMoveOperation(avatar, Direction.Down, Distance.Nudge));
-        nudgeLeft = new OperationButton("Nudge Left", factory.createMoveOperation(avatar, Direction.Left, Distance.Nudge));
-        nudgeRight = new OperationButton("Nudge Right", factory.createMoveOperation(avatar, Direction.Right, Distance.Nudge));
+        nudgeUp = new OperationButton(factory.createMoveOperation(avatar, Direction.Up, Distance.Nudge));
+        nudgeDown = new OperationButton(factory.createMoveOperation(avatar, Direction.Down, Distance.Nudge));
+        nudgeLeft = new OperationButton(factory.createMoveOperation(avatar, Direction.Left, Distance.Nudge));
+        nudgeRight = new OperationButton(factory.createMoveOperation(avatar, Direction.Right, Distance.Nudge));
 
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();

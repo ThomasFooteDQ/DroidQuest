@@ -2,12 +2,12 @@ package com.droidquest.operation.api.avatar;
 
 import com.droidquest.devices.Device;
 import com.droidquest.items.Item;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Operation that rotates the device being carried by the given avatar.
  */
-public class RotateCarriedDeviceOperation implements Operation {
+public class RotateCarriedDeviceOperation extends OperationAdapter {
     private final Item avatar;
     private final Rotation direction;
 

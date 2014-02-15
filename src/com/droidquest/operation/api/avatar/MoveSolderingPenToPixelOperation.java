@@ -1,7 +1,7 @@
 package com.droidquest.operation.api.avatar;
 
 import com.droidquest.avatars.SolderingPen;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.Operation;
 
 /**
  * Operation which moves a SolderingPen to a given screen coordinate.

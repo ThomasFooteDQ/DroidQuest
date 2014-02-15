@@ -1,17 +1,19 @@
 package com.droidquest.operation.swing.avatar;
 
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import java.awt.FileDialog;
 
 import com.droidquest.devices.SmallChip;
 import com.droidquest.items.Item;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 import com.droidquest.view.api.View;
 
 /**
  * Swing-specific Operation that loads a SmallChip
  */
-public class SwingLoadSmallChipOperation implements Operation {
+public class SwingLoadSmallChipOperation extends OperationAdapter {
     private final Item avatar;
     private final View view;
 

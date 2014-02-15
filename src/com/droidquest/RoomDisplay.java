@@ -74,6 +74,7 @@ public class RoomDisplay extends JPanel implements SwingView
     @Override
     public void render() {
         roomPanel.repaint();
+        controlPanel.repaint();
     }
 
     /**
@@ -88,6 +89,18 @@ public class RoomDisplay extends JPanel implements SwingView
         return new Point(
                 (int) (swingCoordPoint.getX() / at.getScaleX()),
                 (int) (swingCoordPoint.getY() / at.getScaleY()));
+    }
+
+    public boolean isFocusable()
+    {
+        // Necessary to get the keyboard focus to work with
+        // the ScrenDisplay class.
+        return(true);
+    }
+
+    @Override
+    public JComponent getViewPanel() {
+        return this;
     }
 
     @Override

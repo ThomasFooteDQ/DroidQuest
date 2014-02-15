@@ -4,7 +4,7 @@ import javax.swing.SwingUtilities;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.Operation;
 
 /**
  * Mouse listener that executes an operation on right click

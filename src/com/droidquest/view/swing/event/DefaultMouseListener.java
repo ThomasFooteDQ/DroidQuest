@@ -6,7 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import com.droidquest.items.Item;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.Operation;
 import com.droidquest.operation.api.OperationFactory;
 import com.droidquest.view.swing.SwingView;
 

@@ -1,12 +1,12 @@
 package com.droidquest.operation.api.avatar;
 
 import com.droidquest.avatars.PaintBrush;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Makes a paint brush paint!
  */
-public class PaintMaterialOperation implements Operation {
+public class PaintMaterialOperation extends OperationAdapter {
     private final PaintBrush paintBrush;
 
     public PaintMaterialOperation(PaintBrush paintBrush) {

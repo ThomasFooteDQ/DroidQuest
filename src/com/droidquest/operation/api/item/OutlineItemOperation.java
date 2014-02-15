@@ -3,12 +3,12 @@ package com.droidquest.operation.api.item;
 import java.awt.Color;
 
 import com.droidquest.items.Item;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Operation which sets the outline flag on an item.
  */
-public class OutlineItemOperation implements Operation {
+public class OutlineItemOperation extends OperationAdapter {
     private final Item item;
 
     public OutlineItemOperation(Item item) {

@@ -1,13 +1,13 @@
 package com.droidquest.operation.api.avatar;
 
 import com.droidquest.items.Item;
-import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.KeyRepeatTracker;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Operation which moves a player avatar in a given direction.
  */
-public class MoveOperation implements Operation {
+public class MoveOperation extends OperationAdapter {
     private final Item avatar;
     private final Distance distance;
     private final Direction direction;
@@ -18,6 +18,11 @@ public class MoveOperation implements Operation {
         this.direction = direction;
         this.distance = distance;
         this.keyRepeatTracker = keyRepeatTracker;
+    }
+
+    @Override
+    public String getName() {
+        return distance.getLabel() + " " + direction.toString();
     }
 
     @Override

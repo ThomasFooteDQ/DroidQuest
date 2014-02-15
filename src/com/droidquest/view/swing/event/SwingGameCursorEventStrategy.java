@@ -9,14 +9,16 @@ import java.util.List;
 
 import com.droidquest.avatars.GameCursor;
 import com.droidquest.items.Item;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.Operation;
 import com.droidquest.operation.api.OperationFactory;
 import com.droidquest.operation.api.avatar.Direction;
 import com.droidquest.operation.api.avatar.Distance;
 import com.droidquest.operation.api.avatar.Rotation;
 import com.droidquest.operation.swing.util.DirectionUtil;
 import com.droidquest.view.swing.SwingView;
+import com.droidquest.view.swing.control.ButtonPanel;
 import com.droidquest.view.swing.control.CursorPad;
+import com.droidquest.view.swing.control.OperationButton;
 
 /**
  * Swing handler for GameCursor active events.
@@ -24,6 +26,8 @@ import com.droidquest.view.swing.control.CursorPad;
 public class SwingGameCursorEventStrategy extends AbstractSwingPlayerEventStrategy<GameCursor> {
 
     private CursorPad cursorPad;
+    private ButtonPanel toolButtons;
+    private ButtonPanel actionButtons;
 
     public SwingGameCursorEventStrategy(OperationFactory operationFactory, SwingView view) {
         super(operationFactory, view);
@@ -31,16 +35,41 @@ public class SwingGameCursorEventStrategy extends AbstractSwingPlayerEventStrate
 
     @Override
     protected void addComponents(Item player) {
+        toolButtons = new ButtonPanel("Tools");
+        toolButtons.add(
+                new OperationButton(getOperationFactory().createSwitchToSolderingPenOperation(player)));
+        toolButtons.add(
+                new OperationButton(getOperationFactory().createToggleRemoteOperation(player)));
+        toolButtons.add(
+                new OperationButton(getOperationFactory().createToggleToolboxOperation(player)));
+
+        actionButtons = new ButtonPanel("Actions");
+        actionButtons.add(new OperationButton(getOperationFactory().createPickUpItemOperation(player)));
+        actionButtons.add(new OperationButton(getOperationFactory().createEnterItemOperation(player)));
+        actionButtons.add(new OperationButton(getOperationFactory().createExitItemOperation(player)));
+
         cursorPad = new CursorPad(getOperationFactory(), player);
 
+        getView().getControlPanel().add(toolButtons);
+        getView().getControlPanel().add(actionButtons);
         getView().getControlPanel().add(cursorPad);
+
+        getView().getControlPanel().revalidate();
     }
 
     @Override
     protected void removeComponents() {
         super.removeComponents();
 
-        getView().getControlPanel().remove(cursorPad);
+        if (toolButtons != null) {
+            getView().getControlPanel().remove(toolButtons);
+            getView().getControlPanel().remove(actionButtons);
+            getView().getControlPanel().remove(cursorPad);
+        }
+
+        toolButtons = null;
+        actionButtons = null;
+        cursorPad = null;
     }
 
     @Override

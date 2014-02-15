@@ -1,7 +1,7 @@
 package com.droidquest.operation.api.avatar;
 
 import com.droidquest.avatars.SolderingPen;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.Operation;
 
 /**
  * Marches soldering pens in a specific direction

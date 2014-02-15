@@ -5,16 +5,17 @@ import java.awt.Dimension;
 import com.droidquest.Room;
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Operation which exits the item we are currently inside (e.g. chip or robot).
  */
-public class ExitItemOperation implements Operation {
+public class ExitItemOperation extends OperationAdapter {
     private final Level level;
     private final Item avatar;
 
     public ExitItemOperation(Level level, Item avatar) {
+        super("Exit", "images/icon/load_upload.png");
         this.level = level;
         this.avatar = avatar;
     }

@@ -3,12 +3,12 @@ package com.droidquest.operation.api.avatar;
 import com.droidquest.devices.GenericChip;
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Operation which switches to the Help avatar.
  */
-public class HelpOperation implements Operation {
+public class HelpOperation extends OperationAdapter {
     private final Item avatar;
     private final Level level;
 

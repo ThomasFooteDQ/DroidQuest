@@ -3,16 +3,18 @@ package com.droidquest.operation.api.avatar;
 import com.droidquest.items.Item;
 import com.droidquest.items.ToolBox;
 import com.droidquest.levels.Level;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Operation which summons or banishes the toolbox, as appropriate.
  */
-public class ToggleToolboxOperation implements Operation {
+public class ToggleToolboxOperation extends OperationAdapter {
     private final Level level;
     private final Item avatar;
 
     public ToggleToolboxOperation(Level level, Item avatar) {
+        super("Toolbox", "images/icon/toolbox.png");
+
         this.level = level;
         this.avatar = avatar;
     }

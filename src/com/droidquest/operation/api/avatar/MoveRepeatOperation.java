@@ -1,13 +1,13 @@
 package com.droidquest.operation.api.avatar;
 
 import com.droidquest.items.Item;
-import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.KeyRepeatTracker;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * The Repeated (KeyDown) version of the move operation.
  */
-public class MoveRepeatOperation implements Operation {
+public class MoveRepeatOperation extends OperationAdapter {
     private final Item avatar;
     private final Direction direction;
     private final Distance distance;

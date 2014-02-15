@@ -1,11 +1,11 @@
 package com.droidquest.operation.swing.util;
 
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Debug operation that outputs current memory usage.
  */
-public class OutputMemoryUsageOperation implements Operation {
+public class OutputMemoryUsageOperation extends OperationAdapter {
     @Override
     public boolean canExecute() {
         return true;

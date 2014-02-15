@@ -9,7 +9,7 @@ import com.droidquest.items.Item;
 import com.droidquest.items.SpyCam;
 import com.droidquest.items.Train;
 import com.droidquest.levels.Level;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.Operation;
 import com.droidquest.operation.api.KeyRepeatTracker;
 import com.droidquest.operation.api.OperationFactory;
 import com.droidquest.operation.api.avatar.*;

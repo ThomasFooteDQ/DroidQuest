@@ -2,17 +2,20 @@ package com.droidquest.operation.api.avatar;
 
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Operation which switches to the SolderingPen avatar.
  */
-public class SwitchToSolderingPenOperation implements Operation {
+public class SwitchToSolderingPenOperation extends OperationAdapter {
     private final Level level;
     private final Item currentAvatar;
     private final Operation saveChipOperation;
 
     public SwitchToSolderingPenOperation(Level level, Item currentAvatar, Operation saveChipOperation) {
+        super("Soldering Iron", "images/icon/pen.png");
+
         this.level = level;
         this.currentAvatar = currentAvatar;
         this.saveChipOperation = saveChipOperation;

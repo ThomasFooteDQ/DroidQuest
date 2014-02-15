@@ -1,13 +1,13 @@
 package com.droidquest.operation.api.avatar;
 
 import com.droidquest.items.Item;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Operation that sets the avatar moving in one of the cardinal directions
  * until it's forced to stop.
  */
-public class MoveDirectionalOperation implements Operation {
+public class MoveDirectionalOperation extends OperationAdapter {
     protected final Item avatar;
     protected final int x, y;
 

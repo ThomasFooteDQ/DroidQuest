@@ -2,16 +2,17 @@ package com.droidquest.operation.api.avatar;
 
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Operation which moves the player into an item (e.g. Chip or robot) that they are current overlapping.
  */
-public class EnterItemOperation implements Operation {
+public class EnterItemOperation extends OperationAdapter {
     private final Item avatar;
     private final Level level;
 
     public EnterItemOperation(Level level, Item avatar) {
+        super("Enter", "images/icon/load_download.png");
         this.avatar = avatar;
         this.level = level;
     }

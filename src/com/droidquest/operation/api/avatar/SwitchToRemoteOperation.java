@@ -2,16 +2,18 @@ package com.droidquest.operation.api.avatar;
 
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Switches the current avatar to the remote.
  */
-public class SwitchToRemoteOperation implements Operation {
+public class SwitchToRemoteOperation extends OperationAdapter {
     private final Item avatar;
     private final Level level;
 
     public SwitchToRemoteOperation(Level level, Item avatar) {
+        super("Remote", "images/icon/remote.png");
+
         this.level = level;
         this.avatar = avatar;
     }

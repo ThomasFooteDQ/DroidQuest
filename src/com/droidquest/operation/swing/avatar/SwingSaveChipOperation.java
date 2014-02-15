@@ -1,17 +1,19 @@
 package com.droidquest.operation.swing.avatar;
 
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import java.awt.FileDialog;
 
 import com.droidquest.devices.SmallChip;
 import com.droidquest.items.Item;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 import com.droidquest.view.api.View;
 
 /**
  * Operation that saves the state of a chip.
  */
-public class SwingSaveChipOperation implements Operation {
+public class SwingSaveChipOperation extends OperationAdapter {
     private final View view;
     private final Item currentAvatar;
 

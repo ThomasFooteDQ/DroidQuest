@@ -7,7 +7,6 @@ import com.droidquest.items.Handle;
 import com.droidquest.items.Item;
 import com.droidquest.items.SpyCam;
 import com.droidquest.items.Train;
-import com.droidquest.operation.Operation;
 import com.droidquest.operation.api.avatar.Direction;
 import com.droidquest.operation.api.avatar.Distance;
 import com.droidquest.operation.api.avatar.Rotation;

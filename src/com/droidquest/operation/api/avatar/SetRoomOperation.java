@@ -2,12 +2,12 @@ package com.droidquest.operation.api.avatar;
 
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Operation which moves an avatar an entire room away.  It's a cheat, of course.
  */
-public class SetRoomOperation implements Operation {
+public class SetRoomOperation extends OperationAdapter {
     private final Item avatar;
     private final Level level;
     private final Direction direction;

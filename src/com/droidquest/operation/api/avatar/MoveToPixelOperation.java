@@ -1,12 +1,12 @@
 package com.droidquest.operation.api.avatar;
 
 import com.droidquest.items.Item;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Operation that moves the avatar to a given pixel location
  */
-public class MoveToPixelOperation implements Operation {
+public class MoveToPixelOperation extends OperationAdapter {
     protected final Item avatar;
     protected final int x, y;
 

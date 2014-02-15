@@ -3,16 +3,18 @@ package com.droidquest.operation.api.avatar;
 import com.droidquest.avatars.Remote;
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
-import com.droidquest.operation.Operation;
+import com.droidquest.operation.api.OperationAdapter;
 
 /**
  * Operation which toggles the remote's state.
  */
-public class ToggleRemoteOperation implements Operation {
+public class ToggleRemoteOperation extends OperationAdapter {
     private final Level level;
     private final Item avatar;
 
     public ToggleRemoteOperation(Level level, Item avatar) {
+        super("Toggle Remote", "images/icon/remote.png");
+
         this.level = level;
         this.avatar = avatar;
     }
