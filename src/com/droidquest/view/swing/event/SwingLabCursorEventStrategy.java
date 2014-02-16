@@ -2,6 +2,8 @@ package com.droidquest.view.swing.event;
 
 import static com.droidquest.operation.swing.util.DirectionUtil.getDirection;
 
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -18,7 +20,9 @@ import com.droidquest.operation.api.avatar.Distance;
 import com.droidquest.operation.api.avatar.Rotation;
 import com.droidquest.operation.swing.util.DirectionUtil;
 import com.droidquest.view.swing.SwingView;
+import com.droidquest.view.swing.control.ButtonPanel;
 import com.droidquest.view.swing.control.CursorPad;
+import com.droidquest.view.swing.control.OperationButton;
 
 /**
  * Swing event handler code for the LabCursor.
@@ -123,6 +127,17 @@ public class SwingLabCursorEventStrategy extends AbstractSwingPlayerEventStrateg
 
     @Override
     protected void addComponents(Item player) {
+        JPanel toolButtons = new ButtonPanel("Tools");
+        toolButtons.add(new OperationButton(
+                getOperationFactory().createLabSolderingPenOperation(player), KeyStroke.getKeyStroke('S')));
+        toolButtons.add(new OperationButton(
+                getOperationFactory().createSwitchToPaintbrushOperation(player), KeyStroke.getKeyStroke('P')));
+        toolButtons.add(new OperationButton(
+                getOperationFactory().createToggleRemoteOperation(player), KeyStroke.getKeyStroke('R')));
+        toolButtons.add(new OperationButton(
+                getOperationFactory().createToggleToolboxOperation(player), KeyStroke.getKeyStroke('T')));
+
+        getView().getControlPanel().add(toolButtons);
         getView().getControlPanel().add(new CursorPad(getOperationFactory(), player));
     }
 }

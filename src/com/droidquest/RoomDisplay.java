@@ -31,7 +31,7 @@ public class RoomDisplay extends JPanel implements SwingView
         this.game = game;
 
         roomPanel = new RoomPanel(game);
-        controlPanel = new ControlPanel(game);
+        controlPanel = new ControlPanel();
 
         setLayout(new BorderLayout());
         add(roomPanel, BorderLayout.CENTER);

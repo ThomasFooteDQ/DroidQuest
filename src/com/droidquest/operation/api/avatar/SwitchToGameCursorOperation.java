@@ -13,6 +13,8 @@ public class SwitchToGameCursorOperation extends OperationAdapter {
     private final Item avatar;
 
     public SwitchToGameCursorOperation(Level level, Item avatar) {
+        super("Regular Character");
+
         this.level = level;
         this.avatar = avatar;
     }

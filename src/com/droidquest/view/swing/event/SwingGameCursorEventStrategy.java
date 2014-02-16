@@ -1,5 +1,6 @@
 package com.droidquest.view.swing.event;
 
+import javax.swing.KeyStroke;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -36,17 +37,20 @@ public class SwingGameCursorEventStrategy extends AbstractSwingPlayerEventStrate
     @Override
     protected void addComponents(Item player) {
         toolButtons = new ButtonPanel("Tools");
-        toolButtons.add(
-                new OperationButton(getOperationFactory().createSwitchToSolderingPenOperation(player)));
-        toolButtons.add(
-                new OperationButton(getOperationFactory().createToggleRemoteOperation(player)));
-        toolButtons.add(
-                new OperationButton(getOperationFactory().createToggleToolboxOperation(player)));
+        toolButtons.add(new OperationButton(
+                getOperationFactory().createSwitchToSolderingPenOperation(player), KeyStroke.getKeyStroke('S')));
+        toolButtons.add(new OperationButton(
+                getOperationFactory().createToggleRemoteOperation(player), KeyStroke.getKeyStroke('R')));
+        toolButtons.add(new OperationButton(
+                getOperationFactory().createToggleToolboxOperation(player), KeyStroke.getKeyStroke('T')));
 
         actionButtons = new ButtonPanel("Actions");
-        actionButtons.add(new OperationButton(getOperationFactory().createPickUpItemOperation(player)));
-        actionButtons.add(new OperationButton(getOperationFactory().createEnterItemOperation(player)));
-        actionButtons.add(new OperationButton(getOperationFactory().createExitItemOperation(player)));
+        actionButtons.add(new OperationButton(
+                getOperationFactory().createPickUpItemOperation(player), KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, true)));
+        actionButtons.add(new OperationButton(
+                getOperationFactory().createEnterItemOperation(player), KeyStroke.getKeyStroke('E')));
+        actionButtons.add(new OperationButton(
+                getOperationFactory().createExitItemOperation(player), KeyStroke.getKeyStroke('X')));
 
         cursorPad = new CursorPad(getOperationFactory(), player);
 

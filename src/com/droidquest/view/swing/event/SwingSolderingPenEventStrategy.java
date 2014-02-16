@@ -1,5 +1,7 @@
 package com.droidquest.view.swing.event;
 
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -18,7 +20,9 @@ import com.droidquest.operation.api.avatar.Direction;
 import com.droidquest.operation.api.avatar.Distance;
 import com.droidquest.operation.swing.util.DirectionUtil;
 import com.droidquest.view.swing.SwingView;
+import com.droidquest.view.swing.control.ButtonPanel;
 import com.droidquest.view.swing.control.CursorPad;
+import com.droidquest.view.swing.control.OperationButton;
 
 /**
  * Swing event strategy for SolderingPen related events.
@@ -118,6 +122,18 @@ public class SwingSolderingPenEventStrategy extends AbstractSwingPlayerEventStra
 
     @Override
     protected void addComponents(Item player) {
+        JPanel toolButtons = new ButtonPanel("Tools");
+        toolButtons.add(new OperationButton(
+                getOperationFactory().createSwitchToGameCursorOperation(player), KeyStroke.getKeyStroke('C')));
+        toolButtons.add(new OperationButton(
+                getOperationFactory().createToggleRemoteOperation(player), KeyStroke.getKeyStroke('R')));
+        final Operation switchToPaintbrushOperation = getOperationFactory().createSwitchToPaintbrushOperation(player);
+        if (switchToPaintbrushOperation.canExecute()) {
+            toolButtons.add(new OperationButton(
+                    switchToPaintbrushOperation, KeyStroke.getKeyStroke('P')));
+        }
+
+        getView().getControlPanel().add(toolButtons);
         getView().getControlPanel().add(new CursorPad(getOperationFactory(), player));
     }
 }

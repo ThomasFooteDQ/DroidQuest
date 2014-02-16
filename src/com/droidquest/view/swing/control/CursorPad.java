@@ -3,8 +3,10 @@ package com.droidquest.view.swing.control;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.KeyEvent;
 
 import com.droidquest.items.Item;
 import com.droidquest.operation.api.OperationFactory;
@@ -21,15 +23,23 @@ public class CursorPad extends JPanel {
     public CursorPad(OperationFactory factory, Item avatar) {
         setBorder(BorderFactory.createEtchedBorder());
 
-        up = new OperationButton(factory.createMoveOperation(avatar, Direction.Up, Distance.Step));
-        down = new OperationButton(factory.createMoveOperation(avatar, Direction.Down, Distance.Step));
-        left = new OperationButton(factory.createMoveOperation(avatar, Direction.Left, Distance.Step));
-        right = new OperationButton(factory.createMoveOperation(avatar, Direction.Right, Distance.Step));
+        up = new OperationButton(factory.createMoveOperation(avatar, Direction.Up, Distance.Step),
+                KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true));
+        down = new OperationButton(factory.createMoveOperation(avatar, Direction.Down, Distance.Step),
+                KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, true));
+        left = new OperationButton(factory.createMoveOperation(avatar, Direction.Left, Distance.Step),
+                KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, true));
+        right = new OperationButton(factory.createMoveOperation(avatar, Direction.Right, Distance.Step),
+                KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true));
 
-        nudgeUp = new OperationButton(factory.createMoveOperation(avatar, Direction.Up, Distance.Nudge));
-        nudgeDown = new OperationButton(factory.createMoveOperation(avatar, Direction.Down, Distance.Nudge));
-        nudgeLeft = new OperationButton(factory.createMoveOperation(avatar, Direction.Left, Distance.Nudge));
-        nudgeRight = new OperationButton(factory.createMoveOperation(avatar, Direction.Right, Distance.Nudge));
+        nudgeUp = new OperationButton(factory.createMoveOperation(avatar, Direction.Up, Distance.Nudge),
+                KeyStroke.getKeyStroke(KeyEvent.VK_UP, KeyEvent.CTRL_DOWN_MASK, true));
+        nudgeDown = new OperationButton(factory.createMoveOperation(avatar, Direction.Down, Distance.Nudge),
+                KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, KeyEvent.CTRL_DOWN_MASK, true));
+        nudgeLeft = new OperationButton(factory.createMoveOperation(avatar, Direction.Left, Distance.Nudge),
+                KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, KeyEvent.CTRL_DOWN_MASK, true));
+        nudgeRight = new OperationButton(factory.createMoveOperation(avatar, Direction.Right, Distance.Nudge),
+                KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, KeyEvent.CTRL_DOWN_MASK, true));
 
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();

@@ -13,6 +13,8 @@ public class SwitchToPaintbrushOperation extends OperationAdapter {
     private final Item avatar;
 
     public SwitchToPaintbrushOperation(Level level, Item avatar) {
+        super("Paint Brush");
+
         this.level = level;
         this.avatar = avatar;
     }
