@@ -19,6 +19,8 @@ import com.droidquest.view.swing.room.RoomPanel;
 
 public class RoomDisplay extends JPanel implements SwingView
 {
+    private static final String ENABLE_CONTROL_PANEL = "enableControlPanel";
+
     private final Game game;
     private final ControlPanel controlPanel;
     private Timer timer;
@@ -35,7 +37,9 @@ public class RoomDisplay extends JPanel implements SwingView
 
         setLayout(new BorderLayout());
         add(roomPanel, BorderLayout.CENTER);
-        add(controlPanel, BorderLayout.EAST);
+        if (System.getProperty(ENABLE_CONTROL_PANEL) != null) {
+            add(controlPanel, BorderLayout.EAST);
+        }
 
 		// Key Released Functions
 		addKeyListener(new KeyAdapter() { 
