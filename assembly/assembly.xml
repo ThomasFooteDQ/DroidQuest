@@ -32,8 +32,12 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>${project.build.directory}/site</directory>
-            <outputDirectory>docs</outputDirectory>
+            <directory>${project.build.directory}/bin</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>*</include>
+            </includes>
+            <fileMode>755</fileMode>
         </fileSet>
     </fileSets>
 </assembly>
