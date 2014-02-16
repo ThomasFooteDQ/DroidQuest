@@ -873,7 +873,7 @@ public class Level implements ImageObserver, Serializable {
 			return;
 		}
         finally {
-            game.restart();
+            game.resume();
         }
 
 		// Remove all unnecessary Materials

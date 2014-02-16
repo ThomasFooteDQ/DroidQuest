@@ -25,7 +25,7 @@ public interface Game {
 
     void suspend();
 
-    void restart();
+    void resume();
 
     SoundPlayer getSoundPlayer();
 

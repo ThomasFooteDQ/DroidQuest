@@ -96,7 +96,7 @@ public class GameImpl implements Game {
                 }
             }
         } finally {
-            restart();
+            resume();
         }
     }
 
@@ -159,7 +159,7 @@ public class GameImpl implements Game {
     }
 
     @Override
-    public void restart() {
+    public void resume() {
         setSuspended(false);
     }
 

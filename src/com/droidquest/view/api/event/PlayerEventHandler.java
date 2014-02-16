@@ -39,6 +39,10 @@ public class PlayerEventHandler {
 
     @Subscribe
     public void onPlayerChange(PlayerChangeEvent event) {
+        if (game.getCurrentLevel() != event.getSource()) {
+            return;
+        }
+
         if (currentStrategy != null) {
             currentStrategy.deactivate();
         }
