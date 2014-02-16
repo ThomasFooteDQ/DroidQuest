@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.AffineTransform;
@@ -78,6 +79,19 @@ public class RoomPanel extends JPanel {
         // Necessary to get the keyboard focus to work with
         // the ScrenDisplay class.
         return(true);
+    }
+
+    /**
+     * Takes a point in the swing coordinate space and returns the equivalent point in the game coordinate space.
+     *
+     * @param swingCoordPoint a point in the swing coordinate space
+     *
+     * @return an equivalent point in the game's coordinate space
+     */
+    public Point toGameCoordSpace(final Point swingCoordPoint) {
+        return new Point(
+                (int) (swingCoordPoint.getX() / at.getScaleX()),
+                (int) (swingCoordPoint.getY() / at.getScaleY()));
     }
 
     private Level getLevel() {

@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.geom.AffineTransform;
 
 import com.droidquest.avatars.LabCursor;
 import com.droidquest.levels.Level;
@@ -25,7 +24,6 @@ public class RoomDisplay extends JPanel implements SwingView
     private final ControlPanel controlPanel;
     private Timer timer;
 	private int timerspeed=128;
-	private AffineTransform at = new AffineTransform();
     private final RoomPanel roomPanel;
 
     public RoomDisplay(final Game game)
@@ -90,9 +88,7 @@ public class RoomDisplay extends JPanel implements SwingView
      */
     @Override
     public Point toGameCoordSpace(final Point swingCoordPoint) {
-        return new Point(
-                (int) (swingCoordPoint.getX() / at.getScaleX()),
-                (int) (swingCoordPoint.getY() / at.getScaleY()));
+        return roomPanel.toGameCoordSpace(swingCoordPoint);
     }
 
     public boolean isFocusable()
