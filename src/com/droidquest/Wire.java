@@ -1,8 +1,5 @@
 package com.droidquest;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -18,7 +15,6 @@ public transient Port fromPort; // Connected First
 public transient Port toPort;   // Connected 2nd
 public transient Port inPort;   // Connected to Input
 public transient Port outPort;  // Connected to Output (Source of Value)
-public boolean value;
 
 public Wire() {}
 
@@ -38,9 +34,9 @@ public Wire(Port f, Port t)
 	  System.out.println("f.myDevice is null");
 	
 	f.myDevice.room.wires.addElement(this);
-	f.myDevice.level.PlaySound(f.myDevice.room, Level.ATTACHSOUND);
-	
-	if (f.type == Port.TYPE_INPUT)
+      f.myDevice.level.getSoundPlayer().playIfInRoom(f.myDevice.room, Level.ATTACHSOUND);
+
+      if (f.type == Port.TYPE_INPUT)
 	  {
 	     if (t.type == Port.TYPE_INPUT)
 	       {
@@ -169,10 +165,10 @@ protected void readRef(ObjectInputStream s, Level level) throws IOException
   }
 
 public void ConnectTo(Port t) 
-  { 
-	fromPort.myDevice.level.PlaySound(fromPort.myDevice.room, Level.DETATCHSOUND);
+  {
+      fromPort.myDevice.level.getSoundPlayer().playIfInRoom(fromPort.myDevice.room, Level.DETATCHSOUND);
 
-	if (toPort.myDevice == toPort.myDevice.level.solderingPen) 
+      if (toPort.myDevice == toPort.myDevice.level.solderingPen)
 	  {
 	     toPort.value = false;
 	     toPort.type = Port.TYPE_UNDEFINED;
@@ -346,10 +342,10 @@ public void ConnectTo(Port t)
 public void Remove() 
   {
 	Room room = fromPort.myDevice.room;
-	
-	room.level.PlaySound(room, Level.DETATCHSOUND);
-	
-	fromPort.myWire = null;
+
+      room.level.getSoundPlayer().playIfInRoom(room, Level.DETATCHSOUND);
+
+      fromPort.myWire = null;
 	toPort.myWire = null;
 	fromPort = null;
 	toPort = null;
@@ -359,81 +355,18 @@ public void Remove()
 	
   }
 
-public void Draw(Graphics g) 
-  {
-	g.setColor(Color.white);
-	value = false;
-	if (fromPort.type == Port.TYPE_OUTPUT && fromPort.value)
-	  {
-	     g.setColor(new Color(255,128,0));
-	     value = true;
-	  }
-	if (toPort.type == Port.TYPE_OUTPUT && toPort.value)
-	  {
-	     g.setColor(new Color(255,128,0));
-	     value = true;
-	  }
-	
-	Dimension d1, d2;
-	int x1, y1, x2, y2;
-	d1 = fromPort.myDevice.GetXY();
-	d2 = toPort.myDevice.GetXY();
-	x1 = d1.width + fromPort.x;
-	y1 = d1.height + fromPort.y;
-	x2 = d2.width + toPort.x;
-	y2 = d2.height + toPort.y;
-	switch((((Device)fromPort.myDevice).rotation + fromPort.rotation)%4)
-	  {
-	   case 0: // Up
-	     x1 += 1;
-	     y1 += 1;
-	     break;
-	   case 1: // Right
-	     x1 -= 2;
-	     y1 += 1;
-	     break;
-	   case 2: // Down
-	     x1 -= 2;
-	     y1 -= 2;
-	     break;
-	   case 3: // Left
-	     x1 += 1;
-	     y1 -= 2;
-	     break;
-	  }
-	switch((((Device)toPort.myDevice).rotation + toPort.rotation)%4)
-	  {
-	   case 0: // Up
-	     x2 += 1;
-	     y2 += 1;
-	     break;
-	   case 1: // Right
-	     x2 -= 2;
-	     y2 += 1;
-	     break;
-	   case 2: // Down
-	     x2 -= 2;
-	     y2 -= 2;
-	     break;
-	   case 3: // Left
-	     x2 += 1;
-	     y2 -= 2;
-	     break;
-	  }
-	
-	g.fillRect(Math.min(x1,x2),y1,Math.abs(x1-x2),2);
-	g.fillRect(x2,Math.min(y1,y2),2,Math.abs(y1-y2));
-	g.fillRect(x1,y1,2,2);
-	g.fillRect(x2,y2,2,2);
-	g.fillRect(x2,y1,2,2);
-	
-  }
-
-public Port otherPort(Port p) 
+public Port otherPort(Port p)
   {
 	if (fromPort == p) return toPort;
 	if (toPort == p) return fromPort;
 	return null;
   }
 
+    public Port getFromPort() {
+        return fromPort;
+    }
+
+    public Port getToPort() {
+        return toPort;
+    }
 }

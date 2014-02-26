@@ -2,8 +2,8 @@ package com.droidquest.levels;
 
 import java.awt.Color;
 
+import com.droidquest.Game;
 import com.droidquest.Room;
-import com.droidquest.RoomDisplay;
 import com.droidquest.avatars.HelpCam;
 import com.droidquest.avatars.LabCursor;
 import com.droidquest.avatars.PaintBrush;
@@ -17,27 +17,7 @@ import com.droidquest.devices.PortDevice;
 import com.droidquest.devices.PrototypeChip;
 import com.droidquest.devices.RoomSensor;
 import com.droidquest.devices.SmallChip;
-import com.droidquest.items.AutoWire;
-import com.droidquest.items.BlueRobot;
-import com.droidquest.items.Burner;
-import com.droidquest.items.Crystal;
-import com.droidquest.items.Factory;
-import com.droidquest.items.Hexagon;
-import com.droidquest.items.Key;
-import com.droidquest.items.MazeControl;
-import com.droidquest.items.MazeCreator;
-import com.droidquest.items.MazeLock;
-import com.droidquest.items.OrangeRobot;
-import com.droidquest.items.PC16Button;
-import com.droidquest.items.PC32Button;
-import com.droidquest.items.PCButton;
-import com.droidquest.items.SpeedControl;
-import com.droidquest.items.Square;
-import com.droidquest.items.ToolBox;
-import com.droidquest.items.Triangle;
-import com.droidquest.items.UnBurner;
-import com.droidquest.items.WhiteRobot;
-import com.droidquest.items.WireTester;
+import com.droidquest.items.*;
 import com.droidquest.materials.ChipTester;
 import com.droidquest.materials.ChipTrash;
 import com.droidquest.materials.CrystalRecharger;
@@ -49,10 +29,10 @@ import com.droidquest.materials.SmallChipBurner;
 
 class ROLab extends Level 
 {
-public ROLab(RoomDisplay rd) 
+public ROLab(Game game)
   {
-	super(rd);
-	
+    super(game);
+
 	// Material 0, Blank
 	materials.addElement(new Material(true, false)); 
 	// Material 1, LightBlue Wall 
@@ -598,8 +578,8 @@ public ROLab(RoomDisplay rd)
 	items.addElement(solderingPen);
 	items.addElement(remote);
 	items.addElement(helpCam);
-	player = gameCursor;
-	currentViewer = player;
+	setPlayer(gameCursor);
+	setCurrentViewer(getPlayer());
   }
 
 }

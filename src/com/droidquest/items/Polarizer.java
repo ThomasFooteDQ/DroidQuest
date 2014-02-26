@@ -77,8 +77,8 @@ public void Animate()
 		    if (item instanceof StormCloud)
 		      if (Overlaps(item))
 			{
-			   level.PlaySound(room, Level.DISCHARGESOUND);
-			   level.LinkRoomsUpDown(36,4);
+                level.getSoundPlayer().playIfInRoom(room, Level.DISCHARGESOUND);
+                level.LinkRoomsUpDown(36,4);
 			   room.SetMaterial(8,0,0);
 			   room.SetMaterial(9,0,0);
 			   room.SetMaterial(10,0,0);

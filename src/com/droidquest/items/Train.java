@@ -1,12 +1,10 @@
 package com.droidquest.items;
 
+import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.materials.Material;
 
@@ -60,39 +58,34 @@ public void GenerateIcons()
 
 public boolean CanBePickedUp(Item item) 
   {
-	if (item == level.player)
+	if (item == getPlayer())
 	  {
-	     PicksUp(level.player);
-	     level.player = this;
+	     PicksUp(getPlayer());
+	     level.setPlayer(this);
 	     Material mat = (Material) level.materials.elementAt(8);
 	     mat.passable=true;
 	  }
 	return false;
   }
 
-public boolean KeyUp(KeyEvent e) 
-  {
-	if (e.getKeyCode() == e.VK_SPACE) 
-	  {
-	     if (level.rooms.indexOf(room)==14)
-	       {
-		  room.SetMaterial(8,0,0);
-		  room.SetMaterial(9,0,0);
-		  room.SetMaterial(10,0,0);
-		  room.SetMaterial(11,0,0);
-		  room.SetMaterial(18,8,0);
-		  room.SetMaterial(18,9,0);
-	       }
-	     level.player=carrying;
-	     Drops();
-	     room=null;
-	     Material mat = (Material) level.materials.elementAt(8);
-	     mat.passable=false;
-	  }
-	return false;
-  }
+public void exitTrain() {
+    if (level.rooms.indexOf(room)==14)
+      {
+     room.SetMaterial(8,0,0);
+     room.SetMaterial(9,0,0);
+     room.SetMaterial(10,0,0);
+     room.SetMaterial(11,0,0);
+     room.SetMaterial(18,8,0);
+     room.SetMaterial(18,9,0);
+      }
+    level.setPlayer(carrying);
+    Drops();
+    room=null;
+    Material mat = (Material) level.materials.elementAt(8);
+    mat.passable=false;
+}
 
-public void Animate() 
+    public void Animate()
   {
 	if (room != null)
 	  if (carrying != null)

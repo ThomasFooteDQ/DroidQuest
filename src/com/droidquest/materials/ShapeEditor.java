@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import javax.swing.ImageIcon;
-
 import com.droidquest.devices.ContactSensor;
 import com.droidquest.devices.DirectionalSensor;
 import com.droidquest.devices.RoomSensor;
@@ -25,11 +23,11 @@ public ShapeEditor(Item item)
 public void GenerateIcons() 
   {
 	target.GenerateIcons();
-	BufferedImage bi = new BufferedImage(28,32,BufferedImage.TYPE_4BYTE_ABGR);
+	image = new BufferedImage(28,32,BufferedImage.TYPE_4BYTE_ABGR);
 	Graphics g;
 	try
 	  {
-	     g = bi.getGraphics();
+	     g = image.getGraphics();
 	  }
 	catch (NullPointerException e)
 	  {
@@ -40,7 +38,6 @@ public void GenerateIcons()
 	g.setColor(Color.black);
 	g.fillRect(0,0,28,32);
 	g.drawImage(target.currentIcon, 14-target.getWidth()/2, 16-target.getHeight()/2, level);
-	icon = new ImageIcon(bi);
   }
 
 public void TouchedByItem(Item item) 

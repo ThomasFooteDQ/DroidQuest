@@ -2,8 +2,8 @@ package com.droidquest.levels;
 
 import java.awt.Color;
 
+import com.droidquest.Game;
 import com.droidquest.Room;
-import com.droidquest.RoomDisplay;
 import com.droidquest.Wire;
 import com.droidquest.avatars.GameCursor;
 import com.droidquest.avatars.HelpCam;
@@ -43,10 +43,10 @@ import com.droidquest.materials.Portal;
 
 class RO1 extends Level 
 {
-public RO1(RoomDisplay rd) 
+public RO1(Game game)
   {
-	super(rd);
-	
+    super(game);
+
 	materials.addElement(new Material(true, false)); 	                // 0= Blank
 	materials.addElement(new Material(new Color(190,190,255),false, true)); // 1= Light Blue Wall
 	int[][] lockProgram1 = {
@@ -905,8 +905,8 @@ public RO1(RoomDisplay rd)
 	items.addElement(solderingPen);
 	items.addElement(remote);
 	items.addElement(helpCam);
-	player = gameCursor;
-	currentViewer = player;
+	setPlayer(gameCursor);
+	setCurrentViewer(getPlayer());
 	items.addElement(new BlackCrystal(2*28,7*32, (Room) rooms.elementAt(3)));
 	
   }

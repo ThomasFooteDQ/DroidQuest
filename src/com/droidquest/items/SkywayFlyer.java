@@ -54,12 +54,12 @@ public void Animate()
 	else
 	  MoveDown(speed);
 	
-	if (Overlaps(level.player))
+	if (Overlaps(getPlayer()))
 	  {
-	     level.PlaySound(room, Level.DISCHARGESOUND);
-	     level.player.x = 2*28;
-	     level.player.y = 8*32;
-	     level.player.SetRoom(room.downRoom);
+          level.getSoundPlayer().playIfInRoom(room, Level.DISCHARGESOUND);
+          getPlayer().x = 2*28;
+	     getPlayer().y = 8*32;
+	     getPlayer().SetRoom(room.downRoom);
 	  }
   }
 

@@ -2,171 +2,27 @@ package com.droidquest;
 
 //This is the source code for DroidQuest 2.7. Copyright 2003 by Thomas Foote.
 
-import java.io.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
-
-import javax.swing.*;
-
-import com.droidquest.avatars.GameCursor;
-import com.droidquest.chipstuff.Port;
-import com.droidquest.decorations.Arrow;
-import com.droidquest.decorations.Graphix;
-import com.droidquest.decorations.Spark;
-import com.droidquest.decorations.TextBox;
-import com.droidquest.devices.ANDGate;
-import com.droidquest.devices.Device;
-import com.droidquest.devices.FlipFlop;
-import com.droidquest.devices.NOTGate;
-import com.droidquest.devices.Node;
-import com.droidquest.devices.ORGate;
-import com.droidquest.devices.PortDevice;
-import com.droidquest.devices.XORGate;
-import com.droidquest.items.Item;
-import com.droidquest.items.ToolBox;
-import com.droidquest.levels.Level;
 import com.droidquest.levels.MainMenu;
-import com.droidquest.materials.Material;
+import com.droidquest.operation.swing.SwingOperationFactory;
+import com.droidquest.view.swing.DQFrame;
+import com.droidquest.view.swing.event.SwingEventHandlerFactory;
+import com.droidquest.view.swing.sound.SwingSoundPlayer;
 
-import java.util.Iterator;
-import java.util.Set;
-import java.util.Vector;
-import java.util.Date;
-import java.lang.Integer;
-import java.util.Random;
-import java.applet.*;
-import java.net.URL;
-import java.net.MalformedURLException;
-
-public class DQ extends JFrame implements ActionListener 
+public class DQ
 {
-	RoomDisplay myRoom;
-
-	public DQ () 
+	public static void main(String[] args)
 	{
-		// Constructor
-		super("DroidQuest");
-		setSize(560+8,384+27+24);
-		addWindowListener( new WindowAdapter() 
-		{
-			public void windowClosing(WindowEvent e)
-			{ setVisible(false); dispose(); System.exit(0); }
-		});	
-		
-		setIconImage(new ImageIcon("images/helper0.gif").getImage());
+        Game game = new GameImpl();
+        game.setSoundPlayer(new SwingSoundPlayer(game));
+        game.setOperationFactory(new SwingOperationFactory(game));
+        game.setCurrentLevel(new MainMenu(game));
+        game.getCurrentLevel().Init();
 
-		Container contentPane = getContentPane();
-		myRoom = new RoomDisplay();
-		myRoom.dq=this;
+        DQFrame dq = new DQFrame(game);
+        SwingEventHandlerFactory.createPlayerEventHandler(game);
 
-		addFocusListener(new FocusAdapter() 
-		{
-			public void focusGained(FocusEvent e)
-			{
-				myRoom.requestFocus();
-			}
-		});
-
-		contentPane.add(myRoom);
-		myRoom.setLocation(0,0);
-
-		JMenuBar menuBar;
-		JMenu fileMenu;
-		JMenuItem menuItemSave;
-		JMenuItem menuItemMain;
-		JCheckBoxMenuItem menuItemSound;
-		JMenuItem menuItemExit;
-
-		menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-		fileMenu = new JMenu("File");
-		fileMenu.setMnemonic(KeyEvent.VK_F);
-		menuBar.add(fileMenu);
-
-		menuItemSave = new JMenuItem("Save Level",KeyEvent.VK_S);
-		menuItemMain = new JMenuItem("Main Menu", KeyEvent.VK_M);
-		menuItemSound = new JCheckBoxMenuItem("Sound", true);
-		menuItemExit = new JMenuItem("Exit", KeyEvent.VK_X);
-		fileMenu.add(menuItemSave);
-		fileMenu.add(menuItemMain);
-		fileMenu.add(menuItemSound);
-		fileMenu.add(menuItemExit);
-
-		menuItemSave.addActionListener(this);
-		menuItemMain.addActionListener(this);
-		menuItemSound.addActionListener(this);
-		menuItemExit.addActionListener(this);
-
-		try
-		{
-			System.setErr(System.out);
-		}
-		catch (SecurityException e) {}
+        dq.setVisible(true);
 	}
-
-	public static void main(String[] args) 
-	{
-		DQ dq = new DQ();
-		GraphicsConfiguration gc = dq.getGraphicsConfiguration();
-		Rectangle bounds = gc.getBounds();
-		dq.setLocation(bounds.x + (bounds.width - 568)/2,
-				bounds.y + (bounds.height - 435)/2 );
-		dq.setVisible(true);
-
-	}
-
-	public void actionPerformed(ActionEvent e) 
-	{
-		if (e.getActionCommand() == "Save Level") 
-		{
-			FileDialog fd = new FileDialog(this,"Save Level", FileDialog.SAVE);
-			fd.setDirectory("ROlevels");
-			fd.show();
-			System.out.println("Dialog returned with " 
-					+ fd.getDirectory()
-					+ fd.getFile());
-			if (fd.getFile() != null)
-				myRoom.SaveLevel(fd.getDirectory()+fd.getFile());
-		}
-
-		if (e.getActionCommand() == "Main Menu") 
-		{
-			int n = JOptionPane.showConfirmDialog(this,"Do you want to quit this level?",
-					"return to Main Menu", JOptionPane.YES_NO_OPTION);
-			if (n==0)
-			{
-				myRoom.level.Empty();
-				myRoom.level = new MainMenu(myRoom);
-				myRoom.level.Init();
-			}
-		}
-
-		if (e.getActionCommand() == "Sound") 
-		{
-			myRoom.useSounds = ((JCheckBoxMenuItem)e.getSource()).getState();
-			if (myRoom.useSounds==false)
-			{
-				Set<String> keys = myRoom.level.sounds.keySet();
-				Iterator<String> iterator = keys.iterator();
-				while (iterator.hasNext()) {
-					String soundFile = iterator.next();
-					SoundClip soundClip = myRoom.level.sounds.get(soundFile);
-					soundClip.audioClip.stop();
-				}
-//				for (int a=0; a<myRoom.level.sounds.size(); a++)
-//				{
-//					SoundClip sc = (SoundClip) myRoom.level.sounds.elementAt(a);
-//					sc.audioClip.stop();
-//				}
-			}
-		}
-
-		if (e.getActionCommand() == "Exit") 
-		{ setVisible(false); dispose(); System.exit(0); }
-
-	}
-
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,19 +1,13 @@
 package com.droidquest.items;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import javax.swing.ImageIcon;
-
 import com.droidquest.Room;
-import com.droidquest.Wire;
 import com.droidquest.chipstuff.ChipCompiler;
-import com.droidquest.chipstuff.Gate;
-import com.droidquest.chipstuff.Signal;
-import com.droidquest.devices.Device;
-import com.droidquest.devices.FlipFlop;
 import com.droidquest.devices.PrototypeChip;
 import com.droidquest.devices.SmallChip;
 import com.droidquest.levels.Level;
@@ -108,9 +102,9 @@ public boolean CanBePickedUp(Item i)
 	
 	// Start the ChipCompiler thread
 	ChipCompiler cc = new ChipCompiler( (PrototypeChip) pc, (SmallChip) sc);
-	
-	level.PlaySound(room,Level.BURNSOUND);
-	burning = 10;
+
+      level.getSoundPlayer().playIfInRoom(room, Level.BURNSOUND);
+      burning = 10;
 	
 	return false;
   }

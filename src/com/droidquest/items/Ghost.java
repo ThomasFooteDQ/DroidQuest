@@ -185,8 +185,8 @@ public void Animate()
 	    if (Overlaps(robot[a]))
 	      {
 		 robot[a].charge=0;
-		 level.PlaySound(room, Level.DISCHARGESOUND);
-		 robot[a].x = 16*28+14;
+              level.getSoundPlayer().playIfInRoom(room, Level.DISCHARGESOUND);
+              robot[a].x = 16*28+14;
 		 robot[a].y = 32;
 	      }
   }

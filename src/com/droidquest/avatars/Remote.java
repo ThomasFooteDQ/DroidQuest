@@ -1,17 +1,14 @@
 package com.droidquest.avatars;
 
+import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.items.Item;
 
-public class Remote extends Item 
-{
+public class Remote extends Item {
 public Remote() 
   {
 //	width=28; height=32;
@@ -111,130 +108,7 @@ public boolean CanBePickedUp(Item i)
 //	return true;
   }
 
-public boolean KeyUp(KeyEvent e) 
-  {
-	if (e.getKeyCode() == e.VK_S) 
-	  {
-	     if (level.solderingPen == null) return false;
-	     level.solderingPen.x = x;
-	     level.solderingPen.y = y;
-	     level.solderingPen.room = room;
-	     room = null;
-	     if (level.currentViewer == level.player)
-	       level.currentViewer=level.solderingPen;
-	     level.player = level.solderingPen;
-	  }
-	if (e.getKeyCode() == e.VK_C) 
-	  {
-	     level.gameCursor.x = x;
-	     level.gameCursor.y = y;
-	     level.gameCursor.room = room;
-	     room = null;
-	     if (level.currentViewer == level.player)
-	       level.currentViewer=level.gameCursor;
-	     level.player = level.gameCursor;
-	  }
-	if (e.getKeyCode() == e.VK_P) 
-	  {
-	     if (level.paintbrush == null) return false;
-	     level.paintbrush.x = x;
-	     level.paintbrush.y = y;
-	     level.paintbrush.room = room;
-	     room = null;
-	     if (level.currentViewer == level.player)
-	       level.currentViewer=level.paintbrush;
-	     level.player = level.paintbrush;
-	  }
-	if (e.getKeyCode() == e.VK_SLASH) 
-	  {
-	     if (level.helpCam == null) return false;
-	     if (level.player != level.helpCam)
-	       {
-		  level.player = level.helpCam;
-		  level.currentViewer = level.helpCam;
-	       }
-	  }
-	if (e.getKeyCode() == e.VK_RIGHT) 
-	  {
-	     if (carriedBy==null)
-	       MoveRight(e.isControlDown());
-	     repeating=0;
-	     return true;
-	  }
-	if (e.getKeyCode() == e.VK_LEFT) 
-	  {
-	     if (carriedBy==null)
-	       MoveLeft(e.isControlDown());
-	     repeating=0;
-	     return true;
-	  }
-	if (e.getKeyCode() == e.VK_UP) 
-	  {
-	     if (carriedBy==null)
-	       MoveUp(e.isControlDown());
-	     repeating=0;
-	     return true;
-	  }
-	if (e.getKeyCode() == e.VK_DOWN) 
-	  {
-	     if (carriedBy==null)
-	       MoveDown(e.isControlDown());
-	     repeating=0;
-	     return true;
-	  }
-	if (e.getKeyCode() == e.VK_SPACE) 
-	  {
-	     level.electricity = ! level.electricity;
-	  }
-	return false;
-  }
-
-public boolean KeyDown(KeyEvent e) 
-  {
-	if (e.getKeyCode() == e.VK_RIGHT) 
-	  {
-	     repeating++;
-	     if (repeating>10)
-	       {
-		  MoveRight(e.isControlDown());
-		  return true;
-	       }
-	     return false;
-	  }
-	if (e.getKeyCode() == e.VK_LEFT) 
-	  {
-	     repeating++;
-	     if (repeating>10)
-	       {
-		  MoveLeft(e.isControlDown());
-		  return true;
-	       }
-	     return false;
-	  }
-	if (e.getKeyCode() == e.VK_UP) 
-	  {
-	     repeating++;
-	     if (repeating>10)
-	       {
-		  MoveUp(e.isControlDown());
-		  return true;
-	       }
-	     return false;
-	  }
-	if (e.getKeyCode() == e.VK_DOWN) 
-	  {
-	     repeating++;
-	     if (repeating>10)
-	       {
-		  MoveDown(e.isControlDown());
-		  return true;
-	       }
-	     return false;
-	  }
-	return false;
-  }
-
-public void MoveUp(boolean nudge) 
+public void MoveUp(boolean nudge)
   {
 	Item item = level.FindNearestItem(this);
 	if (item != null)

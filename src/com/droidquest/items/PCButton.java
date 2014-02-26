@@ -1,11 +1,10 @@
 package com.droidquest.items;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.Room;
 import com.droidquest.devices.PrototypeChip;
@@ -55,8 +54,8 @@ public boolean CanBePickedUp(Item i)
   {
 	PrototypeChip newPC = new PrototypeChip(228, 160, room);
 	level.items.addElement(newPC);
-	level.PlaySound(room,Level.CHARGESOUND);
-	return false;  
+      level.getSoundPlayer().playIfInRoom(room, Level.CHARGESOUND);
+      return false;
   }
 
 }

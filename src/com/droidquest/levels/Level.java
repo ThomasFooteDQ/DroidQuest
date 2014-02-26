@@ -10,29 +10,31 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.Vector;
 
+import com.droidquest.Game;
 import com.droidquest.Room;
-import com.droidquest.RoomDisplay;
-import com.droidquest.devices.SmallChip;
-import com.droidquest.SoundClip;
 import com.droidquest.Wire;
 import com.droidquest.chipstuff.Port;
-import com.droidquest.materials.Portal;
 import com.droidquest.devices.Device;
+import com.droidquest.devices.SmallChip;
+import com.droidquest.event.PlayerChangeEvent;
 import com.droidquest.items.Initializer;
 import com.droidquest.items.Item;
 import com.droidquest.items.ToolBox;
 import com.droidquest.materials.Material;
+import com.droidquest.materials.Portal;
+import com.droidquest.view.api.sound.SoundPlayer;
+import com.google.common.eventbus.EventBus;
 
-public class Level implements ImageObserver, Serializable { 
-	public Item player;
+public class Level implements ImageObserver, Serializable {
+    private final transient Game game;
+    private Item player;
 	public Item gameCursor;
 	public Item solderingPen;
 	public Item remote;
-	public Item toolbox;
+	public ToolBox toolbox;
 	public Item currentViewer;
 	public Item helpCam;   
 	public Item paintbrush;
@@ -44,7 +46,6 @@ public class Level implements ImageObserver, Serializable {
 	public Vector items = new Vector();
 	public Vector sparks = new Vector();
 
-	public transient RoomDisplay roomdisplay;
 	public transient Vector invRooms = new Vector();
 	public transient Vector invRoomIndexes = new Vector();
 	public transient Vector invMaterials = new Vector();
@@ -52,15 +53,13 @@ public class Level implements ImageObserver, Serializable {
 	public transient Vector invItems = new Vector();
 	public transient Vector invItemIndexes = new Vector();
 
-	public transient HashMap<String, SoundClip> sounds = new HashMap<String, SoundClip>();
-
 	public transient Random random = new Random();
 	public transient static String ATTACHSOUND = "attach.WAV"; 
 	public transient static String DETATCHSOUND = "detatch.WAV"; 
 	public transient static String PICKUPSOUND = "pickup2.WAV"; 
 	public transient static String DROPSOUND = "drop2.WAV"; 
 	public transient static String BEEPSOUND = "beep2.WAV"; 
-	public transient static String BUMPSOUND = "bump2.WAV"; 
+	public transient static String BUMPSOUND = "bump2.WAV";
 	public transient static String CHARGESOUND = "charge.WAV"; 
 	public transient static String DISCHARGESOUND = "discharge.WAV"; 
 	public transient static String BURNSOUND = "burn.WAV"; 
@@ -76,25 +75,18 @@ public class Level implements ImageObserver, Serializable {
 			};
 	public transient boolean cheatmode = true;
 
-	public Level() 
+	public Level(Game game)
 	{
+        this.game = game;
+
 		Item.level = this;
 		Room.level = this;
 		Material.level = this;	
-		InitSounds();
-	}
-
-	public Level(RoomDisplay rd) 
-	{
-		roomdisplay = rd;
-		Item.level = this;
-		Room.level = this;
-		Material.level = this;
 		random.setSeed(System.currentTimeMillis());
 		InitSounds();
 	}
 
-	public void LinkRoomsLeftRight(int L, int R) 
+	public void LinkRoomsLeftRight(int L, int R)
 	{
 		((Room) rooms.elementAt(L)).rightRoom = (Room) rooms.elementAt(R);
 		((Room) rooms.elementAt(R)).leftRoom  = (Room) rooms.elementAt(L);
@@ -212,7 +204,7 @@ public class Level implements ImageObserver, Serializable {
 		s.writeBoolean(electricity);
 
 		// Save Player, GameCursor, CurrentViewer
-		s.writeInt(items.indexOf(player));	
+		s.writeInt(items.indexOf(getPlayer()));
 		s.writeInt(items.indexOf(gameCursor));
 		s.writeInt(items.indexOf(currentViewer));
 		s.writeInt(items.indexOf(solderingPen));
@@ -271,12 +263,12 @@ public class Level implements ImageObserver, Serializable {
 		}
 
 		electricity = s.readBoolean();
-		player = FindItem(s.readInt());	
+		setPlayer(FindItem(s.readInt()));
 		gameCursor = FindItem(s.readInt());
 		currentViewer = FindItem(s.readInt());
 		solderingPen = FindItem(s.readInt());
 		remote = FindItem(s.readInt());
-		toolbox = FindItem(s.readInt());
+		toolbox = (ToolBox) FindItem(s.readInt());
 		helpCam = FindItem(s.readInt());
 		paintbrush = FindItem(s.readInt());
 
@@ -367,9 +359,9 @@ public class Level implements ImageObserver, Serializable {
 
 	public void WriteInventory() 
 	{
-		if (player.carrying==null)
+		if (getPlayer().carrying==null)
 			return;
-		AddItemToInventory(player.carrying);
+		AddItemToInventory(getPlayer().carrying);
 		LinkInventory();
 		SaveInventory();
 	}
@@ -388,19 +380,19 @@ public class Level implements ImageObserver, Serializable {
 		System.out.println( (invItems.size()-1) + ": "
 				+ "Saving " + item.getClass() + ", index=" + items.indexOf(item));
 
-		if (item.carriedBy == player)
+		if (item.carriedBy == getPlayer())
 		{
 			clonedItem.carriedBy = null;
 			clonedItem.room = null;
 		}
 
-		if (item.carriedBy == player.carrying)
+		if (item.carriedBy == getPlayer().carrying)
 		{
 			clonedItem.room = null;
 		}
 
 		// Save carried Item
-		if (item.carrying!=null && item.room == player.room)
+		if (item.carrying!=null && item.room == getPlayer().room)
 			AddItemToInventory(item.carrying);
 
 		if (item.InternalRoom!=null)
@@ -708,8 +700,8 @@ public class Level implements ImageObserver, Serializable {
 
 	public void LoadInventory() 
 	{
-		roomdisplay.timer.stop();
-		String filename = "temp.inv";
+        game.suspend();
+        String filename = "temp.inv";
 		System.out.println("Loading Inventory ");
 		int orgNumRooms = rooms.size();
 		int orgNumMaterials = materials.size();
@@ -871,7 +863,6 @@ public class Level implements ImageObserver, Serializable {
 		catch (FileNotFoundException e)
 		{
 			System.out.println("File Not Found");
-			roomdisplay.timer.start();
 			return;
 		}
 		catch (IOException e)
@@ -881,7 +872,9 @@ public class Level implements ImageObserver, Serializable {
 			e.printStackTrace();
 			return;
 		}
-		roomdisplay.timer.start();
+        finally {
+            game.resume();
+        }
 
 		// Remove all unnecessary Materials
 		for (int a=0; a< materials.size()-1; a++)
@@ -927,50 +920,12 @@ public class Level implements ImageObserver, Serializable {
 
 	public void InitSounds() 
 	{
-		for (int a=0; a<soundFiles.length; a++)
-			sounds.put(soundFiles[a], new SoundClip(soundFiles[a]));
-//		sounds.addElement(new SoundClip("attach.WAV"));
-//		sounds.addElement(new SoundClip("detatch.WAV"));
-//		sounds.addElement(new SoundClip("pickup.WAV"));
-//		sounds.addElement(new SoundClip("drop.WAV"));
-//		sounds.addElement(new SoundClip("beep.WAV"));
-//		sounds.addElement(new SoundClip("bump.WAV"));
-//		sounds.addElement(new SoundClip("charge.WAV"));
-//		sounds.addElement(new SoundClip("discharge.WAV"));
-//		sounds.addElement(new SoundClip("burn.WAV"));
-//		sounds.addElement(new SoundClip("liberty.mid"));
-//		sounds.addElement(new SoundClip("sp001.wav"));
-//		sounds.addElement(new SoundClip("teleport.WAV"));
-//		sounds.addElement(new SoundClip("transport.WAV"));
+        game.getSoundPlayer().unloadAll();
+		for (String soundFile : soundFiles)
+            game.getSoundPlayer().load(soundFile);
 	}
 
-	public void PlaySound(Room room, String soundname) 
-	{
-		if (roomdisplay.useSounds==false)
-			return;
-
-		boolean flag = true;
-		if (currentViewer != null)
-			if (room != currentViewer.room)
-				flag = false;
-
-		if(flag)
-		{
-//			for (int a=0; a<sounds.size(); a++)
-//			{
-//				SoundClip soundclip = (SoundClip) sounds.elementAt(a);
-//				if (soundname == soundclip.filename)
-//					soundclip.audioClip.play();
-//			}
-			System.out.println("Playing sound " + soundname);
-			SoundClip soundClip = sounds.get(soundname);
-			if (soundClip != null)
-				soundClip.audioClip.play();
-			System.out.println("Done");
-		}
-	}
-
-	public void Init() 
+    public void Init()
 	{
 		// Generate all Room Material Arrays
 		for (int a=0; a<rooms.size(); a++)
@@ -993,5 +948,43 @@ public class Level implements ImageObserver, Serializable {
 
 	}
 
+    public SoundPlayer getSoundPlayer() {
+        return game.getSoundPlayer();
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setCurrentViewer(Item currentViewer) {
+        this.currentViewer = currentViewer;
+    }
+
+    public Item getCurrentViewer() {
+        return currentViewer;
+    }
+
+    public Item getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Item player) {
+        Item oldPlayer = this.player;
+        this.player = player;
+
+        getEventBus().post(new PlayerChangeEvent(this, oldPlayer, player));
+    }
+
+    public boolean isElectricityEnabled() {
+        return electricity;
+    }
+
+    public void setElectricityEnabled(boolean electricity) {
+        this.electricity = electricity;
+    }
+
+    private EventBus getEventBus() {
+        return getGame().getEventBus();
+    }
 }
 

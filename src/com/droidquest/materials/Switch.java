@@ -1,13 +1,7 @@
 package com.droidquest.materials;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.Date;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.Room;
 import com.droidquest.items.Item;
@@ -35,7 +29,6 @@ public class Switch extends Material
 	public static final int ROT_DOWN =2;
 	public static final int ROT_LEFT =3;
 	int rotation;
-	transient ImageIcon images[];
 	protected boolean value;
 
 	public static final int WAIT4CONTACT =-1;
@@ -65,7 +58,6 @@ public class Switch extends Material
 		super(true,false);
 		int[][] p = {{0}};
 		program = p;
-		GenerateIcons();
 		rotation = rot;
 	  }
 
@@ -73,58 +65,10 @@ public class Switch extends Material
 	  {
 		super(true,false);
 		program = p;
-		GenerateIcons();
 		rotation = rot;
 	  }
 
-	public void GenerateIcons() 
-	  {
-		images = new ImageIcon[2];
-		for (int a=0; a<2; a++)
-		  {
-		     images[a] = new ImageIcon(new BufferedImage(28,32,BufferedImage.TYPE_4BYTE_ABGR));
-		     Graphics g;
-		     try
-		       {
-			  g = images[a].getImage().getGraphics();
-		       }
-		     catch (NullPointerException e)
-		       {
-			  System.out.println("Could not get Graphics pointer to " + getClass() + " Image");
-			  return;
-		       }
-		     Graphics2D g2 = (Graphics2D) g;
-		     g2.setBackground(Color.black);
-		     g2.clearRect(0,0,28,32);
-		     if (a==0) 
-		       g2.setColor(Color.white);
-		     else
-		       g2.setColor(new Color(255,128,0));
-		     
-		     switch (rotation)
-		       {
-			case ROT_UP:
-			  g2.fillRect(2,10,24,6);
-			  g2.fillRect(10,0,8,10);
-			  break;
-			case ROT_RIGHT:
-			  g2.fillRect(12,4,6,24);
-			  g2.fillRect(18,12,10,8);
-			  break;
-			case ROT_DOWN:
-			  g2.fillRect(2,16,24,6);
-			  g2.fillRect(10,22,8,10);
-			  break;
-			case ROT_LEFT:
-			  g2.fillRect(10,4,6,24);
-			  g2.fillRect(0,12,10,8);
-			  break;
-		       }
-		  }
-		
-	  }
-
-	public boolean equals(Material mat) 
+	public boolean equals(Material mat)
 	  {
 		if (super.equals(mat))
 		  if (rotation == ((Switch)mat).rotation
@@ -148,7 +92,7 @@ public class Switch extends Material
 		  }
 		
 		if (program[switchState][0]== -12) // == WAIT4PLAYERCONTACT
-		  if (item == level.player)
+		  if (item == getPlayer())
 		    {
 		       trigger = item;
 		       room = item.room;
@@ -161,11 +105,6 @@ public class Switch extends Material
 	  {
 		if (switchState == program.length)
 		  switchState=0;
-		
-		if (value)
-		  icon = images[1];
-		else
-		  icon = images[0];
 		
 		switch (program[switchState][0])
 		  {
@@ -244,4 +183,11 @@ public class Switch extends Material
 		
 	  }
 
-	}
+    public boolean getValue() {
+        return value;
+    }
+
+    public int getRotation() {
+        return rotation;
+    }
+}

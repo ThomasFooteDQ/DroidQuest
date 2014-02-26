@@ -30,7 +30,7 @@ public void IsDropped()
 	if (mat.getClass().toString().endsWith("Monitor"))
 	  {
 	     level.currentViewer=spycam;
-	     level.player=spycam;
+	     level.setPlayer(spycam);
 	     spycam.room=room;
 	     for (int a=5; a<60; a++)
 	       {

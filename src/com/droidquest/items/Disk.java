@@ -1,5 +1,6 @@
 package com.droidquest.items;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -7,10 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import javax.swing.ImageIcon;
-
 import com.droidquest.Room;
-import com.droidquest.decorations.TextBox;
 import com.droidquest.materials.Material;
 
 public class Disk extends Item 
@@ -78,7 +76,7 @@ public void IsDropped()
 	     helpCamRoom = level.helpCam.room; // Temporary storage
 	     level.helpCam.room = helpRoom;
 	     level.currentViewer=level.helpCam;
-	     level.player=level.helpCam;
+	     level.setPlayer(level.helpCam);
 	  }
   }
 
@@ -86,7 +84,7 @@ public boolean CanBePickedUp(Item item)
   {
 	if (level.helpCam.room == room)
 	  level.helpCam.room = helpCamRoom;
-	level.currentViewer = level.player;
+	level.currentViewer = getPlayer();
 	return true;
   }
 
