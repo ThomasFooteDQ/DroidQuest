@@ -2,8 +2,8 @@ package com.droidquest.levels;
 
 import java.awt.Color;
 
+import com.droidquest.Game;
 import com.droidquest.Room;
-import com.droidquest.RoomDisplay;
 import com.droidquest.avatars.GameCursor;
 import com.droidquest.avatars.HelpCam;
 import com.droidquest.avatars.Remote;
@@ -16,11 +16,11 @@ import com.droidquest.materials.Portal;
 
 class ROEndGame extends Level 
 {
-public ROEndGame (RoomDisplay rd) 
+public ROEndGame (Game game)
   {
-	super(rd);
-	
-	materials.addElement(new Material(true, false));                         // 0 = Empty Space 
+    super(game);
+
+	materials.addElement(new Material(true, false));                         // 0 = Empty Space
 	materials.addElement(new Material(new Color(0,0,255),false, true));      // 1 = Blue
 	materials.addElement(new Portal("MainMenu.lvl",false,false));             // 2 = Portal
 	
@@ -157,8 +157,8 @@ public ROEndGame (RoomDisplay rd)
 	items.addElement(helpCam);
 	items.addElement(solderingPen);
 	items.addElement(remote);
-	player = gameCursor;
-	currentViewer = player;
+	setPlayer(gameCursor);
+	setCurrentViewer(getPlayer());
 	
   }
 

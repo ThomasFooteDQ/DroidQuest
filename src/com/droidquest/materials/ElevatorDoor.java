@@ -40,7 +40,7 @@ public class ElevatorDoor extends Material
 		
 		boolean test = false;
 		
-		if (item == level.player) 
+		if (item == getPlayer())
 		  test = true;
 		else if (item instanceof GenericRobot)
 		  {

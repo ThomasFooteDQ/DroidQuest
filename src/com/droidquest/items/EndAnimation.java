@@ -18,8 +18,8 @@ public void Animate()
   {
 	if (playsong==false)
 	  {
-	     level.PlaySound(room, Level.ENDMUSICSOUND);
-	     playsong=true;
+          level.getSoundPlayer().playIfInRoom(room, Level.ENDMUSICSOUND);
+          playsong=true;
 	  }
 	
 	animationState = 1-animationState;

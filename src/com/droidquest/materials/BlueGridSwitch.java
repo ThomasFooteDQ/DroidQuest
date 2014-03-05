@@ -1,12 +1,6 @@
 package com.droidquest.materials;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.Date;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.Room;
 import com.droidquest.decorations.Graphix;
@@ -18,7 +12,6 @@ public class BlueGridSwitch extends Material
 	// This object turns off the Blue grid (and HotWires), and opens the
 	// doorway to the room above.
 
-	public ImageIcon[] images;
 	boolean value=false;
 	int animationState=0;
 	transient Room room=null;
@@ -30,45 +23,7 @@ public class BlueGridSwitch extends Material
 		super(true, false);
 	  }
 
-	public void GenerateIcons() 
-	  {
-		images = new ImageIcon[2];
-		for (int a=0; a<2; a++)
-		  {
-		     images[a] = new ImageIcon(new BufferedImage(28,32,BufferedImage.TYPE_4BYTE_ABGR));
-		     Graphics g;
-		     try
-		       {
-			  g = images[a].getImage().getGraphics();
-		       }
-		     catch (NullPointerException e)
-		       {
-			  System.out.println("Could not get Graphics pointer to " + getClass() + " Image");
-			  return;
-		       }
-		     Graphics2D g2 = (Graphics2D) g;
-		     Color c;
-		     if (a==0) 
-		       c = Color.white;
-		     else
-		       c = new Color(255,128,0);
-		     
-		     g2.setColor(c);
-		     g.fillRect(0,0,28,32);
-		     g2.setColor(Color.black);
-		     g.fillRect(4,14,20,4);
-		     g.fillRect(8,12,12,8);
-		     g.fillRect(12,8,4,16);
-		     g2.setColor(c);
-		     g.fillRect(12,14,4,4);
-		  }
-		
-		icon = images[0];
-		if (value)
-		  icon = images[1];
-	  }
-
-	public void TouchedByItem(Item item) 
+	public void TouchedByItem(Item item)
 	  {
 		if (animationState==0)
 		  {
@@ -81,10 +36,8 @@ public class BlueGridSwitch extends Material
 
 	public void Animate() 
 	  {
-		icon = images[0];
 		if (value)
 		  {
-		     icon = images[1];
 		     Date now = new Date();
 		     long timer = timeout.getTime() - now.getTime();
 		     if (timer > 0)
@@ -123,14 +76,12 @@ public class BlueGridSwitch extends Material
 			  Graphix gr = (Graphix) room.graphix.elementAt(a);
 			  String[] filelist = {"whiteHorizontal.gif"};
 			  gr.filenames = filelist;
-			  gr.GenerateIcons();
 		       }
 		     for (int a=0; a<5; a++)
 		       {
 			  Graphix gr = (Graphix) room.graphix.elementAt(a+5);
 			  String[] filelist = {"whiteVertical.gif"};
 			  gr.filenames = filelist;
-			  gr.GenerateIcons();
 		       }
 		     animationState++;
 		     break;
@@ -170,14 +121,12 @@ public class BlueGridSwitch extends Material
 			  Graphix gr = (Graphix) room.graphix.elementAt(a);
 			  String[] filelist = {"blueHorizontal.gif"};
 			  gr.filenames = filelist;
-			  gr.GenerateIcons();
 		       }
 		     for (int a=0; a<5; a++)
 		       {
 			  Graphix gr = (Graphix) room.graphix.elementAt(a+5);
 			  String[] filelist = {"blueVertical.gif"};
 			  gr.filenames = filelist;
-			  gr.GenerateIcons();
 		       }
 		     animationState++;
 		     break;
@@ -199,4 +148,7 @@ public class BlueGridSwitch extends Material
 		  }
 	  }
 
-	}
+    public boolean getValue() {
+        return value;
+    }
+}

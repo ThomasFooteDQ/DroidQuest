@@ -1,12 +1,10 @@
 package com.droidquest.avatars;
 
+import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.items.GenericRobot;
 import com.droidquest.items.Item;
@@ -25,10 +23,10 @@ public class PaintBrush extends Item
 	// Undetectable, blocks White  White
 	// Undetectable, blocks Blue   Blue
 
-	int emptyIndex=0;
-	int paintIndex; // Which paintMats[] am I using?
-	transient Material[] paintMats;
-	int matIndex;   // index of chosen paintMax in level.materials
+	private int emptyIndex=0;
+	private int paintIndex; // Which paintMats[] am I using?
+	private transient Material[] paintMats;
+	private int matIndex;   // index of chosen paintMax in level.materials
 
 	public PaintBrush() 
 	  {
@@ -110,113 +108,30 @@ public class PaintBrush extends Item
 		
 	  }
 
-	public boolean KeyUp(KeyEvent e) 
-	  {
-		if (e.getKeyCode() == e.VK_C) 
-		  {
-		     level.gameCursor.x = x;
-		     level.gameCursor.y = y;
-		     level.gameCursor.room = room;
-		     room = null;
-		     if (level.currentViewer == level.player)
-		       level.currentViewer=level.gameCursor;
-		     level.player = level.gameCursor;
-		  }
-		if (e.getKeyCode() == e.VK_S) 
-		  {
-		     if (level.solderingPen == null) return false;
-		     level.solderingPen.x = x;
-		     level.solderingPen.y = y;
-		     level.solderingPen.room = room;
-		     room = null;
-		     if (level.currentViewer == level.player)
-		       level.currentViewer=level.solderingPen;
-		     level.player = level.solderingPen;
-		  }
-		if (e.getKeyCode() == e.VK_R) 
-		  {
-		     if (level.remote == null) return false;
-		     level.remote.x = x;
-		     level.remote.y = y;
-		     level.remote.room = room;
-		     room = null;
-		     if (level.currentViewer == level.player)
-		       level.currentViewer=level.remote;
-		     level.player = level.remote;
-		  }
-		if (e.getKeyCode() == e.VK_SLASH) 
-		  {
-		     if (level.helpCam == null) return false;
-		     level.player = level.helpCam;
-		     level.currentViewer = level.helpCam;
-		  }
-		if (e.getKeyCode() == e.VK_RIGHT) 
-		  {
-		     if (e.isShiftDown())
-		       SetRoom(room.rightRoom);
-		     if (carriedBy==null)
-		       MoveRight(e.isControlDown());
-		     repeating=0;
-		     return true;
-		  }
-		if (e.getKeyCode() == e.VK_LEFT) 
-		  {
-		     if (e.isShiftDown())
-		       SetRoom(room.leftRoom);
-		     if (carriedBy==null)
-		       MoveLeft(e.isControlDown());
-		     repeating=0;
-		     return true;
-		  }
-		if (e.getKeyCode() == e.VK_UP) 
-		  {
-		     if (e.isShiftDown())
-		       SetRoom(room.upRoom);
-		     if (carriedBy==null)
-		       MoveUp(e.isControlDown());
-		     repeating=0;
-		     return true;
-		  }
-		if (e.getKeyCode() == e.VK_DOWN) 
-		  {
-		     if (e.isShiftDown())
-		       SetRoom(room.downRoom);
-		     if (carriedBy==null)
-		       MoveDown(e.isControlDown());
-		     repeating=0;
-		     return true;
-		  }
-		if (e.getKeyCode() == e.VK_P) 
-		  {
-		     paintIndex++;
-		     if (paintIndex==5) paintIndex=0;
-		     matIndex = level.materials.indexOf(paintMats[paintIndex]);
-		     currentIcon=icons[paintIndex].getImage();
-		  }
-		if (e.getKeyCode() == e.VK_SPACE) 
-		  {
-		     if (!room.editable) return false;
-		     int bigX=(x+14)/28;
-		     int bigY=(y+16)/32;
-		     if (room.RoomArray[bigY][bigX]==emptyIndex)
-		       room.SetMaterial(bigX,bigY,matIndex);
-		     else
-		       room.SetMaterial(bigX,bigY,emptyIndex);
-		  }
-		return false;
-	  }
+    public void paintMaterial() {
+        if (!room.editable) {
+            return;
+        }
 
-	public void MoveUp(boolean nudge) 
+        int bigX=(x+14)/28;
+        int bigY=(y+16)/32;
+        if (room.RoomArray[bigY][bigX]==emptyIndex)
+          room.SetMaterial(bigX,bigY,matIndex);
+        else
+          room.SetMaterial(bigX,bigY,emptyIndex);
+    }
+
+    public void MoveUp(boolean nudge)
 	  {
 		int dist = 32;
 		if (nudge) dist = 2;
 		y=y-dist;
 		if (y<0)
 		  {
-		     if (room.getUpRoom(this) != null)
+		     if (room.getUpRoom() != null)
 		       { // change Rooms
 			  y=y+384;
-			  SetRoom(room.getUpRoom(this));
+			  SetRoom(room.getUpRoom());
 		       }
 		     else // stop at top
 		       y=0;
@@ -230,10 +145,10 @@ public class PaintBrush extends Item
 		y=y+dist;
 		if (y>383)
 		  {
-		     if (room.getDownRoom(this) != null)
+		     if (room.getDownRoom() != null)
 		       { // change Rooms
 			  y=y-384;
-			  SetRoom(room.getDownRoom(this));
+			  SetRoom(room.getDownRoom());
 		       }
 		     else // stop at bottom
 		       y=384-32;
@@ -247,10 +162,10 @@ public class PaintBrush extends Item
 		x=x-dist;
 		if (x<0)
 		  {
-		     if (room.getLeftRoom(this) != null)
+		     if (room.getLeftRoom() != null)
 		       { // change Rooms
 			  x=x+560;
-			  SetRoom(room.getLeftRoom(this));
+			  SetRoom(room.getLeftRoom());
 		       }
 		     else // stop at left
 		       x=0;
@@ -264,14 +179,23 @@ public class PaintBrush extends Item
 		x=x+dist;
 		if (x>559)
 		  {
-		     if (room.getRightRoom(this) != null)
+		     if (room.getRightRoom() != null)
 		       { // change Rooms
 			  x=x-560;
-			  SetRoom(room.getRightRoom(this));
+			  SetRoom(room.getRightRoom());
 		       }
 		     else // stop at right
 		       x=560-28;
 		  }
 	  }
 
-	}
+    public int getPaintIndex() {
+        return paintIndex;
+    }
+
+    public void setPaintIndex(int paintIndex) {
+        this.paintIndex = paintIndex;
+
+        matIndex = level.materials.indexOf(paintMats[paintIndex]);
+    }
+}

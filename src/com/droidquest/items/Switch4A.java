@@ -12,7 +12,6 @@ transient Room room= null;
 public Switch4A() 
   {
 	super(Switch.ROT_UP);
-	GenerateIcons();
   }
 
 public void TouchedByItem(Item item) 

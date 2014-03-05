@@ -1,39 +1,25 @@
 package com.droidquest.materials;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Image;
 import java.io.Serializable;
 
-import javax.swing.ImageIcon;
-
-import com.droidquest.RoomDisplay;
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
 
 public class Material implements Serializable, Cloneable 
 {
 	public transient static Level level;
-	public transient ImageIcon icon;
-	public String file;
+	public transient Image image;
 	public boolean passable;
 	public boolean detectable;
 	public Color color;
 
 	public Material(){}
 
-	public Material(String filename, boolean p, boolean d) 
+	public Material(boolean p, boolean d)
 	{
-		//	icon=Toolkit.getDefaultToolkit().getImage(filename);
-		icon = new ImageIcon(filename);
-		passable = p;
-		detectable = d;
-	}
-
-	public Material(boolean p, boolean d) 
-	{
-		passable = p;
-		detectable = d;
-		color = Color.black;
+        this(Color.black, p, d);
 	}
 
 	public Material (Color c, boolean p, boolean d) 
@@ -45,33 +31,6 @@ public class Material implements Serializable, Cloneable
 
 	public void GenerateIcons() 
 	{
-		if (file != null)
-			icon = new ImageIcon(file);
-	}
-
-	public void Draw(Graphics g, RoomDisplay rd, int x, int y) 
-	{
-		if (icon==null)
-		{
-			// Blank Background
-			g.setColor(color);
-			g.fillRect(x*28,y*32,28,32);
-//			if (color!=Color.BLACK){
-//				g.setColor(color.brighter());
-//				g.drawLine(x*28, y*32, x*28+27, y*32);
-//				g.drawLine(x*28, y*32, x*28, y*32+31);
-//				g.setColor(color.darker());
-//				g.drawLine(x*28+27, y*32, x*28+27, y*32+31);
-//				g.drawLine(x*28, y*32+31, x*28+27, y*32+31);
-//			}
-			return;
-		}
-		else
-		{
-			// Material Background
-			g.drawImage(icon.getImage(), x*28, y*32, rd);
-			return;
-		}
 	}
 
 	public void TouchedByItem(Item item) 
@@ -97,8 +56,7 @@ public class Material implements Serializable, Cloneable
 		if (getClass() == mat.getClass()
 				&& color == mat.color 
 				&& passable == mat.passable 
-				&& detectable == mat.detectable
-				&& file == mat.file)
+				&& detectable == mat.detectable)
 			return true;
 		else
 			return false;
@@ -127,4 +85,15 @@ public class Material implements Serializable, Cloneable
 		return newObject;
 	}
 
+    public Image getImage() {
+        return image;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    protected Item getPlayer() {
+        return level.getPlayer();
+    }
 }

@@ -1,5 +1,6 @@
 package com.droidquest.devices;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -7,8 +8,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.chipstuff.Port;
 import com.droidquest.items.Item;
@@ -200,5 +199,12 @@ public class Device extends Item
 		return newDevice;
 	  }
 
-	}
+    public int getRotation() {
+        return rotation;
+    }
+
+    public Port getPort(int portIndex) {
+        return ports[portIndex];
+    }
+}
 

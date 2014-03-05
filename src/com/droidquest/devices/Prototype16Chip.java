@@ -206,8 +206,8 @@ public void IsDropped()
 		 {
 		    SetRoom(null);
 		    level.items.removeElement(this);
-		    level.PlaySound(room,level.DISCHARGESOUND);
-		    return;
+             level.getSoundPlayer().playIfInRoom(room, level.DISCHARGESOUND);
+             return;
 		 }
 	    }
   }

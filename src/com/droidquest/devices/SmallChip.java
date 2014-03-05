@@ -1,5 +1,6 @@
 package com.droidquest.devices;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -13,8 +14,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Vector;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.Room;
 import com.droidquest.Wire;
@@ -180,8 +179,8 @@ public void IsDropped()
 		 {
 		    SetRoom(null); // Cheap way to remove the wires;
 		    level.items.removeElement(this);
-		    level.PlaySound(room,level.DISCHARGESOUND);
-		    return;
+             level.getSoundPlayer().playIfInRoom(room, level.DISCHARGESOUND);
+             return;
 		 }
 	       if (room.MaterialArray[a][b] instanceof ChipTester)
 		 {

@@ -67,8 +67,8 @@ public boolean CanBePickedUp(Item i)
 	item.y = (384 - item.height)/2;
 	item.room = room;
 	level.items.addElement(item);
-	level.PlaySound(room,Level.CHARGESOUND);
-	return false;  
+      level.getSoundPlayer().playIfInRoom(room, Level.CHARGESOUND);
+      return false;
   }
 
 }

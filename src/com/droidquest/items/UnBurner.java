@@ -101,9 +101,9 @@ public boolean CanBePickedUp(Item i)
 	
 	// Start the ChipDecompiler thread
 	ChipDecompiler cd = new ChipDecompiler( (PrototypeChip) pc, (SmallChip) sc);
-	
-	level.PlaySound(room,Level.BURNSOUND);
-	burning = 10;
+
+      level.getSoundPlayer().playIfInRoom(room, Level.BURNSOUND);
+      burning = 10;
 	
 	return false;
   }

@@ -1,14 +1,10 @@
 package com.droidquest.avatars;
 
+import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.Room;
 import com.droidquest.Wire;
@@ -300,6 +296,39 @@ public void WirePort()
 	  }
   }
 
+public void flipPort() {
+    if (hot)
+    {
+        if (ports[0].myWire != null) // If SP is wired
+        {
+            // Flip wire attached to SP
+            Port tempPort = ports[0].myWire.fromPort;
+            ports[0].myWire.fromPort = ports[0].myWire.toPort;
+            ports[0].myWire.toPort = tempPort;
+        }
+        else if (ports[0].myWire == null) // If SP is not wired
+        {
+            // Flip wire attached to CurrentPort
+            if (currentPort.myWire != null)
+            {
+                Port tempPort = currentPort.myWire.fromPort;
+                currentPort.myWire.fromPort = currentPort.myWire.toPort;
+                currentPort.myWire.toPort = tempPort;
+            }
+        }
+    }
+    else
+    {
+        if (ports[0].myWire != null) // If SP is wired
+        {
+            // Flip wire attached to SP
+            Port tempPort = ports[0].myWire.fromPort;
+            ports[0].myWire.fromPort = ports[0].myWire.toPort;
+            ports[0].myWire.toPort = tempPort;
+        }
+    }
+}
+
 public boolean Function () 
   {
 	if (ports[0].myWire == null)
@@ -315,229 +344,6 @@ public boolean CanBePickedUp(Item i)
 	if (i.getClass().toString().endsWith("Robot"))
 	  return false;
 	return true;
-  }
-
-public boolean KeyUp(KeyEvent e) 
-  {
-	if (e.getKeyCode() == e.VK_C) 
-	  {
-	     if (ports[0].myWire != null)
-	       ports[0].myWire.Remove();
-	     level.gameCursor.x = x;
-	     level.gameCursor.y = y;
-	     level.gameCursor.room = room;
-	     room = null;
-	     if (level.currentViewer == level.player)
-	       level.currentViewer=level.gameCursor;
-	     level.player = level.gameCursor;
-	     if (level.remote != null)
-	       if (level.remote.carriedBy != null)
-		 {
-		    level.remote.carriedBy = level.player;
-		 }
-	  }
-	if (e.getKeyCode() == e.VK_R) 
-	  {
-	     if (level.remote == null) return false;
-	     if (level.remote.carriedBy == null)
-	       { // Summon Remote
-		  level.remote.x = 28;
-		  level.remote.y = -20;
-		  level.remote.carriedBy = level.player;
-		  level.remote.room = level.player.room;
-		  level.electricity = true;
-	       }
-	     else
-	       { // Hide Remote
-		  level.remote.carriedBy = null;
-		  level.remote.room = null;
-		  level.electricity = false;
-	       }
-//	     if (ports[0].myWire != null)
-//	       ports[0].myWire.Remove();
-//	     level.remote.x = x;
-//	     level.remote.y = y;
-//	     level.remote.room = room;
-//	     room = null;
-//	     if (level.currentViewer == level.player)
-//	       level.currentViewer=level.remote;
-//	     level.player = level.remote;
-	  }
-	if (e.getKeyCode() == e.VK_P) 
-	  {
-	     if (level.paintbrush == null) return false;
-	     if (ports[0].myWire != null)
-	       ports[0].myWire.Remove();
-	     level.paintbrush.x = x;
-	     level.paintbrush.y = y;
-	     level.paintbrush.room = room;
-	     room = null;
-	     if (level.currentViewer == level.player)
-	       level.currentViewer=level.paintbrush;
-	     level.player = level.paintbrush;
-	  }
-	if (e.getKeyCode() == e.VK_SLASH) 
-	  {
-	     if (level.helpCam == null) return false;
-	     level.player = level.helpCam;
-	     level.currentViewer = level.helpCam;
-	  }
-	if (e.getKeyCode() == e.VK_RIGHT) 
-	  {
-	     if (carriedBy==null)
-	       MoveRight(e.isControlDown());
-	     repeating=0;
-	     return true;
-	  }
-	if (e.getKeyCode() == e.VK_LEFT) 
-	  {
-	     if (carriedBy==null)
-	       MoveLeft(e.isControlDown());
-	     repeating=0;
-	     return true;
-	  }
-	if (e.getKeyCode() == e.VK_UP) 
-	  {
-	     if (carriedBy==null)
-	       MoveUp(e.isControlDown());
-	     repeating=0;
-	     return true;
-	  }
-	if (e.getKeyCode() == e.VK_DOWN) 
-	  {
-	     if (carriedBy==null)
-	       MoveDown(e.isControlDown());
-	     repeating=0;
-	     return true;
-	  }
-	if (e.getKeyCode() == e.VK_SPACE) 
-	  {
-	     WirePort();
-	  }
-	if (e.getKeyCode() == e.VK_F) 
-	  {
-	     if (hot)
-	       {
-		  if (ports[0].myWire != null) // If SP is wired
-		    {
-		       // Flip wire attached to SP
-		       Port tempPort = ports[0].myWire.fromPort;
-		       ports[0].myWire.fromPort = ports[0].myWire.toPort;
-		       ports[0].myWire.toPort = tempPort;
-		    }
-		  else if (ports[0].myWire == null) // If SP is not wired
-		    {
-		       // Flip wire attached to CurrentPort
-		       if (currentPort.myWire != null)
-			 {
-			    Port tempPort = currentPort.myWire.fromPort;
-			    currentPort.myWire.fromPort = currentPort.myWire.toPort;
-			    currentPort.myWire.toPort = tempPort;
-			 }
-		    }
-	       }
-	     else
-	       {
-		  if (ports[0].myWire != null) // If SP is wired
-		    {
-		       // Flip wire attached to SP
-		       Port tempPort = ports[0].myWire.fromPort;
-		       ports[0].myWire.fromPort = ports[0].myWire.toPort;
-		       ports[0].myWire.toPort = tempPort;
-		    }
-	       }
-	  }
-	return false;
-  }
-
-public boolean KeyDown(KeyEvent e) 
-  {
-	if (e.getKeyCode() == e.VK_RIGHT) 
-	  {
-	     repeating++;
-	     if (repeating>10)
-	       {
-		  MoveRight(e.isControlDown());
-		  return true;
-	       }
-	     return false;
-	  }
-	if (e.getKeyCode() == e.VK_LEFT) 
-	  {
-	     repeating++;
-	     if (repeating>10)
-	       {
-		  MoveLeft(e.isControlDown());
-		  return true;
-	       }
-	     return false;
-	  }
-	if (e.getKeyCode() == e.VK_UP) 
-	  {
-	     repeating++;
-	     if (repeating>10)
-	       {
-		  MoveUp(e.isControlDown());
-		  return true;
-	       }
-	     return false;
-	  }
-	if (e.getKeyCode() == e.VK_DOWN) 
-	  {
-	     repeating++;
-	     if (repeating>10)
-	       {
-		  MoveDown(e.isControlDown());
-		  return true;
-	       }
-	     return false;
-	  }
-	return false;
-  }
-
-public void MouseClick(MouseEvent e) 
-  {
-	int button=0;
-	if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK)
-	  button = 1;
-	if ((e.getModifiers() & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK)
-	  button = 3;
-	
-	if (button==1)
-	  {
-	     if (e.getClickCount()==1)
-	       {
-		  autoX = e.getX() - 2;
-		  autoY = e.getY() - 20;
-		  automove = 1;
-	       }
-	     else if (e.getClickCount()==2)
-	       {
-		  int dx = e.getX() - 2 - x;
-		  int dy = e.getY() - 20 - y;
-		  if (Math.abs(dx) > Math.abs(dy))
-		    {
-		       autoY=0; autoX=28;
-		       if (dx<0) autoX=-28;
-		       automove=2;
-		    }
-		  else
-		    {
-		       autoX=0; autoY=32;
-		       if (dy<0) autoY=-32;
-		       automove=2;
-		    }
-	       }
-	  }
-		
-	if (button==3)
-	  {
-	     KeyEvent k = new KeyEvent(e.getComponent(), e.getID(), 
-				       e.getWhen(), 0, 
-				       KeyEvent.VK_SPACE, ' ');
-	     KeyUp(k);
-	  }
-	
   }
 
 }

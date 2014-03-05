@@ -3,8 +3,8 @@ package com.droidquest.levels;
 import java.awt.Color;
 import java.io.File;
 
+import com.droidquest.Game;
 import com.droidquest.Room;
-import com.droidquest.RoomDisplay;
 import com.droidquest.avatars.GameCursor;
 import com.droidquest.avatars.HelpCam;
 import com.droidquest.decorations.Arrow;
@@ -15,10 +15,10 @@ import com.droidquest.materials.Portal;
 
 public class MainMenu extends Level 
 {
-public MainMenu(RoomDisplay rd) 
+public MainMenu(Game game)
   {
-	super(rd);
-	
+    super(game);
+
 	// Material 0, Blank
 	materials.addElement(new Material(true, false)); 
 	// Material 1, White Wall
@@ -288,8 +288,8 @@ public MainMenu(RoomDisplay rd)
 	helpCam = new HelpCam( (Room) rooms.elementAt(0));
 	items.addElement(gameCursor);
 	items.addElement(helpCam);
-	player = gameCursor;
-	currentViewer = player;
+	setPlayer(gameCursor);
+	currentViewer = getPlayer();
 	
 	File f = new File("ROlevels/");
 	if (!f.exists())

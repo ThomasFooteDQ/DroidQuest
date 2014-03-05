@@ -1,5 +1,6 @@
 package com.droidquest.devices;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -8,8 +9,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.Room;
 import com.droidquest.chipstuff.Port;
@@ -315,8 +314,8 @@ public void IsDropped()
 		 {
 		    SetRoom(null);
 		    level.items.removeElement(this);
-		    level.PlaySound(room,level.DISCHARGESOUND);
-		    return;
+             level.getSoundPlayer().playIfInRoom(room, level.DISCHARGESOUND);
+             return;
 		 }
 	    }
   }

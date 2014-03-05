@@ -1,12 +1,10 @@
 package com.droidquest.items;
 
+import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.Room;
 
@@ -48,46 +46,38 @@ public class Handle extends Item
 
 	public boolean CanBePickedUp(Item item) 
 	  {
-		if (item != level.player) return false;
+		if (item != getPlayer()) return false;
 		PicksUp(item);
-		level.player = this;
+		level.setPlayer(this);
 		return false;
 	  }
 
-	public boolean KeyUp(KeyEvent e) 
-	  {
-		if (e.getKeyCode() == e.VK_RIGHT) 
-		  {
-		     if (x<15*28)
-		       {
-			  room.SetMaterial(x/28-12, 4, 0);
-			  MoveRight(28);
-			  room.SetMaterial(x/28-1, 4, 8);
-		       }
-		  }
+    public void dropHandle() {
+        level.setPlayer(carrying);
+        Drops();
+        room.SetMaterial(1, 4, 8);
+        room.SetMaterial(2, 4, 8);
+        room.SetMaterial(13, 4, 0);
+        room.SetMaterial(14, 4, 0);
+        x=13*28;
+    }
 
-		if (e.getKeyCode() == e.VK_LEFT) 
-		  {
-		     if (x>13*28)
-		       {
-			  room.SetMaterial(x/28-13, 4, 8);
-			  room.SetMaterial(x/28-1, 4, 0);
-			  MoveLeft(28);
-		       }
-		  }
+    public void pullWallLeft() {
+        if (x>13*28)
+          {
+         room.SetMaterial(x/28-13, 4, 8);
+         room.SetMaterial(x/28-1, 4, 0);
+         MoveLeft(28);
+          }
+    }
 
-		if (e.getKeyCode() == e.VK_SPACE) 
-		  {
-		     level.player=carrying;
-		     Drops();
-		     room.SetMaterial(1, 4, 8);
-		     room.SetMaterial(2, 4, 8);
-		     room.SetMaterial(13, 4, 0);
-		     room.SetMaterial(14, 4, 0);
-		     x=13*28;
-		  }
-		return false;
-	  }
-
-	}
+    public void pullWallRight() {
+        if (x<15*28)
+        {
+            room.SetMaterial(x/28-12, 4, 0);
+            MoveRight(28);
+            room.SetMaterial(x/28-1, 4, 8);
+        }
+    }
+}
 

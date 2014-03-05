@@ -55,8 +55,8 @@ public boolean CanBePickedUp(Item i)
   {
 	Prototype32Chip newPC = new Prototype32Chip(228, 160, room);
 	level.items.addElement(newPC);
-	level.PlaySound(room,Level.CHARGESOUND);
-	return false;  
+      level.getSoundPlayer().playIfInRoom(room, Level.CHARGESOUND);
+      return false;
   }
 
 }

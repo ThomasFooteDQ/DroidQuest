@@ -2,8 +2,8 @@ package com.droidquest.levels;
 
 import java.awt.Color;
 
+import com.droidquest.Game;
 import com.droidquest.Room;
-import com.droidquest.RoomDisplay;
 import com.droidquest.Wire;
 import com.droidquest.avatars.HelpCam;
 import com.droidquest.avatars.LabCursor;
@@ -38,10 +38,10 @@ import com.droidquest.materials.Portal;
 class ROTut2 extends Level 
 {
 
-public ROTut2(RoomDisplay rd) 
+public ROTut2(Game game)
   {
-	super(rd);
-	
+    super(game);
+
 	// Material 0, Blank
 	materials.addElement(new Material(true, false)); 
 	// Material 1, Green Wall 
@@ -1266,8 +1266,8 @@ public ROTut2(RoomDisplay rd)
 	items.addElement(helpCam);
 	items.addElement(solderingPen);
 	items.addElement(remote);
-	player = gameCursor;
-	currentViewer = player;
+	setPlayer(gameCursor);
+	setCurrentViewer(getPlayer());
   }
 
 }

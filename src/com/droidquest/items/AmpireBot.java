@@ -251,7 +251,7 @@ public void Animate()
 	     switch (behaviorState)
 	       {
 		case 0: 
-		  if (level.player.room == room) behaviorState=1;
+		  if (getPlayer().room == room) behaviorState=1;
 		  break;
 		case 1: 
 		  if (y>=192)

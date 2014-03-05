@@ -9,7 +9,6 @@ import java.io.Serializable;
 
 import com.droidquest.Wire;
 import com.droidquest.devices.Device;
-import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
 
 public class Port implements Serializable 
@@ -32,11 +31,11 @@ public class Port implements Serializable
 	public int x,y; 
 	public int width, height; // width & height 
 	public int wireX, wireY;
-	public transient Item myDevice;
+	public transient Device myDevice;
 	public transient Wire myWire;
 	public boolean locked; // False = Reverts to Undefined with no connections
 
-	public Port() {}
+    public Port() {}
 
 	public Port(int X, int Y, int Type, int Size, int rot, Device d) 
 	  {
@@ -82,7 +81,7 @@ public class Port implements Serializable
 
 	public void readRef(ObjectInputStream s, Level level) throws IOException 
 	  {
-		myDevice = (Item) level.FindItem(s.readInt());
+		myDevice = (Device) level.FindItem(s.readInt());
 		if (myDevice != null)
 		  if (myDevice.room != null)
 		    myWire = myDevice.room.FindWire(s.readInt());
@@ -191,4 +190,31 @@ public class Port implements Serializable
 	  }
 
 
-	}
+    public int getType() {
+        return type;
+    }
+
+    public boolean getValue() {
+        return value;
+    }
+
+    public Device getOwner() {
+        return myDevice;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getRotation() {
+        return rotation;
+    }
+
+    public Wire getWire() {
+        return myWire;
+    }
+}

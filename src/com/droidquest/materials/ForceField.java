@@ -1,10 +1,6 @@
 package com.droidquest.materials;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.avatars.GameCursor;
 import com.droidquest.items.GenericRobot;
@@ -19,33 +15,11 @@ public ForceField(String rc, Color c)
 	super(true,false);
 	robotClassName = rc;
 	color = c;
-	GenerateIcons();
   }
 
-public void GenerateIcons() 
+public boolean Passable(Item item)
   {
-	BufferedImage bi = new BufferedImage(28,32,BufferedImage.TYPE_4BYTE_ABGR);
-	Graphics g;
-	try
-	  {
-	     g = bi.getGraphics();
-	  }
-	catch (NullPointerException e)
-	  {
-	     System.out.println("Could not get Graphics pointer to " + getClass() + "Image");
-	     return;
-	  }
-	
-	g.setColor(Color.black);
-	g.fillRect(0,0,28,32);
-	g.setColor(color);
-	g.fillRect(12,0,4,32);
-	icon = new ImageIcon(bi);
-  }
-
-public boolean Passable(Item item) 
-  {
-	if (item == level.player)
+	if (item == getPlayer())
 	  return false;
 	else if (item instanceof GenericRobot)
 	  {

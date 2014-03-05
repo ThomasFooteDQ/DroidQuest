@@ -1,12 +1,11 @@
 package com.droidquest;
 
 import java.awt.Color;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Vector;
 
 import com.droidquest.decorations.Arrow;
@@ -81,12 +80,7 @@ public void readRef(ObjectInputStream s) throws IOException
 	  {
 	     Wire wire = new Wire();
 	     wires.addElement(wire);
-	     wire.readRef(s,level);
-	  }
-	
-	for (int a=0; a<graphix.size(); a++)
-	  {
-	     ((Graphix)graphix.elementAt(a)).GenerateIcons();
+	     wire.readRef(s, level);
 	  }
 	
 	GenerateArray();
@@ -189,127 +183,22 @@ public void AddGraphix(String[] t, int X, int Y)
 	graphix.addElement(newGraphix);
   }
 
-public void DrawTextBoxes(Graphics g, RoomDisplay rd) 
-  {
-	for (int a=0; a<textBoxes.size(); a++)
-	  {
-	     TextBox textBox = (TextBox) textBoxes.elementAt(a);
-	     g.setColor(Color.white);
-	     g.setFont(rd.smallFont);
-	     
-	     int cursX = textBox.x;
-	     int cursY = textBox.y;
-	     int advY=0;
-	     int advX;
-	     String nextWord;
-	     int indexFrom=0;
-	     int indexTo;
-	     
-	     do
-	       {
-		  // Get the next word in the string
-		  if (indexFrom >= textBox.textString.lastIndexOf(" "))
-		    {indexTo = textBox.textString.length();}
-		  else
-		    {indexTo = textBox.textString.indexOf(" ",indexFrom+1);}
-		  nextWord = textBox.textString.substring(indexFrom, indexTo);
-		  if (nextWord.startsWith(" "))
-		    {
-		       nextWord = nextWord.substring(1,nextWord.length());
-		    }
-		  if (!nextWord.endsWith(" "))
-		    {
-		       nextWord = nextWord + " ";
-		    }
-		  
-		  if (nextWord.startsWith("{BIG}"))
-		    {
-		       g.setFont(rd.bigFont);
-		    }
-		  
-		  else if (nextWord.startsWith("{SML}"))
-		    {
-		       g.setFont(rd.smallFont);
-		    }
-		  
-		  else if (nextWord.startsWith("{BSP}"))
-		    {
-		       FontMetrics fm = g.getFontMetrics();
-		       advX = fm.stringWidth(" ");
-		       cursX-=advX;
-		    }
-		  
-		  // if (nextWord fits "{rrr,ggg,bbb} "
-		  else if (nextWord.startsWith("{") 
-			   && nextWord.endsWith("} ") 
-			   && nextWord.length()==14)
-		    {
-		       // extract rrr,ggg,bbb
-		       Integer rr = new Integer(nextWord.substring(1,4));
-		       Integer gg = new Integer(nextWord.substring(5,8));
-		       Integer bb = new Integer(nextWord.substring(9,12));
-		       g.setColor(new Color(rr.intValue(),
-					    gg.intValue(),
-					    bb.intValue()));
-		    }
-		  else
-		    {
-		       FontMetrics fm = g.getFontMetrics();
-		       if (fm.getAscent() > advY)
-			 {advY = fm.getAscent() ;}
-		       advX = fm.stringWidth(nextWord);
-		       if (cursX+advX > textBox.width + textBox.x)
-			 {
-			    cursX=textBox.x; 
-			    cursY+=advY; 
-			    advY=fm.getAscent();
-			 }
-		       g.drawString(nextWord, cursX, cursY);
-		       cursX+=advX;
-		       if (cursX+advX > textBox.width + textBox.x)
-			 {
-			    cursX=textBox.x; 
-			    cursY+=advY;
-			    advY=fm.getAscent();
-			 }
-		    }
-		  indexFrom = indexTo;
-	       }
-	     while (indexFrom < textBox.textString.length());
-	  }
-  }
-
-public void DrawGraphix(Graphics g, RoomDisplay rd) 
-  {
-	for (int a = 0; a< graphix.size(); a++)
-	  {
-	     Graphix grx = (Graphix) graphix.elementAt(a);
-	     grx.Draw(g,rd);
-	  }
-  }
-
-public void DrawArrows(Graphics g) 
-  {
-	for (int a = 0; a< arrows.size(); a++)
-	  ((Arrow) arrows.elementAt(a)).Draw(g);
-  }
-
-public Room getUpRoom(Item item) 
+public Room getUpRoom()
   {
 	return upRoom;
   }
 
-public Room getDownRoom(Item item) 
+public Room getDownRoom()
   {
 	return downRoom;
   }
 
-public Room getLeftRoom(Item item) 
+public Room getLeftRoom()
   {
 	return leftRoom;
   }
 
-public Room getRightRoom(Item item) 
+public Room getRightRoom()
   {
 	return rightRoom;
   }
@@ -351,5 +240,27 @@ public void Erase()
 	  }
 	wires.clear();
   }
+    public Material getMaterial(int x, int y) {
+        return MaterialArray[y][x];
+    }
 
-} 
+    public List<TextBox> getTextBoxes() {
+        return textBoxes;
+    }
+
+    public List<Graphix> getGraphix() {
+        return graphix;
+    }
+
+    public List<Arrow> getArrows() {
+        return arrows;
+    }
+
+    public List<Wire> getWires() {
+        return wires;
+    }
+
+    public Item getPortalItem() {
+        return portalItem;
+    }
+}

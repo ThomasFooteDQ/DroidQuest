@@ -1,12 +1,7 @@
 package com.droidquest.materials;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+import javax.swing.*;
 import java.util.Date;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.Room;
 import com.droidquest.items.Item;
@@ -19,47 +14,14 @@ static int[] states = {0,0,0,0,0}; //0=Blue, 1=White, 2=Orange
 public Date timeout;
 transient Room room=null;
 
-public MultiSwitch(int n, int s) 
+    public MultiSwitch(int n, int s)
   {
 	super(true, false);
 	number = n;
 	states[number] = s;
   }
 
-public void GenerateIcons() 
-  {
-	images = new ImageIcon[3];
-	for (int a=0; a<3; a++)
-	  {
-	     images[a] = new ImageIcon(new BufferedImage(28,32,BufferedImage.TYPE_4BYTE_ABGR));
-	     Graphics g;
-	     try
-	       {
-		  g = images[a].getImage().getGraphics();
-	       }
-	     catch (NullPointerException e)
-	       {
-		  System.out.println("Could not get Graphics pointer to " + getClass() + " Image");
-		  return;
-	       }
-	     Graphics2D g2 = (Graphics2D) g;
-	     g2.setBackground(Color.black);
-	     g2.clearRect(0,0,28,32);
-	     if (a==0) 
-	       g2.setColor(Color.blue);
-	     else if (a==1)
-	       g2.setColor(Color.white);
-	     else if (a==2)
-	       g2.setColor(new Color(255,128,0));
-	     
-	     g2.fillRect(12,4,6,24);
-	     g2.fillRect(18,12,10,8);
-	  }
-	
-	icon = images[0];
-  }
-
-public void TouchedByItem(Item item) 
+public void TouchedByItem(Item item)
   {
 	if (room==null)
 	  room = item.room;
@@ -97,9 +59,7 @@ public void TouchedByItem(Item item)
 
 public void Animate() 
   {
-	icon = images[states[number]];
-	
-	if (number!=0) 
+	if (number!=0)
 	  return;
 	
 	boolean flag = true;
@@ -154,4 +114,7 @@ public boolean equals(Material mat)
 	return false;
   }
 
+    public int getCurrentState() {
+        return states[number];
+    }
 }

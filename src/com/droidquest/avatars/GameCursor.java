@@ -1,35 +1,21 @@
 package com.droidquest.avatars;
 
+import javax.swing.ImageIcon;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FileDialog;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-import javax.swing.ImageIcon;
-
 import com.droidquest.Room;
-import com.droidquest.RoomDisplay;
-import com.droidquest.devices.Device;
-import com.droidquest.devices.GenericChip;
-import com.droidquest.devices.SmallChip;
 import com.droidquest.items.GenericRobot;
 import com.droidquest.items.Item;
-import com.droidquest.items.ToolBox;
 
-public class GameCursor extends Item 
-{
+public class GameCursor extends Item {
 	private int walk = 0; // 0 or 1, used in animation
-	public boolean outline; // Draw outline around GameCursor?
 
-	public GameCursor(){}
-
-	public GameCursor(int X, int Y, Room r) 
+	public GameCursor(int X, int Y, Room r)
 	{
 		x=X; y=Y; 
-		outline=false;
 		room=r;
 		width=28; height=32;
 		GenerateIcons();
@@ -303,7 +289,7 @@ public class GameCursor extends Item
 					SetRoom(item.InternalRoom);
 				}
 		}
-		super.MoveUp( nudge);
+		super.MoveUp(nudge);
 		walk = 1-walk;
 		currentIcon = icons[0+walk].getImage();
 	}
@@ -323,7 +309,7 @@ public class GameCursor extends Item
 					SetRoom(item.InternalRoom);
 				}
 		}
-		super.MoveDown( nudge);
+		super.MoveDown(nudge);
 		walk = 1-walk;
 		currentIcon = icons[2+walk].getImage();
 	}
@@ -343,7 +329,7 @@ public class GameCursor extends Item
 					SetRoom(item.InternalRoom);
 				}
 		}
-		super.MoveLeft( nudge);
+		super.MoveLeft(nudge);
 		walk = 1-walk;
 		currentIcon = icons[4+walk].getImage();
 	}
@@ -365,321 +351,19 @@ public class GameCursor extends Item
 				}
 			}
 		}
-		super.MoveRight( nudge);
+		super.MoveRight(nudge);
 		walk = 1-walk;
 		currentIcon = icons[6+walk].getImage();
 	}
 
-	public void Draw(Graphics g, RoomDisplay rd) 
-	{
-		g.drawImage(currentIcon, x, y, rd);
-		if (outline)
-		{
-			g.setColor(Color.white);
-			g.drawRect(x,y,28,32);
-		}
-	}
-
-	public boolean CanBePickedUp(Item i) 
+	public boolean CanBePickedUp(Item i)
 	{
 		if (i.getClass().toString().endsWith("Robot"))
 			return false;
 		return true;
 	}
 
-	public boolean KeyUp(KeyEvent e) 
-	{
-		if (e.getKeyCode() == e.VK_L) 
-		{
-			if (carrying != null)
-				if (carrying.getClass().toString().endsWith("SmallChip"))
-				{
-					FileDialog fd = new FileDialog(level.roomdisplay.dq,"Load Chip", FileDialog.LOAD);
-					fd.setDirectory("chips");
-					fd.show();
-					System.out.println("Dialog returned with " 
-							+ fd.getDirectory()
-							+ fd.getFile());
-					if (fd.getFile() != null)
-					{
-						((SmallChip)carrying).Empty();
-						((SmallChip)carrying).LoadChip(fd.getDirectory()+fd.getFile());
-					}
-				}
-		}
-		if (e.getKeyCode() == e.VK_S) 
-		{
-			if (level.solderingPen == null) return false;
-			if (carrying != null)
-				Drops();
-			level.solderingPen.x = x;
-			level.solderingPen.y = y;
-			level.solderingPen.room = room;
-			room = null;
-			if (level.currentViewer == level.player)
-				level.currentViewer=level.solderingPen;
-			level.player = level.solderingPen;
-			if (level.remote != null)
-				if (level.remote.carriedBy != null)
-				{
-					level.remote.carriedBy = level.player;
-				}
-		}
-		if (e.getKeyCode() == e.VK_R) 
-		{
-			if (level.remote == null) return false;
-			if (level.remote.carriedBy == null)
-			{ // Summon Remote
-				level.remote.x = 28;
-				level.remote.y = -20;
-				level.remote.carriedBy = level.player;
-				level.remote.room = level.player.room;
-				level.electricity = true;
-			}
-			else
-			{ // Hide Remote
-				level.remote.carriedBy = null;
-				level.remote.room = null;
-				level.electricity = false;
-			}
-			//	     if (carrying != null)
-			//	       Drops();
-			//	     level.remote.x = x;
-			//	     level.remote.y = y;
-			//	     level.remote.room = room;
-			//	     room = null;
-			//	     if (level.currentViewer == level.player)
-			//	       level.currentViewer=level.remote;
-			//	     level.player = level.remote;
-		}
-		if (e.getKeyCode() == e.VK_T) 
-		{
-			if (level.toolbox == null)
-			{
-				if (carrying != null)
-					Drops();
-				level.toolbox = new ToolBox(x,y+8,room);
-				level.items.addElement(level.toolbox);
-				((ToolBox)level.toolbox).Toggle();
-				PicksUp(level.toolbox);
-			}
-			if (level.toolbox.room != room)
-			{
-				// Summon Toolbox
-				if (carrying != null) return false;
-				if (((ToolBox)level.toolbox).open) ((ToolBox)level.toolbox).Toggle();
-				level.toolbox.room = room;
-				level.toolbox.x = x+28;
-				level.toolbox.y = y+6;
-				PicksUp(level.toolbox);
-			}
-			else
-				((ToolBox)level.toolbox).Toggle();
-		}
-		if (e.getKeyCode() == e.VK_SLASH) 
-		{
-			if (carrying != null)
-				if (carrying.getClass().toString().endsWith("Chip"))
-				{
-					((GenericChip)carrying).ShowText(true);
-					return false;
-				}
-			if (level.helpCam == null) return false;
-			level.player = level.helpCam;
-			level.currentViewer = level.helpCam;
-		}
-		if (e.getKeyCode() == e.VK_RIGHT) 
-		{
-			if (level.cheatmode)
-				if (e.isShiftDown())
-					SetRoom(room.rightRoom);
-			if (carriedBy==null)
-				MoveRight(e.isControlDown());
-			repeating=0;
-			return true;
-		}
-		if (e.getKeyCode() == e.VK_LEFT) 
-		{
-			if (level.cheatmode)
-				if (e.isShiftDown())
-					SetRoom(room.leftRoom);
-			if (carriedBy==null)
-				MoveLeft(e.isControlDown());
-			repeating=0;
-			return true;
-		}
-		if (e.getKeyCode() == e.VK_UP) 
-		{
-			if (level.cheatmode)
-				if (e.isShiftDown())
-					SetRoom(room.upRoom);
-			if (carriedBy==null)
-				MoveUp(e.isControlDown());
-			repeating=0;
-			return true;
-		}
-		if (e.getKeyCode() == e.VK_DOWN) 
-		{
-			if (level.cheatmode)
-				if (e.isShiftDown())
-					SetRoom(room.downRoom);
-			if (carriedBy==null)
-				MoveDown(e.isControlDown());
-			repeating=0;
-			return true;
-		}
-		if (e.getKeyCode() == e.VK_SPACE) 
-		{
-			{
-				Item item = level.FindNearestItem(level.gameCursor);
-				if (item!=null)
-					if (item.getClass().toString().endsWith("Train"))
-					{
-						item.CanBePickedUp(this);
-						return false;
-					}
-			}
-
-			if (carrying != null)
-				Drops();
-			else
-			{
-				Item item = level.FindNearestItem(level.gameCursor);
-				if (item != null)
-					if (item.CanBePickedUp(level.gameCursor))
-						PicksUp(item);
-			}
-			outline = false;
-			return false;
-		}
-		if (e.getKeyCode() == e.VK_CLOSE_BRACKET) 
-		{
-			if (carrying !=null)
-				if (carrying.isDevice())
-					((Device) carrying).rotate(1);
-			return false;
-		}
-		if (e.getKeyCode() == e.VK_OPEN_BRACKET) 
-		{
-			if (carrying !=null)
-				if (carrying.isDevice())
-					((Device) carrying).rotate(-1);
-			return false;
-		}
-		if (e.getKeyCode() == e.VK_E) 
-		{
-			boolean found=false;
-			Item item = level.FindNearestItem(this);
-			if (item!=null)
-				if (item.InternalRoom!=null)
-					if (Overlaps(item))
-						//		 if (x>=item.x && y>=item.y 
-						//		     && x+width <= item.x + item.width
-						//		     && y+height <= item.y + item.height)
-						if (!item.OverWall())
-						{
-							int newX = 280; // 10 * 28
-							int newY = 176; // 5.5 * 32
-							x = newX;
-							y = newY;
-							SetRoom(item.InternalRoom);
-							found=true;
-						}
-		}
-		if (e.getKeyCode() == e.VK_X) 
-		{
-			if (room.portalItem!=null)
-			{
-				Dimension d = room.portalItem.GetXY();
-				int newX = d.width
-						+ room.portalItem.getWidth()/2 
-						- width/2;
-				int newY = d.height
-						+ room.portalItem.getHeight()/4*2 
-						- height/2;
-				x = newX;
-				y = newY;
-				SetRoom(room.portalItem.room);
-				level.currentViewer = level.player;
-			}
-		}
-		if (e.getKeyCode() == e.VK_F) 
-		{
-			if (carrying != null)
-				if (carrying instanceof Device)
-					((Device)carrying).flip();
-		}
-		if (e.getKeyCode() == e.VK_M) 
-		{
-			Runtime runtime = Runtime.getRuntime();
-			long freemem = runtime.freeMemory();
-			long totalmem = runtime.totalMemory();
-			System.out.println("Total Memory = "+ totalmem
-					+ ", (" + totalmem/1024 + "K), ("
-					+ totalmem/1024/1024 + "M)");
-			System.out.println("Free Memory = "+ freemem
-					+ ", (" + freemem/1024 + "K), ("
-					+ freemem/1024/1024 + "M)");
-		}
-
-		return false;
-	}
-
-	public boolean KeyDown(KeyEvent e) 
-	{
-		if (e.getKeyCode() == e.VK_RIGHT) 
-		{
-			repeating++;
-			if (repeating>5)
-			{
-				if (carriedBy==null)
-					MoveRight(e.isControlDown());
-				return true;
-			}
-			return false;
-		}
-		if (e.getKeyCode() == e.VK_LEFT) 
-		{
-			repeating++;
-			if (repeating>5)
-			{
-				if (carriedBy==null)
-					MoveLeft(e.isControlDown());
-				return true;
-			}
-			return false;
-		}
-		if (e.getKeyCode() == e.VK_UP) 
-		{
-			repeating++;
-			if (repeating>5)
-			{
-				if (carriedBy==null)
-					MoveUp(e.isControlDown());
-				return true;
-			}
-			return false;
-		}
-		if (e.getKeyCode() == e.VK_DOWN) 
-		{
-			repeating++;
-			if (repeating>5)
-			{
-				if (carriedBy==null)
-					MoveDown(e.isControlDown());
-				return true;
-			}
-			return false;
-		}
-		if (e.getKeyCode() == e.VK_SPACE) 
-		{
-			if (level.player == level.gameCursor)
-				outline = true;
-		}
-		return false;
-	}
-
-	public void Animate() 
+    public void Animate()
 	{
 		if (automove==1 && room == null)
 			automove=0;
@@ -749,10 +433,10 @@ public class GameCursor extends Item
 	{
 		if (robot==null)
 		{
-			if (level.player.room.portalItem!=null)
+			if (getPlayer().room.portalItem!=null)
 			{
-				if (level.player.room.portalItem.getClass().toString().endsWith("Robot"))
-					return (PlayerInRobot ((GenericRobot) level.player.room.portalItem));
+				if (getPlayer().room.portalItem.getClass().toString().endsWith("Robot"))
+					return (PlayerInRobot ((GenericRobot) getPlayer().room.portalItem));
 				else return (null);
 			}
 			else

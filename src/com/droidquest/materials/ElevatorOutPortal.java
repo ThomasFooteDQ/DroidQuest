@@ -14,7 +14,7 @@ public ElevatorOutPortal()
 
 public void TouchedByItem(Item item) 
   {
-	if (item == level.player)
+	if (item == getPlayer())
 	  {
 	     if (outRoom == null)
 	       outRoom = (Room) level.rooms.elementAt(9);

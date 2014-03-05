@@ -2,10 +2,6 @@ package com.droidquest.materials;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
 
 import com.droidquest.Room;
 import com.droidquest.items.BinaryKey;
@@ -73,38 +69,9 @@ public class BinaryLock extends Material
 		super(true, false);
 		color = lc;
 		program = prg;
-		GenerateIcons();
 	  }
 
-	public void GenerateIcons() 
-	  {
-		BufferedImage bi = new BufferedImage(28,32,BufferedImage.TYPE_4BYTE_ABGR);
-		Graphics g;
-		try
-		  {
-		     g = bi.getGraphics();
-		  }
-		catch (NullPointerException e)
-		  {
-		     System.out.println("Could not get Graphics pointer to " + getClass() + "Image");
-		     return;
-		  }
-		
-		g.setColor(color);
-		g.fillRect(0,0,28,32);
-		g.setColor(Color.black);
-		g.fillRect(16,2,4,8);
-		g.fillRect(16,12,4,2);
-		g.fillRect(12,14,4,4);
-		g.fillRect(20,14,4,4);
-		g.fillRect(16,18,4,2);
-		g.fillRect(16,22,4,8);
-		g.fillRect(24,4,4,4);
-		g.fillRect(24,24,4,4);
-		icon = new ImageIcon(bi);	
-	  }
-
-	public boolean equals(Material mat) 
+	public boolean equals(Material mat)
 	  {
 		if (super.equals(mat))
 		  if (program == ((BinaryLock)mat).program)
