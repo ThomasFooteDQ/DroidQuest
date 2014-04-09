@@ -1,44 +1,40 @@
 package com.droidquest.materials;
 
-import java.awt.Color;
-
 import com.droidquest.Room;
-import com.droidquest.Wire;
 import com.droidquest.items.Item;
 
-public class MineField extends Material 
-{
-int hit=0;
-Item target = null;
+import java.awt.*;
 
-public MineField() 
-  {
-	super(Color.black, false, false);
-  }
+public class MineField extends Material {
+    private int hit = 0;
+    private Item target = null;
 
-public boolean Passable(Item item) 
-  {
-	hit += 2;
-	target = item;
-	return false;
-  }
+    public MineField() {
+        super(Color.black, false, false);
+    }
 
-public void Animate() 
-  {
-	if (hit>0)
-	  hit--;
-	if (hit>=2)
-	  {
-	     target.room = (Room) level.rooms.elementAt(58);
-	     target.charge=0;
-	     if (target.InternalRoom != null)
-	       {
-		  Room room = target.InternalRoom;
-		  if (room.wires.size()>0)
-		    for(int a=0; a<room.wires.size(); a++)
-		      ((Wire) room.wires.elementAt(0)).Remove();
-	       }
-	  }
-  }
+    public boolean Passable(Item item) {
+        hit += 2;
+        target = item;
+        return false;
+    }
+
+    public void Animate() {
+        if (hit > 0) {
+            hit--;
+        }
+        if (hit >= 2) {
+            target.room = level.rooms.elementAt(58);
+            target.charge = 0;
+            if (target.InternalRoom != null) {
+                Room room = target.InternalRoom;
+                if (room.wires.size() > 0) {
+                    for (int a = 0; a < room.wires.size(); a++) {
+                        room.wires.elementAt(0).Remove();
+                    }
+                }
+            }
+        }
+    }
 
 }
