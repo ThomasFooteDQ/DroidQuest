@@ -174,16 +174,16 @@ public class StormCloud extends Item {
         }
 
         if (xDirection > 0) {
-            MoveRight(xDirection);
+            moveRight(xDirection);
         }
         if (xDirection < 0) {
-            MoveLeft(-xDirection);
+            moveLeft(-xDirection);
         }
         if (yDirection > 0) {
-            MoveDown(yDirection);
+            moveDown(yDirection);
         }
         if (yDirection < 0) {
-            MoveUp(-yDirection);
+            moveUp(-yDirection);
         }
 
         if (brobot != null) {
@@ -239,7 +239,7 @@ public class StormCloud extends Item {
 
     }
 
-    public void MoveRight(int dist) {
+    public void moveRight(int dist) {
         int newX = x + dist;
         if (newX > 559 - 4 * 28 / 2) {
             xDirection = -(level.random.nextInt(maxspeed) + 1);
@@ -248,7 +248,7 @@ public class StormCloud extends Item {
         x = newX;
     }
 
-    public void MoveLeft(int dist) {
+    public void moveLeft(int dist) {
         int newX = x - dist;
         if (newX < 0) {
             xDirection = level.random.nextInt(maxspeed) + 1;
@@ -257,7 +257,7 @@ public class StormCloud extends Item {
         x = newX;
     }
 
-    public void MoveUp(int dist) {
+    public void moveUp(int dist) {
         y -= dist;
         if (y < 0) {
             room = room.upRoom;
@@ -265,7 +265,7 @@ public class StormCloud extends Item {
         }
     }
 
-    public void MoveDown(int dist) {
+    public void moveDown(int dist) {
         y += dist;
         if (y > 383) {
             room = room.downRoom;

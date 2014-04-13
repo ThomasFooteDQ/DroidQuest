@@ -290,16 +290,16 @@ public class GenericRobot extends Item {
         // Do Thrusting
         if (charge > 0 && level.electricity && (carriedBy == null) && thrusterPower) {
             if (topThruster) {
-                MoveDown(8);
+                moveDown(8);
             }
             if (rightThruster) {
-                MoveLeft(8);
+                moveLeft(8);
             }
             if (bottomThruster) {
-                MoveUp(8);
+                moveUp(8);
             }
             if (leftThruster) {
-                MoveRight(8);
+                moveRight(8);
             }
         }
 
@@ -461,15 +461,7 @@ public class GenericRobot extends Item {
             }
         }
 
-//	g.setColor(Color.magenta);
-//	g.drawRect(orgX+leftPortal.x, orgY+leftPortal.y,
-//		  leftPortal.width+28, leftPortal.height+32);
-//	g.drawRect(orgX+rightPortal.x, orgY+rightPortal.y,
-//		  rightPortal.width+28, rightPortal.height+32);
-//	g.drawRect(orgX+upPortal.x, orgY+upPortal.y,
-//		  upPortal.width+28, upPortal.height+32);
-//	g.drawRect(orgX+downPortal.x, orgY+downPortal.y,
-//		  downPortal.width+28, downPortal.height+32);
+
 
     }
 

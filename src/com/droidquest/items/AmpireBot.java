@@ -253,12 +253,12 @@ public class AmpireBot extends Item {
                         behaviorState = 2;
                     }
                     else {
-                        MoveDown(8);
+                        moveDown(8);
                         if (x < 280) {
-                            MoveRight(8);
+                            moveRight(8);
                         }
                         if (x > 280) {
-                            MoveLeft(8);
+                            moveLeft(8);
                         }
                     }
                     break;
@@ -267,12 +267,12 @@ public class AmpireBot extends Item {
                         behaviorState = 3;
                     }
                     else {
-                        MoveLeft(8);
+                        moveLeft(8);
                         if (y < 192) {
-                            MoveDown(8);
+                            moveDown(8);
                         }
                         if (y > 192) {
-                            MoveUp(8);
+                            moveUp(8);
                         }
                     }
                     break;
@@ -281,12 +281,12 @@ public class AmpireBot extends Item {
                         behaviorState = 4;
                     }
                     else {
-                        MoveUp(8);
+                        moveUp(8);
                         if (x < 280) {
-                            MoveRight(8);
+                            moveRight(8);
                         }
                         if (x > 280) {
-                            MoveLeft(8);
+                            moveLeft(8);
                         }
                     }
                     break;
@@ -295,12 +295,12 @@ public class AmpireBot extends Item {
                         behaviorState = 5;
                     }
                     else {
-                        MoveRight(8);
+                        moveRight(8);
                         if (y < 192) {
-                            MoveDown(8);
+                            moveDown(8);
                         }
                         if (y > 192) {
-                            MoveUp(8);
+                            moveUp(8);
                         }
                     }
                     break;
@@ -309,12 +309,12 @@ public class AmpireBot extends Item {
                         behaviorState = 2;
                     }
                     else {
-                        MoveDown(8);
+                        moveDown(8);
                         if (x < 280) {
-                            MoveRight(8);
+                            moveRight(8);
                         }
                         if (x > 280) {
-                            MoveLeft(8);
+                            moveLeft(8);
                         }
                     }
                     break;
@@ -328,16 +328,16 @@ public class AmpireBot extends Item {
                     }
                     Dimension d = target.GetXY();
                     if (d.width < x) {
-                        MoveLeft(false);
+                        moveLeft(false);
                     }
                     if (d.width > x) {
-                        MoveRight(false);
+                        moveRight(false);
                     }
                     if (d.height < y) {
-                        MoveUp(false);
+                        moveUp(false);
                     }
                     if (d.height > y) {
-                        MoveDown(false);
+                        moveDown(false);
                     }
                     break;
                 case 7:

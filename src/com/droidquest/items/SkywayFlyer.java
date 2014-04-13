@@ -30,14 +30,14 @@ public class SkywayFlyer extends Item {
         currentIcon = icons[0].getImage();
     }
 
-    public void MoveUp(int dist) {
+    public void moveUp(int dist) {
         y = y - dist;
         if (y < 32) {
             y = 320;
         }
     }
 
-    public void MoveDown(int dist) {
+    public void moveDown(int dist) {
         y = y + dist;
         if (y > 320) {
             y = 32;
@@ -52,10 +52,10 @@ public class SkywayFlyer extends Item {
         currentIcon = icons[animationState].getImage();
 
         if (speed < 0) {
-            MoveUp(-speed);
+            moveUp(-speed);
         }
         else {
-            MoveDown(speed);
+            moveDown(speed);
         }
 
         if (Overlaps(level.player)) {

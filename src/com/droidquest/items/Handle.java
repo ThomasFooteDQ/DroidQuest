@@ -54,7 +54,7 @@ public class Handle extends Item {
         if (e.getKeyCode() == e.VK_RIGHT) {
             if (x < 15 * 28) {
                 room.SetMaterial(x / 28 - 12, 4, 0);
-                MoveRight(28);
+                moveRight(28);
                 room.SetMaterial(x / 28 - 1, 4, 8);
             }
         }
@@ -63,7 +63,7 @@ public class Handle extends Item {
             if (x > 13 * 28) {
                 room.SetMaterial(x / 28 - 13, 4, 8);
                 room.SetMaterial(x / 28 - 1, 4, 0);
-                MoveLeft(28);
+                moveLeft(28);
             }
         }
 

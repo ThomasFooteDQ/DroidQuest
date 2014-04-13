@@ -164,16 +164,16 @@ public class Ghost extends Item {
 
         switch (animationState) {
             case 0: // Right
-                MoveRight(4);
+                moveRight(4);
                 break;
             case 1: // Down
-                MoveDown(4);
+                moveDown(4);
                 break;
             case 2: // Left
-                MoveLeft(4);
+                moveLeft(4);
                 break;
             case 3: // Up
-                MoveUp(4);
+                moveUp(4);
                 break;
         }
         currentIcon = icons[animationState].getImage();

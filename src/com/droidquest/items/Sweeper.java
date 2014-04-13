@@ -175,7 +175,7 @@ public class Sweeper extends Item {
                     currentIcon = icons[1].getImage();
                 }
                 else {
-                    MoveRight(8);
+                    moveRight(8);
                 }
                 break;
 
@@ -190,7 +190,7 @@ public class Sweeper extends Item {
                     currentIcon = icons[2].getImage();
                 }
                 else {
-                    MoveLeft(8);
+                    moveLeft(8);
                 }
                 break;
 

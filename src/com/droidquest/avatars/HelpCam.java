@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-public class HelpCam extends Item {
+public class HelpCam extends Item implements Avatar {
     public HelpCam(Room r) {
         charge = 0;
         x = 28;
@@ -38,4 +38,63 @@ public class HelpCam extends Item {
     }
 
 
+    @Override
+    public boolean handleGameCursor() {
+        return false;
+    }
+
+    @Override
+    public boolean handleSolderPen() {
+        return false;
+    }
+
+    @Override
+    public boolean handleToolbox() {
+        return false;
+    }
+
+    @Override
+    public boolean handleRadio() {
+        return false;
+    }
+
+    @Override
+    public boolean handleRotateDevice(int direction) {
+        return false;
+    }
+
+    @Override
+    public boolean handleHotCursor() {
+        return false;
+    }
+
+    @Override
+    public boolean handlePaintbrush() {
+        return false;
+    }
+
+    @Override
+    public boolean handleLoadSmallChip() {
+        return false;
+    }
+
+    @Override
+    public boolean handleHelp() {
+        return false;
+    }
+
+    @Override
+    public boolean handleEnterRoom() {
+        return false;
+    }
+
+    @Override
+    public boolean handleExitRoom() {
+        return false;
+    }
+
+    @Override
+    public boolean handleFlipDevice() {
+        return false;
+    }
 }

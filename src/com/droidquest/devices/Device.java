@@ -169,6 +169,9 @@ public class Device extends Item {
     }
 
     public void flip() {
+        // Just rotate twice to flip
+        rotate(1);
+        rotate(1);
     }
 
     public Object clone() {

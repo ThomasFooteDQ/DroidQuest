@@ -9,10 +9,9 @@ import com.droidquest.materials.RobotBlocker;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-public class PaintBrush extends Item {
+public class PaintBrush extends Player {
     // The Paintbrush works just like the original, except it allows
     // differnt color paints for differnt materials. Pressing 'P' as the
     // Paintbrush switches the Material Settings.
@@ -32,6 +31,11 @@ public class PaintBrush extends Item {
         width = 28;
         height = 32;
         GenerateIcons();
+    }
+
+    @Override
+    protected boolean isCheatMode() {
+        return true;
     }
 
     public void GenerateIcons() {
@@ -119,115 +123,97 @@ public class PaintBrush extends Item {
 
     }
 
-    public boolean KeyUp(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_C) {
-            level.gameCursor.x = x;
-            level.gameCursor.y = y;
-            level.gameCursor.room = room;
-            room = null;
-            if (level.currentViewer == level.player) {
-                level.currentViewer = level.gameCursor;
-            }
-            level.player = level.gameCursor;
-        }
-        if (e.getKeyCode() == KeyEvent.VK_S) {
-            if (level.solderingPen == null) {
-                return false;
-            }
-            level.solderingPen.x = x;
-            level.solderingPen.y = y;
-            level.solderingPen.room = room;
-            room = null;
-            if (level.currentViewer == level.player) {
-                level.currentViewer = level.solderingPen;
-            }
-            level.player = level.solderingPen;
-        }
-        if (e.getKeyCode() == KeyEvent.VK_R) {
-            if (level.remote == null) {
-                return false;
-            }
-            level.remote.x = x;
-            level.remote.y = y;
-            level.remote.room = room;
-            room = null;
-            if (level.currentViewer == level.player) {
-                level.currentViewer = level.remote;
-            }
-            level.player = level.remote;
-        }
-        if (e.getKeyCode() == KeyEvent.VK_SLASH) {
-            if (level.helpCam == null) {
-                return false;
-            }
-            level.player = level.helpCam;
-            level.currentViewer = level.helpCam;
-        }
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            if (e.isShiftDown()) {
-                SetRoom(room.rightRoom);
-            }
-            if (carriedBy == null) {
-                MoveRight(e.isControlDown());
-            }
-            repeating = 0;
-            return true;
-        }
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            if (e.isShiftDown()) {
-                SetRoom(room.leftRoom);
-            }
-            if (carriedBy == null) {
-                MoveLeft(e.isControlDown());
-            }
-            repeating = 0;
-            return true;
-        }
-        if (e.getKeyCode() == KeyEvent.VK_UP) {
-            if (e.isShiftDown()) {
-                SetRoom(room.upRoom);
-            }
-            if (carriedBy == null) {
-                MoveUp(e.isControlDown());
-            }
-            repeating = 0;
-            return true;
-        }
-        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            if (e.isShiftDown()) {
-                SetRoom(room.downRoom);
-            }
-            if (carriedBy == null) {
-                MoveDown(e.isControlDown());
-            }
-            repeating = 0;
-            return true;
-        }
-        if (e.getKeyCode() == KeyEvent.VK_P) {
-            paintIndex++;
-            if (paintIndex == 5) {
-                paintIndex = 0;
-            }
-            matIndex = level.materials.indexOf(paintMats[paintIndex]);
-            currentIcon = icons[paintIndex].getImage();
-        }
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            if (!room.editable) {
-                return false;
-            }
-            int bigX = (x + 14) / 28;
-            int bigY = (y + 16) / 32;
-            if (room.RoomArray[bigY][bigX] == emptyIndex) {
-                room.SetMaterial(bigX, bigY, matIndex);
-            }
-            else {
-                room.SetMaterial(bigX, bigY, emptyIndex);
-            }
-        }
+    @Override
+    public boolean handleHelp() {
+        handleGameCursor();
+        return super.handleHelp();
+    }
+
+    @Override
+    public boolean handleLoadSmallChip() {
         return false;
     }
 
-    public void MoveUp(boolean nudge) {
+    @Override
+    public boolean handlePaintbrush() {
+        paintIndex++;
+        if (paintIndex == 5) {
+            paintIndex = 0;
+        }
+        matIndex = level.materials.indexOf(paintMats[paintIndex]);
+        currentIcon = icons[paintIndex].getImage();
+        return true;
+    }
+
+    @Override
+    public boolean handleToolbox() {
+        // Paintbrush doesn't handle toolbox
+        return false;
+    }
+
+    @Override
+    public boolean handlePickupDrop() {
+        // Paintbrush uses space for painting instead of pickup/drop
+        if (!room.editable) {
+            return false;
+        }
+        int bigX = (x + 14) / 28;
+        int bigY = (y + 16) / 32;
+        if (room.RoomArray[bigY][bigX] == emptyIndex) {
+            room.SetMaterial(bigX, bigY, matIndex);
+        }
+        else {
+            room.SetMaterial(bigX, bigY, emptyIndex);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean handleEnterRoom() {
+        return false;
+    }
+
+    @Override
+    public boolean handleExitRoom() {
+        return false;
+    }
+
+    @Override
+    public boolean handleFlipDevice() {
+        return false;
+    }
+
+    @Override
+    public boolean handleRotateDevice(int direction) {
+        return false;
+    }
+
+
+    @Override
+    public boolean handleGameCursor() {
+        level.gameCursor.x = x;
+        level.gameCursor.y = y;
+        level.gameCursor.room = room;
+        room = null;
+        if (level.currentViewer == level.player) {
+            level.currentViewer = level.gameCursor;
+        }
+        level.player = level.gameCursor;
+
+        handleRemote();
+
+        level.roomdisplay.dq.selectCursor();
+
+        return true;
+    }
+
+
+    @Override
+    protected boolean handleRepeatSpace() {
+         return false;
+    }
+
+    public void moveUp(boolean nudge) {
         int dist = 32;
         if (nudge) {
             dist = 2;
@@ -245,7 +231,7 @@ public class PaintBrush extends Item {
         }
     }
 
-    public void MoveDown(boolean nudge) {
+    public void moveDown(boolean nudge) {
         int dist = 32;
         if (nudge) {
             dist = 2;
@@ -263,7 +249,7 @@ public class PaintBrush extends Item {
         }
     }
 
-    public void MoveLeft(boolean nudge) {
+    public void moveLeft(boolean nudge) {
         int dist = 28;
         if (nudge) {
             dist = 2;
@@ -281,7 +267,7 @@ public class PaintBrush extends Item {
         }
     }
 
-    public void MoveRight(boolean nudge) {
+    public void moveRight(boolean nudge) {
         int dist = 28;
         if (nudge) {
             dist = 2;

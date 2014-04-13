@@ -166,14 +166,14 @@ public class SentryT1 extends Item {
         switch (behavior) {
             case 0:
                 oldX = x;
-                MoveLeft(4);
+                moveLeft(4);
                 if (oldX == x) {
                     behavior = 1;
                 }
                 break;
             case 1:
                 oldX = x;
-                MoveRight(4);
+                moveRight(4);
                 if (oldX == x) {
                     behavior = 0;
                 }

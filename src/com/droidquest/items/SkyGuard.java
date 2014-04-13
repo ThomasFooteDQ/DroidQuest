@@ -32,7 +32,7 @@ public class SkyGuard extends Item {
 
         if (speed > 0) {
             if (speed + x < 420) {
-                MoveRight(speed);
+                moveRight(speed);
                 currentIcon = icons[animationState].getImage();
             }
             else {
@@ -42,7 +42,7 @@ public class SkyGuard extends Item {
         }
         else if (speed < 0) {
             if (speed + x > 112) {
-                MoveLeft(-speed);
+                moveLeft(-speed);
                 currentIcon = icons[3 + animationState].getImage();
             }
             else {

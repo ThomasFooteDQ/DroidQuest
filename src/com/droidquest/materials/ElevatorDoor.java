@@ -2,7 +2,6 @@ package com.droidquest.materials;
 
 import com.droidquest.avatars.GameCursor;
 import com.droidquest.decorations.Graphix;
-import com.droidquest.decorations.TextBox;
 import com.droidquest.items.GenericRobot;
 import com.droidquest.items.Item;
 import com.droidquest.items.Magnet;

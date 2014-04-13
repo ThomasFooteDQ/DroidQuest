@@ -95,14 +95,14 @@ class ChipDecompiler extends Thread {
                     for (int c = 0; c < 8; c++) {
                         if (oldgate.portSignals[c].externalSignal != null) {
                             int sigIndex = gate.mySignals.indexOf(oldgate.portSignals[c].externalSignal);
-                            newgate.portSignals[c].externalSignal = (Signal) smallchip.signals.elementAt(sigIndex);
+                            newgate.portSignals[c].externalSignal = smallchip.signals.elementAt(sigIndex);
                         }
                     }
                 }
                 for (int b = 0; b < 8; b++) {
                     if (gate.portSignals[b].internalSignal != null) {
                         int sigIndex = gate.mySignals.indexOf(gate.portSignals[b].internalSignal);
-                        smallchip.portSignals[b].internalSignal = (Signal) smallchip.signals.elementAt(sigIndex);
+                        smallchip.portSignals[b].internalSignal = smallchip.signals.elementAt(sigIndex);
                     }
                     smallchip.portSignals[b].type = gate.portSignals[b].type;
                     smallchip.ports[b].type = gate.portSignals[b].type;

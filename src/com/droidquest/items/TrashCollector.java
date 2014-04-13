@@ -89,14 +89,14 @@ public class TrashCollector extends Item {
         switch (behavior) {
             case 0: // Move Left to Room 31
                 if (room != gotoRoom) {
-                    MoveLeft(4);
+                    moveLeft(4);
                     if (y != 176) {
                         int diff = Math.abs(176 - y);
                         int dir = diff / (176 - y);
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveDown(diff * dir);
+                        moveDown(diff * dir);
                     }
                 }
                 else {
@@ -110,7 +110,7 @@ public class TrashCollector extends Item {
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveRight(diff * dir);
+                        moveRight(diff * dir);
                     }
                     if (y != gotoY) {
                         int diff = Math.abs(gotoY - y);
@@ -118,20 +118,20 @@ public class TrashCollector extends Item {
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveDown(diff * dir);
+                        moveDown(diff * dir);
                     }
                 }
                 break;
             case 1: // Move Up to Room 5
                 if (room != gotoRoom) {
-                    MoveUp(4);
+                    moveUp(4);
                     if (x != 266) {
                         int diff = Math.abs(266 - y);
                         int dir = diff / (266 - y);
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveRight(diff * dir);
+                        moveRight(diff * dir);
                     }
                 }
                 else {
@@ -145,7 +145,7 @@ public class TrashCollector extends Item {
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveRight(diff * dir);
+                        moveRight(diff * dir);
                     }
                     if (y != gotoY) {
                         int diff = Math.abs(gotoY - y);
@@ -153,20 +153,20 @@ public class TrashCollector extends Item {
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveDown(diff * dir);
+                        moveDown(diff * dir);
                     }
                 }
                 break;
             case 2: // Move Right to Room 11
                 if (room != gotoRoom) {
-                    MoveRight(4);
+                    moveRight(4);
                     if (y != 176) {
                         int diff = Math.abs(176 - y);
                         int dir = diff / (176 - y);
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveDown(diff * dir);
+                        moveDown(diff * dir);
                     }
                 }
                 else {
@@ -180,7 +180,7 @@ public class TrashCollector extends Item {
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveRight(diff * dir);
+                        moveRight(diff * dir);
                     }
                     if (y != gotoY) {
                         int diff = Math.abs(gotoY - y);
@@ -188,20 +188,20 @@ public class TrashCollector extends Item {
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveDown(diff * dir);
+                        moveDown(diff * dir);
                     }
                 }
                 break;
             case 3: // Move Down to Room 17
                 if (room != gotoRoom) {
-                    MoveDown(4);
+                    moveDown(4);
                     if (x != 266) {
                         int diff = Math.abs(266 - y);
                         int dir = diff / (266 - y);
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveRight(diff * dir);
+                        moveRight(diff * dir);
                     }
                 }
                 else {
@@ -215,7 +215,7 @@ public class TrashCollector extends Item {
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveRight(diff * dir);
+                        moveRight(diff * dir);
                     }
                     if (y != gotoY) {
                         int diff = Math.abs(gotoY - y);
@@ -223,20 +223,20 @@ public class TrashCollector extends Item {
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveDown(diff * dir);
+                        moveDown(diff * dir);
                     }
                 }
                 break;
             case 4: // Move Left to Room 19
                 if (room != gotoRoom) {
-                    MoveLeft(4);
+                    moveLeft(4);
                     if (y != 176) {
                         int diff = Math.abs(176 - y);
                         int dir = diff / (176 - y);
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveDown(diff * dir);
+                        moveDown(diff * dir);
                     }
                 }
                 else {
@@ -263,7 +263,7 @@ public class TrashCollector extends Item {
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveRight(diff * dir);
+                        moveRight(diff * dir);
                     }
                     if (y != gotoY) {
                         int diff = Math.abs(gotoY - y);
@@ -271,20 +271,20 @@ public class TrashCollector extends Item {
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveDown(diff * dir);
+                        moveDown(diff * dir);
                     }
                 }
                 break;
             case 5: // Move Up to Room 58
                 if (room != gotoRoom) {
-                    MoveUp(4);
+                    moveUp(4);
                     if (x != 266) {
                         int diff = Math.abs(266 - y);
                         int dir = diff / (266 - y);
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveRight(diff * dir);
+                        moveRight(diff * dir);
                     }
                 }
                 else {
@@ -305,7 +305,7 @@ public class TrashCollector extends Item {
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveRight(diff * dir);
+                        moveRight(diff * dir);
                     }
                     if (y != gotoY) {
                         int diff = Math.abs(gotoY - y);
@@ -313,20 +313,20 @@ public class TrashCollector extends Item {
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveDown(diff * dir);
+                        moveDown(diff * dir);
                     }
                 }
                 break;
             case 6: // Move Down to Room 19
                 if (room != gotoRoom) {
-                    MoveDown(4);
+                    moveDown(4);
                     if (x != 266) {
                         int diff = Math.abs(266 - y);
                         int dir = diff / (266 - y);
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveRight(diff * dir);
+                        moveRight(diff * dir);
                     }
                 }
                 else {
@@ -340,7 +340,7 @@ public class TrashCollector extends Item {
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveRight(diff * dir);
+                        moveRight(diff * dir);
                     }
                     if (y != gotoY) {
                         int diff = Math.abs(gotoY - y);
@@ -348,7 +348,7 @@ public class TrashCollector extends Item {
                         if (diff > 4) {
                             diff = 4;
                         }
-                        MoveDown(diff * dir);
+                        moveDown(diff * dir);
                     }
                 }
                 break;
@@ -365,7 +365,7 @@ public class TrashCollector extends Item {
                             if (diff > 8) {
                                 diff = 8;
                             }
-                            MoveRight(diff * dir);
+                            moveRight(diff * dir);
                         }
                         if (y != target.y) {
                             int diff = Math.abs(target.y - y);
@@ -373,7 +373,7 @@ public class TrashCollector extends Item {
                             if (diff > 8) {
                                 diff = 8;
                             }
-                            MoveDown(diff * dir);
+                            moveDown(diff * dir);
                         }
                     }
                 }

@@ -82,7 +82,7 @@ public class Turbine extends Item {
     public void Animate() {
         boolean flag = false;
         for (int a = 0; a < level.sparks.size(); a++) {
-            Spark spark = (Spark) level.sparks.elementAt(a);
+            Spark spark = level.sparks.elementAt(a);
             if (spark.room == room) {
                 if (spark.y >= y && spark.y <= y + height) {
                     if (spark.x >= x && spark.x <= x + width) {

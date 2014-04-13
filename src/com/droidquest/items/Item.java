@@ -273,7 +273,7 @@ public class Item implements Serializable, Cloneable {
 
     }
 
-    protected void MoveUp(int dist) {
+    protected void moveUp(int dist) {
         int bigXl = x / 28;
         int bigXr = (x + getWidth() - 1) / 28;
         int bigY = (y - dist) / 32;
@@ -295,7 +295,7 @@ public class Item implements Serializable, Cloneable {
                 x = d.width + (room.portalItem.width - width) / 2;
                 y = d.height + (room.portalItem.height - height) / 2;
                 SetRoom(room.portalItem.room);
-                MoveUp(dist);
+                moveUp(dist);
             }
             else { // stop at top
                 y += 384;
@@ -305,7 +305,7 @@ public class Item implements Serializable, Cloneable {
         ItemEffectsMaterials();
     }
 
-    protected void MoveDown(int dist) {
+    protected void moveDown(int dist) {
         int bigXl = x / 28;
         int bigXr = (x + getWidth() - 1) / 28;
         int bigY = (y + getHeight() - 1 + dist) / 32;
@@ -328,7 +328,7 @@ public class Item implements Serializable, Cloneable {
                 x = d.width + (room.portalItem.width - width) / 2;
                 y = d.height + (room.portalItem.height - height) / 2;
                 SetRoom(room.portalItem.room);
-                MoveDown(dist);
+                moveDown(dist);
             }
             else { // stop at bottom
                 y -= 384;
@@ -338,7 +338,7 @@ public class Item implements Serializable, Cloneable {
         ItemEffectsMaterials();
     }
 
-    protected void MoveLeft(int dist) {
+    protected void moveLeft(int dist) {
         int bigX = (x - dist) / 28;
         int bigYt = y / 32;
         int bigYb = (y + getHeight() - 1) / 32;
@@ -360,7 +360,7 @@ public class Item implements Serializable, Cloneable {
                 x = d.width + (room.portalItem.width - width) / 2;
                 y = d.height + (room.portalItem.height - height) / 2;
                 SetRoom(room.portalItem.room);
-                MoveLeft(dist);
+                moveLeft(dist);
             }
             else { // stop at Left
                 x += 560;
@@ -370,7 +370,7 @@ public class Item implements Serializable, Cloneable {
         ItemEffectsMaterials();
     }
 
-    protected void MoveRight(int dist) {
+    protected void moveRight(int dist) {
         int bigX = (x + getWidth() - 1 + dist) / 28;
         int bigYt = y / 32;
         int bigYb = (y + getHeight() - 1) / 32;
@@ -394,7 +394,7 @@ public class Item implements Serializable, Cloneable {
                 x = d.width + (room.portalItem.width - width) / 2;
                 y = d.height + (room.portalItem.height - height) / 2;
                 SetRoom(room.portalItem.room);
-                MoveRight(dist);
+                moveRight(dist);
             }
             else { // stop at Right
                 x -= 560;
@@ -404,36 +404,36 @@ public class Item implements Serializable, Cloneable {
         ItemEffectsMaterials();
     }
 
-    protected void MoveUp(boolean nudge) {
+    protected void moveUp(boolean nudge) {
         int dist = 32;
         if (nudge) {
             dist = 2;
         }
-        MoveUp(dist);
+        moveUp(dist);
     }
 
-    protected void MoveDown(boolean nudge) {
+    protected void moveDown(boolean nudge) {
         int dist = 32;
         if (nudge) {
             dist = 2;
         }
-        MoveDown(dist);
+        moveDown(dist);
     }
 
-    protected void MoveLeft(boolean nudge) {
+    protected void moveLeft(boolean nudge) {
         int dist = 28;
         if (nudge) {
             dist = 2;
         }
-        MoveLeft(dist);
+        moveLeft(dist);
     }
 
-    protected void MoveRight(boolean nudge) {
+    protected void moveRight(boolean nudge) {
         int dist = 28;
         if (nudge) {
             dist = 2;
         }
-        MoveRight(dist);
+        moveRight(dist);
     }
 
     public void Animate() {
@@ -459,30 +459,30 @@ public class Item implements Serializable, Cloneable {
                 dy = 32;
             }
             if (dx > 0) {
-                MoveRight(dx);
+                moveRight(dx);
             }
             if (dx < 0) {
-                MoveLeft(-dx);
+                moveLeft(-dx);
             }
             if (dy > 0) {
-                MoveDown(dy);
+                moveDown(dy);
             }
             if (dy < 0) {
-                MoveUp(-dy);
+                moveUp(-dy);
             }
         }
         if (automove == 2) {
             if (autoX > 0) {
-                MoveRight(autoX);
+                moveRight(autoX);
             }
             if (autoX < 0) {
-                MoveLeft(-autoX);
+                moveLeft(-autoX);
             }
             if (autoY > 0) {
-                MoveDown(autoY);
+                moveDown(autoY);
             }
             if (autoY < 0) {
-                MoveUp(-autoY);
+                moveUp(-autoY);
             }
         }
     }

@@ -75,13 +75,13 @@ public class WallHandle extends Item {
             int tempX = d.width;
             int tempY = d.height;
             if (tempY != startY) {
-                carriedBy.MoveDown(startY - tempY);
+                carriedBy.moveDown(startY - tempY);
             }
             if (tempX < startX) {
-                carriedBy.MoveRight(startX - tempX);
+                carriedBy.moveRight(startX - tempX);
             }
             if (tempX > (startX + maxPull)) {
-                carriedBy.MoveLeft(tempX - (startX + maxPull));
+                carriedBy.moveLeft(tempX - (startX + maxPull));
             }
 
             d = GetXY();

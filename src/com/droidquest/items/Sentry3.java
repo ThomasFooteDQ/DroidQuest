@@ -56,30 +56,30 @@ public class Sentry3 extends Sentry {
         switch (behavior) {
             case 0:
                 if (y < 256) {
-                    MoveDown(8);
+                    moveDown(8);
                 }
                 else {
                     behavior = 1;
                 }
                 if (x < 56) {
-                    MoveRight(8);
+                    moveRight(8);
                 }
                 if (x > 56) {
-                    MoveLeft(8);
+                    moveLeft(8);
                 }
                 break;
             case 1:
                 if (y > 64) {
-                    MoveUp(8);
+                    moveUp(8);
                 }
                 else {
                     behavior = 0;
                 }
                 if (x < 56) {
-                    MoveRight(8);
+                    moveRight(8);
                 }
                 if (x > 56) {
-                    MoveLeft(8);
+                    moveLeft(8);
                 }
                 break;
             case 2:
@@ -102,16 +102,16 @@ public class Sentry3 extends Sentry {
                     dy = 50;
                 }
                 if (dx < 0) {
-                    MoveLeft(-dx);
+                    moveLeft(-dx);
                 }
                 if (dx > 0) {
-                    MoveRight(dx);
+                    moveRight(dx);
                 }
                 if (dy < 0) {
-                    MoveUp(-dy);
+                    moveUp(-dy);
                 }
                 if (dy > 0) {
-                    MoveDown(dy);
+                    moveDown(dy);
                 }
                 if (dx == 0 && dy == 0) {
                     PicksUp(level.player);
@@ -126,16 +126,16 @@ public class Sentry3 extends Sentry {
                 }
                 else {
                     if (y < 312) {
-                        MoveDown(8);
+                        moveDown(8);
                     }
                     else if (y < 320) {
-                        MoveDown(320 - y);
+                        moveDown(320 - y);
                     }
                     if (x < carryToX) {
-                        MoveRight(8);
+                        moveRight(8);
                     }
                     if (x > carryToX) {
-                        MoveLeft(8);
+                        moveLeft(8);
                     }
                 }
                 break;

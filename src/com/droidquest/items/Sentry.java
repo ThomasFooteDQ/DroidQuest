@@ -288,7 +288,7 @@ public class Sentry extends Item {
                     if (diff > 8) {
                         diff = 8;
                     }
-                    MoveRight(diff * dir);
+                    moveRight(diff * dir);
                 }
                 if (y != goToY) {
                     int diff = Math.abs(goToY - y);
@@ -296,7 +296,7 @@ public class Sentry extends Item {
                     if (diff > 8) {
                         diff = 8;
                     }
-                    MoveDown(diff * dir);
+                    moveDown(diff * dir);
                 }
             }
         }
@@ -314,7 +314,7 @@ public class Sentry extends Item {
                 if (diff > 50) {
                     diff /= 2;
                 }
-                MoveRight(diff * dir);
+                moveRight(diff * dir);
             }
             if (y != level.player.y) {
                 int diff = Math.abs(level.player.y - y);
@@ -322,7 +322,7 @@ public class Sentry extends Item {
                 if (diff > 50) {
                     diff /= 2;
                 }
-                MoveDown(diff * dir);
+                moveDown(diff * dir);
             }
             if (x == level.player.x && y == level.player.y) {
                 PicksUp(level.player);
@@ -343,7 +343,7 @@ public class Sentry extends Item {
                     if (diff > 8) {
                         diff = 8;
                     }
-                    MoveRight(diff * dir);
+                    moveRight(diff * dir);
                 }
                 if (y != carryToY) {
                     int diff = Math.abs(carryToY - y);
@@ -351,7 +351,7 @@ public class Sentry extends Item {
                     if (diff > 8) {
                         diff = 8;
                     }
-                    MoveDown(diff * dir);
+                    moveDown(diff * dir);
                 }
             }
         }
@@ -389,7 +389,7 @@ public class Sentry extends Item {
         }
     }
 
-    public void MoveUp(int dist) {
+    public void moveUp(int dist) {
         int newY = y - dist;
         if (newY < 0) {
             newY = 0;
@@ -397,7 +397,7 @@ public class Sentry extends Item {
         y = newY;
     }
 
-    public void MoveDown(int dist) {
+    public void moveDown(int dist) {
         int newY = y + dist;
         if (newY > 383) {
             newY = 383;
@@ -405,7 +405,7 @@ public class Sentry extends Item {
         y = newY;
     }
 
-    public void MoveLeft(int dist) {
+    public void moveLeft(int dist) {
         int newX = x - dist;
         if (newX < 0) {
             newX = 0;
@@ -413,7 +413,7 @@ public class Sentry extends Item {
         x = newX;
     }
 
-    public void MoveRight(int dist) {
+    public void moveRight(int dist) {
         int newX = x + dist;
         if (newX > 579) {
             newX = 579;

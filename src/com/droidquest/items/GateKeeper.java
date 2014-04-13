@@ -71,7 +71,7 @@ public class GateKeeper extends Item {
                     if (diff > 2) {
                         diff = 2;
                     }
-                    MoveRight(diff * dir);
+                    moveRight(diff * dir);
                 }
                 if (y != goToY) {
                     int diff = Math.abs(goToY - y);
@@ -79,7 +79,7 @@ public class GateKeeper extends Item {
                     if (diff > 2) {
                         diff = 2;
                     }
-                    MoveDown(diff * dir);
+                    moveDown(diff * dir);
                 }
             }
             else {

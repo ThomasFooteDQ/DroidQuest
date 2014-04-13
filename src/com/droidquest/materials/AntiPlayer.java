@@ -1,6 +1,5 @@
 package com.droidquest.materials;
 
-import com.droidquest.Room;
 import com.droidquest.avatars.GameCursor;
 import com.droidquest.items.GenericRobot;
 import com.droidquest.items.Item;

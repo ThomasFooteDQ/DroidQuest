@@ -43,30 +43,30 @@ public class SentryT2 extends Sentry {
         switch (behavior) {
             case 0:
                 if (y < 256) {
-                    MoveDown(4);
+                    moveDown(4);
                 }
                 else {
                     behavior = 1;
                 }
                 if (x < 56) {
-                    MoveRight(4);
+                    moveRight(4);
                 }
                 if (x > 56) {
-                    MoveLeft(4);
+                    moveLeft(4);
                 }
                 break;
             case 1:
                 if (y > 64) {
-                    MoveUp(4);
+                    moveUp(4);
                 }
                 else {
                     behavior = 0;
                 }
                 if (x < 56) {
-                    MoveRight(4);
+                    moveRight(4);
                 }
                 if (x > 56) {
-                    MoveLeft(4);
+                    moveLeft(4);
                 }
                 break;
             case 2:
@@ -89,16 +89,16 @@ public class SentryT2 extends Sentry {
                     dy = 50;
                 }
                 if (dx < 0) {
-                    MoveLeft(-dx);
+                    moveLeft(-dx);
                 }
                 if (dx > 0) {
-                    MoveRight(dx);
+                    moveRight(dx);
                 }
                 if (dy < 0) {
-                    MoveUp(-dy);
+                    moveUp(-dy);
                 }
                 if (dy > 0) {
-                    MoveDown(dy);
+                    moveDown(dy);
                 }
                 if (dx == 0 && dy == 0) {
                     PicksUp(level.player);
@@ -113,13 +113,13 @@ public class SentryT2 extends Sentry {
                 }
                 else {
                     if (x > 56) {
-                        MoveLeft(4);
+                        moveLeft(4);
                     }
                     if (y < 20) {
-                        MoveDown(4);
+                        moveDown(4);
                     }
                     if (y > 30) {
-                        MoveUp(4);
+                        moveUp(4);
                     }
                 }
                 break;

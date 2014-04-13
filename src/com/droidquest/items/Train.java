@@ -1,5 +1,6 @@
 package com.droidquest.items;
 
+import com.droidquest.avatars.Avatar;
 import com.droidquest.materials.Material;
 
 import javax.swing.*;
@@ -7,7 +8,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-public class Train extends Item {
+public class Train extends Item implements Avatar {
     public Train() {
         x = 0;
         y = 0;
@@ -85,10 +86,69 @@ public class Train extends Item {
     public void Animate() {
         if (room != null) {
             if (carrying != null) {
-                MoveRight(8);
+                moveRight(8);
             }
         }
     }
 
 
+    @Override
+    public boolean handleGameCursor() {
+        return false;
+    }
+
+    @Override
+    public boolean handleSolderPen() {
+        return false;
+    }
+
+    @Override
+    public boolean handleToolbox() {
+        return false;
+    }
+
+    @Override
+    public boolean handleRadio() {
+        return false;
+    }
+
+    @Override
+    public boolean handleRotateDevice(int direction) {
+        return false;
+    }
+
+    @Override
+    public boolean handleHotCursor() {
+        return false;
+    }
+
+    @Override
+    public boolean handlePaintbrush() {
+        return false;
+    }
+
+    @Override
+    public boolean handleLoadSmallChip() {
+        return false;
+    }
+
+    @Override
+    public boolean handleHelp() {
+        return false;
+    }
+
+    @Override
+    public boolean handleEnterRoom() {
+        return false;
+    }
+
+    @Override
+    public boolean handleExitRoom() {
+        return false;
+    }
+
+    @Override
+    public boolean handleFlipDevice() {
+        return false;
+    }
 }

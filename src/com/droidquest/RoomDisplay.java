@@ -20,7 +20,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 public class RoomDisplay extends JPanel {
-    public DQ dq;
+    public final DQ dq;
     Level level;
     public Timer timer;
     private int timerspeed = 128;
@@ -36,7 +36,8 @@ public class RoomDisplay extends JPanel {
         return (true);
     }
 
-    public RoomDisplay() {
+    public RoomDisplay(final DQ dq) {
+        this.dq = dq;
         setSize(new Dimension(560, 384));
         level = new MainMenu(this);
         level.Init();
@@ -188,6 +189,45 @@ public class RoomDisplay extends JPanel {
 
                     level.roomdisplay.useSounds = tempsound;
                     level.PlaySound(level.currentViewer.room, Level.TRANSPORTSOUND);
+
+
+                    // Handle menu item initialization
+                    if (level.gameCursor instanceof LabCursor) {
+                        dq.setHotCursorSelected(false);
+                        dq.setHotCursorEnabled(true);
+                    }
+                    else {
+                        dq.setHotCursorSelected(false);
+                        dq.setHotCursorEnabled(false);
+                    }
+
+                    if(null == level.solderingPen) {
+                        dq.setSolderPenEnabled(false);
+                    }
+                    else {
+                        dq.setSolderPenEnabled(true);
+                    }
+
+                    if(null == level.paintbrush) {
+                        dq.setPaintbrushEnabled(false);
+                    }
+                    else {
+                        dq.setPaintbrushEnabled(true);
+                    }
+
+                    if(null == level.remote) {
+                        dq.setRadioEnabled(false);
+                        dq.setRadioSelected(false);
+                    }
+                    else {
+                        dq.setRadioEnabled(true);
+                        dq.setRadioSelected(true);
+                    }
+
+                    // Always start with cursor
+                    dq.selectCursor();
+
+
                 }
                 Electricity();
                 for (int a = 0; a < level.items.size(); a++) {
@@ -210,7 +250,7 @@ public class RoomDisplay extends JPanel {
 
                 repaint();
                 for (int a = 0; a < level.sparks.size(); a++) {
-                    Spark spark = (Spark) level.sparks.elementAt(a);
+                    Spark spark = level.sparks.elementAt(a);
                     spark.Age();
                     if (spark.age > 6) {
                         level.sparks.removeElement(spark);
@@ -284,7 +324,7 @@ public class RoomDisplay extends JPanel {
 
         // Paint Sparks
         for (int a = 0; a < level.sparks.size(); a++) {
-            Spark spark = (Spark) level.sparks.elementAt(a);
+            Spark spark = level.sparks.elementAt(a);
             if (spark.room == level.currentViewer.room) {
                 spark.Draw(g2);
             }

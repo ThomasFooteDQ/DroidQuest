@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-public class Remote extends Item {
+public class Remote extends Item implements Avatar {
     public Remote() {
         width = 4;
         height = 20;
@@ -98,28 +98,28 @@ public class Remote extends Item {
         }
         else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             if (carriedBy == null) {
-                MoveRight(e.isControlDown());
+                moveRight(e.isControlDown());
             }
             repeating = 0;
             return true;
         }
         else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             if (carriedBy == null) {
-                MoveLeft(e.isControlDown());
+                moveLeft(e.isControlDown());
             }
             repeating = 0;
             return true;
         }
         else if (e.getKeyCode() == KeyEvent.VK_UP) {
             if (carriedBy == null) {
-                MoveUp(e.isControlDown());
+                moveUp(e.isControlDown());
             }
             repeating = 0;
             return true;
         }
         else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             if (carriedBy == null) {
-                MoveDown(e.isControlDown());
+                moveDown(e.isControlDown());
             }
             repeating = 0;
             return true;
@@ -134,7 +134,7 @@ public class Remote extends Item {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             repeating++;
             if (repeating > 10) {
-                MoveRight(e.isControlDown());
+                moveRight(e.isControlDown());
                 return true;
             }
             return false;
@@ -142,7 +142,7 @@ public class Remote extends Item {
         else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             repeating++;
             if (repeating > 10) {
-                MoveLeft(e.isControlDown());
+                moveLeft(e.isControlDown());
                 return true;
             }
             return false;
@@ -150,7 +150,7 @@ public class Remote extends Item {
         else if (e.getKeyCode() == KeyEvent.VK_UP) {
             repeating++;
             if (repeating > 10) {
-                MoveUp(e.isControlDown());
+                moveUp(e.isControlDown());
                 return true;
             }
             return false;
@@ -158,7 +158,7 @@ public class Remote extends Item {
         else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             repeating++;
             if (repeating > 10) {
-                MoveDown(e.isControlDown());
+                moveDown(e.isControlDown());
                 return true;
             }
             return false;
@@ -166,7 +166,7 @@ public class Remote extends Item {
         return false;
     }
 
-    public void MoveUp(boolean nudge) {
+    public void moveUp(boolean nudge) {
         Item item = level.FindNearestItem(this);
         if (item != null) {
             if (item.InternalRoom != null) {
@@ -179,10 +179,10 @@ public class Remote extends Item {
                 }
             }
         }
-        super.MoveUp(nudge);
+        super.moveUp(nudge);
     }
 
-    public void MoveDown(boolean nudge) {
+    public void moveDown(boolean nudge) {
         Item item = level.FindNearestItem(this);
         if (item != null) {
             if (item.InternalRoom != null) {
@@ -195,10 +195,10 @@ public class Remote extends Item {
                 }
             }
         }
-        super.MoveDown(nudge);
+        super.moveDown(nudge);
     }
 
-    public void MoveLeft(boolean nudge) {
+    public void moveLeft(boolean nudge) {
         Item item = level.FindNearestItem(this);
         if (item != null) {
             if (item.InternalRoom != null) {
@@ -211,10 +211,10 @@ public class Remote extends Item {
                 }
             }
         }
-        super.MoveLeft(nudge);
+        super.moveLeft(nudge);
     }
 
-    public void MoveRight(boolean nudge) {
+    public void moveRight(boolean nudge) {
         Item item = level.FindNearestItem(this);
         if (item != null) {
             if (item.InternalRoom != null) {
@@ -227,7 +227,66 @@ public class Remote extends Item {
                 }
             }
         }
-        super.MoveRight(nudge);
+        super.moveRight(nudge);
     }
 
+    @Override
+    public boolean handleGameCursor() {
+        return false;
+    }
+
+    @Override
+    public boolean handleSolderPen() {
+        return false;
+    }
+
+    @Override
+    public boolean handleToolbox() {
+        return false;
+    }
+
+    @Override
+    public boolean handleRadio() {
+        return false;
+    }
+
+    @Override
+    public boolean handleRotateDevice(int direction) {
+        return false;
+    }
+
+    @Override
+    public boolean handleHotCursor() {
+        return false;
+    }
+
+    @Override
+    public boolean handlePaintbrush() {
+        return false;
+    }
+
+    @Override
+    public boolean handleLoadSmallChip() {
+        return false;
+    }
+
+    @Override
+    public boolean handleHelp() {
+        return false;
+    }
+
+    @Override
+    public boolean handleEnterRoom() {
+        return false;
+    }
+
+    @Override
+    public boolean handleExitRoom() {
+        return false;
+    }
+
+    @Override
+    public boolean handleFlipDevice() {
+        return false;
+    }
 }
