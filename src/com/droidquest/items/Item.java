@@ -234,6 +234,19 @@ public class Item implements Serializable, Cloneable {
         autoPath = pf.search(startX, startY, endX, endY, this);
     }
 
+
+    protected int getWidthModifier() {
+        return width / 2;
+    }
+
+    protected int getHeightModifier() {
+        return height / 2;
+    }
+
+    protected void setFinePositioning(MouseEvent e) {
+        // By default, no fine positioning
+    }
+
     public void MouseClick(MouseEvent e) {
         int button = 0;
         if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
@@ -254,6 +267,8 @@ public class Item implements Serializable, Cloneable {
                 findPath(startX, startY, endX, endY);
 
                 if(autoPath != null && autoPath.size() > 0) {
+                    setFinePositioning(e);
+
                     Node next = autoPath.remove(0);
 
                     autoX = next.getX();
@@ -264,8 +279,8 @@ public class Item implements Serializable, Cloneable {
                 }
             }
             else if (e.getClickCount() == 2) {
-                int dx = e.getX() - width / 2 - x;
-                int dy = e.getY() - height / 2 - y;
+                int dx = e.getX() - getWidthModifier() - x;
+                int dy = e.getY() - getHeightModifier() - y;
                 if (Math.abs(dx) > Math.abs(dy)) {
                     autoY = 0;
                     autoX = 28;
