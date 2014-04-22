@@ -251,19 +251,6 @@ public class PaintBrush extends Player {
         }
     }
 
-//    @Override
-//    protected void findPath(int startX, int startY, int endX, int endY) {
-//        // The paintbrush can go anywhere
-////        autoPath = new ArrayList<Node>();
-////        autoPath.add(new Node(endX * 28, endY * 32));
-//        autoX = endX * 28;
-//        autoY = endY * 28;
-//        autoX -= autoX % 2; // Even numbered pixel only!
-//        autoY -= autoY % 2;
-//        automove = 1;
-//
-//    }
-
     @Override
     public void moveLeft(boolean nudge) {
         int dist = 28;
