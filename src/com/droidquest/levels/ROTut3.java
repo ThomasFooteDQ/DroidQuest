@@ -9,6 +9,7 @@ import com.droidquest.decorations.Arrow;
 import com.droidquest.devices.*;
 import com.droidquest.items.*;
 import com.droidquest.materials.*;
+import com.droidquest.materials.switches.MazeLock;
 
 import java.awt.*;
 

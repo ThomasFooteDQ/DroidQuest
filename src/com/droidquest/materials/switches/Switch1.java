@@ -1,7 +1,8 @@
-package com.droidquest.materials;
+package com.droidquest.materials.switches;
 
 import com.droidquest.items.Item;
 import com.droidquest.items.Train;
+import com.droidquest.materials.Material;
 
 public class Switch1 extends Switch {
     private transient Train train;
@@ -12,8 +13,8 @@ public class Switch1 extends Switch {
 
     public void TouchedByItem(Item item) {
         if (train == null) {
-            for (int a = 0; a < level.items.size(); a++) {
-                Item t = level.items.elementAt(a);
+            for (int a = 0; a < Material.level.items.size(); a++) {
+                Item t = Material.level.items.elementAt(a);
                 if (t.getClass().toString().endsWith("Train")) {
                     train = (Train) t;
                 }

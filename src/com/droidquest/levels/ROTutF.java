@@ -11,7 +11,7 @@ import com.droidquest.items.*;
 import com.droidquest.materials.Material;
 import com.droidquest.materials.PanicButton;
 import com.droidquest.materials.Portal;
-import com.droidquest.materials.Switch;
+import com.droidquest.materials.switches.Switch;
 
 import java.awt.*;
 

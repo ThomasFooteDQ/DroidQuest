@@ -1,7 +1,8 @@
-package com.droidquest.materials;
+package com.droidquest.materials.switches;
 
 import com.droidquest.Room;
 import com.droidquest.items.Item;
+import com.droidquest.materials.Material;
 
 import javax.swing.*;
 import java.awt.*;

@@ -10,6 +10,7 @@ import com.droidquest.decorations.Arrow;
 import com.droidquest.decorations.Graphix;
 import com.droidquest.items.*;
 import com.droidquest.materials.*;
+import com.droidquest.materials.switches.Switch;
 
 import java.awt.*;
 

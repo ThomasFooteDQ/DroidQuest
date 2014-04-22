@@ -1,4 +1,4 @@
-package com.droidquest.materials;
+package com.droidquest.materials.switches;
 
 import com.droidquest.items.Item;
 
@@ -11,7 +11,7 @@ public class SwitchA extends Switch {
     // something like that.
 
     public SwitchA() {
-        super(Switch.ROT_LEFT);
+        super(ROT_LEFT);
     }
 
     public void TouchedByItem(Item item) {
