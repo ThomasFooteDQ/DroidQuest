@@ -5,6 +5,8 @@ import com.droidquest.Wire;
 import com.droidquest.devices.Device;
 import com.droidquest.levels.Level;
 import com.droidquest.materials.ChipTrash;
+import com.droidquest.pathfinder.Node;
+import com.droidquest.pathfinder.Pathfinder;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Item implements Serializable, Cloneable {
     public transient static Level level;
@@ -28,6 +31,7 @@ public class Item implements Serializable, Cloneable {
     public transient int autoX; // Destination of automovement
     public transient int autoY; // Destination of automovement
     public Room InternalRoom = null; // Room inside this item, if any.
+    public transient ArrayList<Node> autoPath = new ArrayList<Node>();
 
     protected int repeating = 0; // Keyboard repeat.
     public int charge = 0; // Battery Charge of this item, if any.
@@ -225,6 +229,11 @@ public class Item implements Serializable, Cloneable {
         return false;
     }
 
+    protected void findPath(int startX, int startY, int endX, int endY) {
+        Pathfinder pf = new Pathfinder(room);
+        autoPath = pf.search(startX, startY, endX, endY, this);
+    }
+
     public void MouseClick(MouseEvent e) {
         int button = 0;
         if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
@@ -236,11 +245,23 @@ public class Item implements Serializable, Cloneable {
 
         if (button == 1) {
             if (e.getClickCount() == 1) {
-                autoX = e.getX() - width / 2;
-                autoY = e.getY() - height / 2;
-                autoX -= autoX % 2; // Even numbered pixel only!
-                autoY -= autoY % 2;
-                automove = 1;
+                int endX = e.getX() / 28;
+                int endY = e.getY() / 32;
+
+                int startX = x / 28;
+                int startY = y / 32;
+
+                findPath(startX, startY, endX, endY);
+
+                if(autoPath != null && autoPath.size() > 0) {
+                    Node next = autoPath.remove(0);
+
+                    autoX = next.getX();
+                    autoY = next.getY();
+                    autoX -= autoX % 2; // Even numbered pixel only!
+                    autoY -= autoY % 2;
+                    automove = 1;
+                }
             }
             else if (e.getClickCount() == 2) {
                 int dx = e.getX() - width / 2 - x;
@@ -436,6 +457,10 @@ public class Item implements Serializable, Cloneable {
         moveRight(dist);
     }
 
+    protected void animateCharacter(int dx, int dy) {
+
+    }
+
     public void Animate() {
         if (automove == 1 && room == null) {
             automove = 0;
@@ -443,8 +468,21 @@ public class Item implements Serializable, Cloneable {
         if (automove == 1) {
             int dx = autoX - x;
             int dy = autoY - y;
+
             if (dx == 0 && dy == 0) {
-                automove = 0;
+                if(autoPath.size() > 0) {
+                    Node next = autoPath.remove(0);
+                    autoX = next.getX();
+                    autoY = next.getY();
+                    autoX -= autoX % 2; // Even numbered pixel only!
+                    autoY -= autoY % 2;
+                    dx = autoX - x;
+                    dy = autoY - y;
+                }
+                if(dx == 0 && dy == 0) {
+                    automove = 0;
+                    return;
+                }
             }
             if (dx < -28) {
                 dx = -28;
@@ -458,6 +496,9 @@ public class Item implements Serializable, Cloneable {
             if (dy > 32) {
                 dy = 32;
             }
+
+            animateCharacter(dx, dy);
+
             if (dx > 0) {
                 moveRight(dx);
             }
@@ -472,18 +513,22 @@ public class Item implements Serializable, Cloneable {
             }
         }
         if (automove == 2) {
-            if (autoX > 0) {
-                moveRight(autoX);
-            }
-            if (autoX < 0) {
-                moveLeft(-autoX);
-            }
-            if (autoY > 0) {
-                moveDown(autoY);
-            }
-            if (autoY < 0) {
-                moveUp(-autoY);
-            }
+            autoMoveFull();
+        }
+    }
+
+    protected void autoMoveFull() {
+        if (autoX > 0) {
+            moveRight(autoX);
+        }
+        if (autoX < 0) {
+            moveLeft(-autoX);
+        }
+        if (autoY > 0) {
+            moveDown(autoY);
+        }
+        if (autoY < 0) {
+            moveUp(-autoY);
         }
     }
 

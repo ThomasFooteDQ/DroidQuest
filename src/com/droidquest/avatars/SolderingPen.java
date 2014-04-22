@@ -225,6 +225,7 @@ public class SolderingPen extends Device implements Avatar {
         CheckPort();
     }
 
+    @Override
     public void Animate() {
         Room tempRoom = room;
         super.Animate();
@@ -297,16 +298,16 @@ public class SolderingPen extends Device implements Avatar {
 
     public boolean KeyUp(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_C && handleGameCursor()) {
-                return false;
+            return false;
         }
         else if (e.getKeyCode() == KeyEvent.VK_R && handleRadio()) {
-                return false;
+            return false;
         }
         else if (e.getKeyCode() == KeyEvent.VK_P && handlePaintbrush()) {
-                return false;
+            return false;
         }
         else if (e.getKeyCode() == KeyEvent.VK_SLASH && handleHelp()) {
-                return false;
+            return false;
         }
         else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             if (carriedBy == null) {
@@ -340,13 +341,13 @@ public class SolderingPen extends Device implements Avatar {
             WirePort();
         }
         else if (e.getKeyCode() == KeyEvent.VK_F && handleFlipDevice()) {
-                return false;
+            return false;
         }
         else if (e.getKeyCode() == KeyEvent.VK_E && handleEnterRoom()) {
-                return false;
+            return false;
         }
         else if (e.getKeyCode() == KeyEvent.VK_X && handleExitRoom()) {
-                return false;
+            return false;
         }
         return false;
     }
@@ -592,32 +593,32 @@ public class SolderingPen extends Device implements Avatar {
     @Override
     public boolean handleFlipDevice() {
         if (hot) {
-             if (ports[0].myWire != null) // If SP is wired
-             {
-                 // Flip wire attached to SP
-                 Port tempPort = ports[0].myWire.fromPort;
-                 ports[0].myWire.fromPort = ports[0].myWire.toPort;
-                 ports[0].myWire.toPort = tempPort;
-             }
-             else if (ports[0].myWire == null) // If SP is not wired
-             {
-                 // Flip wire attached to CurrentPort
-                 if (currentPort.myWire != null) {
-                     Port tempPort = currentPort.myWire.fromPort;
-                     currentPort.myWire.fromPort = currentPort.myWire.toPort;
-                     currentPort.myWire.toPort = tempPort;
-                 }
-             }
-         }
-         else {
-             if (ports[0].myWire != null) // If SP is wired
-             {
-                 // Flip wire attached to SP
-                 Port tempPort = ports[0].myWire.fromPort;
-                 ports[0].myWire.fromPort = ports[0].myWire.toPort;
-                 ports[0].myWire.toPort = tempPort;
-             }
-         }
+            if (ports[0].myWire != null) // If SP is wired
+            {
+                // Flip wire attached to SP
+                Port tempPort = ports[0].myWire.fromPort;
+                ports[0].myWire.fromPort = ports[0].myWire.toPort;
+                ports[0].myWire.toPort = tempPort;
+            }
+            else if (ports[0].myWire == null) // If SP is not wired
+            {
+                // Flip wire attached to CurrentPort
+                if (currentPort.myWire != null) {
+                    Port tempPort = currentPort.myWire.fromPort;
+                    currentPort.myWire.fromPort = currentPort.myWire.toPort;
+                    currentPort.myWire.toPort = tempPort;
+                }
+            }
+        }
+        else {
+            if (ports[0].myWire != null) // If SP is wired
+            {
+                // Flip wire attached to SP
+                Port tempPort = ports[0].myWire.fromPort;
+                ports[0].myWire.fromPort = ports[0].myWire.toPort;
+                ports[0].myWire.toPort = tempPort;
+            }
+        }
         return true;
     }
 }

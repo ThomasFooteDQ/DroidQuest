@@ -1,6 +1,7 @@
 package com.droidquest.materials;
 
 import com.droidquest.RoomDisplay;
+import com.droidquest.avatars.PaintBrush;
 import com.droidquest.items.Item;
 import com.droidquest.levels.Level;
 
@@ -62,6 +63,10 @@ public class Material implements Serializable, Cloneable {
     }
 
     public boolean Passable(Item item) {
+        // The PaintBrush can pass anything
+        if(item instanceof PaintBrush) {
+            return true;
+        }
         return passable;
     }
 

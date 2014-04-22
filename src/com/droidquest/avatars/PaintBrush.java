@@ -93,8 +93,8 @@ public class PaintBrush extends Player {
         paintMats[1] = Material.FindSimiliar(new Material(Color.green, false, false));
         Item robot = null;
 
-        for(Item item : level.items) {
-            if(item instanceof OrangeRobot) {
+        for (Item item : level.items) {
+            if (item instanceof OrangeRobot) {
                 robot = item;
             }
         }
@@ -104,14 +104,14 @@ public class PaintBrush extends Player {
         paintMats[2] = Material.FindSimiliar(new RobotBlocker(robot, new Color(255, 128, 0)));
 
         for (Item item : level.items) {
-            if(item instanceof WhiteRobot) {
+            if (item instanceof WhiteRobot) {
                 robot = item;
             }
         }
         paintMats[3] = Material.FindSimiliar(new RobotBlocker(robot, Color.white));
 
-        for(Item item : level.items) {
-            if(item instanceof BlueRobot) {
+        for (Item item : level.items) {
+            if (item instanceof BlueRobot) {
                 robot = item;
             }
         }
@@ -210,9 +210,10 @@ public class PaintBrush extends Player {
 
     @Override
     protected boolean handleRepeatSpace() {
-         return false;
+        return false;
     }
 
+    @Override
     public void moveUp(boolean nudge) {
         int dist = 32;
         if (nudge) {
@@ -231,6 +232,7 @@ public class PaintBrush extends Player {
         }
     }
 
+    @Override
     public void moveDown(boolean nudge) {
         int dist = 32;
         if (nudge) {
@@ -249,6 +251,20 @@ public class PaintBrush extends Player {
         }
     }
 
+//    @Override
+//    protected void findPath(int startX, int startY, int endX, int endY) {
+//        // The paintbrush can go anywhere
+////        autoPath = new ArrayList<Node>();
+////        autoPath.add(new Node(endX * 28, endY * 32));
+//        autoX = endX * 28;
+//        autoY = endY * 28;
+//        autoX -= autoX % 2; // Even numbered pixel only!
+//        autoY -= autoY % 2;
+//        automove = 1;
+//
+//    }
+
+    @Override
     public void moveLeft(boolean nudge) {
         int dist = 28;
         if (nudge) {
@@ -267,6 +283,7 @@ public class PaintBrush extends Player {
         }
     }
 
+    @Override
     public void moveRight(boolean nudge) {
         int dist = 28;
         if (nudge) {
