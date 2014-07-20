@@ -3,6 +3,7 @@ package com.droidquest.avatars;
 import com.droidquest.Room;
 import com.droidquest.RoomDisplay;
 import com.droidquest.items.*;
+import com.droidquest.pathfinder.Node;
 
 import javax.swing.*;
 import java.awt.*;
@@ -324,81 +325,51 @@ public class GameCursor extends Player {
         return level.cheatmode;
     }
 
-    public void Animate() {
-        if (automove == 1 && room == null) {
-            automove = 0;
-        }
-        if (automove == 1) {
-            int dx = autoX - x;
-            int dy = autoY - y;
-            if (dx == 0 && dy == 0) {
-                automove = 0;
-                return;
-            }
-            if (dx < -28) {
-                dx = -28;
-            }
-            if (dx > 28) {
-                dx = 28;
-            }
-            if (dy < -32) {
-                dy = -32;
-            }
-            if (dy > 32) {
-                dy = 32;
-            }
-            walk = 1 - walk;
-            if (dx == 0) {
-                if (dy < 0) {
-                    currentIcon = icons[0 + walk].getImage();
-                }
-                else {
-                    currentIcon = icons[2 + walk].getImage();
-                }
+
+    @Override
+    protected void animateCharacter(int dx, int dy) {
+        walk = 1 - walk;
+        if (dx == 0) {
+            if (dy < 0) {
+                currentIcon = icons[0 + walk].getImage();
             }
             else {
-                if (dx < 0) {
-                    currentIcon = icons[4 + walk].getImage();
-                }
-                else {
-                    currentIcon = icons[6 + walk].getImage();
-                }
-            }
-            if (dx > 0) {
-                moveRight(dx);
-            }
-            if (dx < 0) {
-                moveLeft(-dx);
-            }
-            if (dy > 0) {
-                moveDown(dy);
-            }
-            if (dy < 0) {
-                moveUp(-dy);
-            }
-        }
-        if (automove == 2) {
-            walk = 1 - walk;
-            if (autoX > 0) {
-                currentIcon = icons[6 + walk].getImage();
-                moveRight(autoX);
-            }
-
-            if (autoX < 0) {
-                currentIcon = icons[4 + walk].getImage();
-                moveLeft(-autoX);
-            }
-
-            if (autoY > 0) {
                 currentIcon = icons[2 + walk].getImage();
-                moveDown(autoY);
-            }
-
-            if (autoY < 0) {
-                currentIcon = icons[0 + walk].getImage();
-                moveUp(-autoY);
             }
         }
+        else {
+            if (dx < 0) {
+                currentIcon = icons[4 + walk].getImage();
+            }
+            else {
+                currentIcon = icons[6 + walk].getImage();
+            }
+        }
+    }
+
+    @Override
+    protected void autoMoveFull() {
+        walk = 1 - walk;
+        if (autoX > 0) {
+            currentIcon = icons[6 + walk].getImage();
+            moveRight(autoX);
+        }
+
+        if (autoX < 0) {
+            currentIcon = icons[4 + walk].getImage();
+            moveLeft(-autoX);
+        }
+
+        if (autoY > 0) {
+            currentIcon = icons[2 + walk].getImage();
+            moveDown(autoY);
+        }
+
+        if (autoY < 0) {
+            currentIcon = icons[0 + walk].getImage();
+            moveUp(-autoY);
+        }
+
     }
 
     public GenericRobot PlayerInRobot(GenericRobot robot) {

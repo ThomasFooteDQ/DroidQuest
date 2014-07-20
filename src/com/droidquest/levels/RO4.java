@@ -10,6 +10,10 @@ import com.droidquest.decorations.Graphix;
 import com.droidquest.devices.SmallChip;
 import com.droidquest.items.*;
 import com.droidquest.materials.*;
+import com.droidquest.materials.switches.Switch4A;
+import com.droidquest.materials.switches.Switch4B;
+import com.droidquest.materials.switches.Switch4C;
+import com.droidquest.materials.switches.Switch4D;
 
 import java.awt.*;
 

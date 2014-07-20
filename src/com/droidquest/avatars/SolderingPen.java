@@ -5,6 +5,7 @@ import com.droidquest.Wire;
 import com.droidquest.chipstuff.Port;
 import com.droidquest.devices.Device;
 import com.droidquest.items.Item;
+import com.droidquest.pathfinder.Node;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +13,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class SolderingPen extends Device implements Avatar {
     private boolean hot;
@@ -225,6 +227,7 @@ public class SolderingPen extends Device implements Avatar {
         CheckPort();
     }
 
+    @Override
     public void Animate() {
         Room tempRoom = room;
         super.Animate();
@@ -297,16 +300,16 @@ public class SolderingPen extends Device implements Avatar {
 
     public boolean KeyUp(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_C && handleGameCursor()) {
-                return false;
+            return false;
         }
         else if (e.getKeyCode() == KeyEvent.VK_R && handleRadio()) {
-                return false;
+            return false;
         }
         else if (e.getKeyCode() == KeyEvent.VK_P && handlePaintbrush()) {
-                return false;
+            return false;
         }
         else if (e.getKeyCode() == KeyEvent.VK_SLASH && handleHelp()) {
-                return false;
+            return false;
         }
         else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             if (carriedBy == null) {
@@ -340,13 +343,13 @@ public class SolderingPen extends Device implements Avatar {
             WirePort();
         }
         else if (e.getKeyCode() == KeyEvent.VK_F && handleFlipDevice()) {
-                return false;
+            return false;
         }
         else if (e.getKeyCode() == KeyEvent.VK_E && handleEnterRoom()) {
-                return false;
+            return false;
         }
         else if (e.getKeyCode() == KeyEvent.VK_X && handleExitRoom()) {
-                return false;
+            return false;
         }
         return false;
     }
@@ -387,50 +390,23 @@ public class SolderingPen extends Device implements Avatar {
         return false;
     }
 
-    public void MouseClick(MouseEvent e) {
-        int button = 0;
-        if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
-            button = 1;
-        }
-        if ((e.getModifiers() & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) {
-            button = 3;
-        }
+    @Override
+    protected int getWidthModifier() {
+        return 2;
+    }
 
-        if (button == 1) {
-            if (e.getClickCount() == 1) {
-                autoX = e.getX() - 2;
-                autoY = e.getY() - 20;
-                automove = 1;
-            }
-            else if (e.getClickCount() == 2) {
-                int dx = e.getX() - 2 - x;
-                int dy = e.getY() - 20 - y;
-                if (Math.abs(dx) > Math.abs(dy)) {
-                    autoY = 0;
-                    autoX = 28;
-                    if (dx < 0) {
-                        autoX = -28;
-                    }
-                    automove = 2;
-                }
-                else {
-                    autoX = 0;
-                    autoY = 32;
-                    if (dy < 0) {
-                        autoY = -32;
-                    }
-                    automove = 2;
-                }
-            }
-        }
+    @Override
+    protected int getHeightModifier() {
+        return 20;
+    }
 
-        if (button == 3) {
-            KeyEvent k = new KeyEvent(e.getComponent(), e.getID(),
-                    e.getWhen(), 0,
-                    KeyEvent.VK_SPACE, ' ');
-            KeyUp(k);
-        }
 
+    @Override
+    protected void setFinePositioning(MouseEvent e) {
+        // Fine positioning needed for solderpen
+        int finalX = e.getX() - getWidthModifier();
+        int finalY = e.getY() - getHeightModifier();
+        autoPath.add(new Node(finalX, finalY));
     }
 
     @Override
@@ -592,32 +568,32 @@ public class SolderingPen extends Device implements Avatar {
     @Override
     public boolean handleFlipDevice() {
         if (hot) {
-             if (ports[0].myWire != null) // If SP is wired
-             {
-                 // Flip wire attached to SP
-                 Port tempPort = ports[0].myWire.fromPort;
-                 ports[0].myWire.fromPort = ports[0].myWire.toPort;
-                 ports[0].myWire.toPort = tempPort;
-             }
-             else if (ports[0].myWire == null) // If SP is not wired
-             {
-                 // Flip wire attached to CurrentPort
-                 if (currentPort.myWire != null) {
-                     Port tempPort = currentPort.myWire.fromPort;
-                     currentPort.myWire.fromPort = currentPort.myWire.toPort;
-                     currentPort.myWire.toPort = tempPort;
-                 }
-             }
-         }
-         else {
-             if (ports[0].myWire != null) // If SP is wired
-             {
-                 // Flip wire attached to SP
-                 Port tempPort = ports[0].myWire.fromPort;
-                 ports[0].myWire.fromPort = ports[0].myWire.toPort;
-                 ports[0].myWire.toPort = tempPort;
-             }
-         }
+            if (ports[0].myWire != null) // If SP is wired
+            {
+                // Flip wire attached to SP
+                Port tempPort = ports[0].myWire.fromPort;
+                ports[0].myWire.fromPort = ports[0].myWire.toPort;
+                ports[0].myWire.toPort = tempPort;
+            }
+            else if (ports[0].myWire == null) // If SP is not wired
+            {
+                // Flip wire attached to CurrentPort
+                if (currentPort.myWire != null) {
+                    Port tempPort = currentPort.myWire.fromPort;
+                    currentPort.myWire.fromPort = currentPort.myWire.toPort;
+                    currentPort.myWire.toPort = tempPort;
+                }
+            }
+        }
+        else {
+            if (ports[0].myWire != null) // If SP is wired
+            {
+                // Flip wire attached to SP
+                Port tempPort = ports[0].myWire.fromPort;
+                ports[0].myWire.fromPort = ports[0].myWire.toPort;
+                ports[0].myWire.toPort = tempPort;
+            }
+        }
         return true;
     }
 }

@@ -15,6 +15,9 @@ import com.droidquest.devices.StormShield;
 import com.droidquest.items.Button;
 import com.droidquest.items.*;
 import com.droidquest.materials.*;
+import com.droidquest.materials.switches.ElevatorSwitch;
+import com.droidquest.materials.switches.SwitchA;
+import com.droidquest.materials.switches.SwitchB;
 
 import java.awt.*;
 

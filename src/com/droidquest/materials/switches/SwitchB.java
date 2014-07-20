@@ -1,8 +1,9 @@
-package com.droidquest.materials;
+package com.droidquest.materials.switches;
 
 import com.droidquest.decorations.TextBox;
 import com.droidquest.items.Item;
 import com.droidquest.items.Sentry;
+import com.droidquest.materials.Material;
 
 public class SwitchB extends Switch {
     private transient SwitchA switchA = null;
@@ -10,7 +11,7 @@ public class SwitchB extends Switch {
     private transient Sentry sentry = null;
 
     public SwitchB() {
-        super(Switch.ROT_LEFT);
+        super(ROT_LEFT);
     }
 
     public void TouchedByItem(Item item) {

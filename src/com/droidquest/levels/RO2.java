@@ -12,6 +12,8 @@ import com.droidquest.devices.ContactSensor;
 import com.droidquest.devices.SmallChip;
 import com.droidquest.items.*;
 import com.droidquest.materials.*;
+import com.droidquest.materials.switches.Switch;
+import com.droidquest.materials.switches.Switch1;
 
 import java.awt.*;
 

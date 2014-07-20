@@ -1,7 +1,7 @@
-package com.droidquest.items;
+package com.droidquest.materials.switches;
 
 import com.droidquest.Room;
-import com.droidquest.materials.Switch;
+import com.droidquest.items.Item;
 
 public class Switch4A extends Switch {
     int count = 0;
