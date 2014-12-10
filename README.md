@@ -3,6 +3,13 @@ DroidQuest
 
 A Java recreation of the classic game Robot Odyssey I
 
+Build with:
+
+   mvn install
+
+Run with:
+
+   java -jar target/dq-1.1-SNAPSHOT.jar
 
 Copyright (c) 2000 Thomas Foote
 
