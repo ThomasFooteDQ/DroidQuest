@@ -15,7 +15,7 @@ import java.awt.event.KeyEvent;
 public class Player extends Item implements Avatar {
 
     private int keyRepeatRate = 5;
-
+    private int shortcut_modifier = Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask();
 
     protected boolean handleSaveSmallChip() {
         return false;
@@ -362,16 +362,16 @@ public class Player extends Item implements Avatar {
         else if (e.getKeyCode() == KeyEvent.VK_SLASH && handleHelp()) {
             return false;
         }
-        else if (e.getKeyCode() == KeyEvent.VK_RIGHT && handleMoveRight(e.isShiftDown(), e.isControlDown())) {
+        else if (e.getKeyCode() == KeyEvent.VK_RIGHT && handleMoveRight(e.isShiftDown(), (e.getModifiers() & shortcut_modifier) > 0)) {
             return true;
         }
-        else if (e.getKeyCode() == KeyEvent.VK_LEFT && handleMoveLeft(e.isShiftDown(), e.isControlDown())) {
+        else if (e.getKeyCode() == KeyEvent.VK_LEFT && handleMoveLeft(e.isShiftDown(), (e.getModifiers() & shortcut_modifier) > 0)) {
             return true;
         }
-        else if (e.getKeyCode() == KeyEvent.VK_UP && handleMoveUp(e.isShiftDown(), e.isControlDown())) {
+        else if (e.getKeyCode() == KeyEvent.VK_UP && handleMoveUp(e.isShiftDown(), (e.getModifiers() & shortcut_modifier) > 0)) {
             return true;
         }
-        else if (e.getKeyCode() == KeyEvent.VK_DOWN && handleMoveDown(e.isShiftDown(), e.isControlDown())) {
+        else if (e.getKeyCode() == KeyEvent.VK_DOWN && handleMoveDown(e.isShiftDown(), (e.getModifiers() & shortcut_modifier) > 0)) {
             return true;
         }
         else if (e.getKeyCode() == KeyEvent.VK_SPACE && handlePickupDrop()) {
@@ -455,22 +455,22 @@ public class Player extends Item implements Avatar {
 
     public boolean KeyDown(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            if (handleRepeatRight(e.isControlDown())) {
+            if (handleRepeatRight((e.getModifiers() & shortcut_modifier) > 0)) {
                 return true;
             }
         }
         else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            if (handleRepeatLeft(e.isControlDown())) {
+            if (handleRepeatLeft((e.getModifiers() & shortcut_modifier) > 0)) {
                 return true;
             }
         }
         else if (e.getKeyCode() == KeyEvent.VK_UP) {
-            if (handleRepeatUp(e.isControlDown())) {
+            if (handleRepeatUp((e.getModifiers() & shortcut_modifier) > 0)) {
                 return true;
             }
         }
         else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            if (handleRepeatDown(e.isControlDown())) {
+            if (handleRepeatDown((e.getModifiers() & shortcut_modifier) > 0)) {
                 return true;
             }
         }
