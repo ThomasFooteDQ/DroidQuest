@@ -13,7 +13,7 @@ Run with:
 
 Controls:
 
-    / - help
+    / - contextual help
     arrows - normal movement
     control + arrows - fine-grained movement [OS X: command + arrows]
     space - pickup/drop
@@ -23,11 +23,11 @@ Controls:
     R - toggle radio
     P - paintbrush
     T - toolbox
-    [, ] - rotate
+    [, ] - rotate device
     F - flip
     L - load small chip
-    E - enter room
-    X - exit room
+    E - enter robot
+    X - exit robot
 
     Cheat/debug:
 
