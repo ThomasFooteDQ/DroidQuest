@@ -3,6 +3,11 @@ DroidQuest
 
 A Java recreation of the classic game Robot Odyssey I
 
+Compile command:
+	mvn compile
+
+Run the game:
+	./start_game.sh
 
 Copyright (c) 2000 Thomas Foote
 
