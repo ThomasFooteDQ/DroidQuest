@@ -1,6 +1,7 @@
 package com.droidquest.items;
 
 import com.droidquest.Room;
+import com.droidquest.Wire;
 import com.droidquest.chipstuff.Port;
 import com.droidquest.devices.Device;
 import com.droidquest.devices.PortDevice;
@@ -112,8 +113,7 @@ public class AutoWire extends Item {
 
         if (animation == 1) {
             if (portdevices[0].ports[0].myWire == null) { // Wiring
-                portdevices[0].ports[0].type = Port.TYPE_UNDEFINED;
-                portdevices[0].ports[0].value = false;
+                portdevices[0].ports[0].myWire = new Wire(chip.ports[0], portdevices[0].ports[0]);
             }
             else { // Unwiring
                 portdevices[0].ports[0].myWire.Remove();
@@ -128,8 +128,7 @@ public class AutoWire extends Item {
         if (animation >= 2 && animation <= 8) {
             if (portdevices[0].ports[0].myWire != null) { // Wiring
                 if (portdevices[animation - 1].ports[0].myWire == null) {
-                    portdevices[animation - 1].ports[0].type = Port.TYPE_UNDEFINED;
-                    portdevices[animation - 1].ports[0].value = false;
+                    portdevices[animation - 1].ports[0].myWire = new Wire(chip.ports[animation - 1], portdevices[animation - 1].ports[0]);
                 }
             }
             else { // Unwiring
