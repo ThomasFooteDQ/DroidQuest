@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class SolderingPen extends Device implements Avatar {
     private boolean hot;
     private Port currentPort = null; // Port that Soldering pen is currently over
+    private int shortcut_modifier = Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask();
 
     public SolderingPen() {
         width = 22;
@@ -313,28 +314,28 @@ public class SolderingPen extends Device implements Avatar {
         }
         else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             if (carriedBy == null) {
-                moveRight(e.isControlDown());
+                moveRight((e.getModifiers() & shortcut_modifier) > 0);
             }
             repeating = 0;
             return true;
         }
         else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             if (carriedBy == null) {
-                moveLeft(e.isControlDown());
+                moveLeft((e.getModifiers() & shortcut_modifier) > 0);
             }
             repeating = 0;
             return true;
         }
         else if (e.getKeyCode() == KeyEvent.VK_UP) {
             if (carriedBy == null) {
-                moveUp(e.isControlDown());
+                moveUp((e.getModifiers() & shortcut_modifier) > 0);
             }
             repeating = 0;
             return true;
         }
         else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             if (carriedBy == null) {
-                moveDown(e.isControlDown());
+                moveDown((e.getModifiers() & shortcut_modifier) > 0);
             }
             repeating = 0;
             return true;
@@ -358,7 +359,7 @@ public class SolderingPen extends Device implements Avatar {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             repeating++;
             if (repeating > 10) {
-                moveRight(e.isControlDown());
+                moveRight((e.getModifiers() & shortcut_modifier) > 0);
                 return true;
             }
             return false;
@@ -366,7 +367,7 @@ public class SolderingPen extends Device implements Avatar {
         else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             repeating++;
             if (repeating > 10) {
-                moveLeft(e.isControlDown());
+                moveLeft((e.getModifiers() & shortcut_modifier) > 0);
                 return true;
             }
             return false;
@@ -374,7 +375,7 @@ public class SolderingPen extends Device implements Avatar {
         else if (e.getKeyCode() == KeyEvent.VK_UP) {
             repeating++;
             if (repeating > 10) {
-                moveUp(e.isControlDown());
+                moveUp((e.getModifiers() & shortcut_modifier) > 0);
                 return true;
             }
             return false;
@@ -382,7 +383,7 @@ public class SolderingPen extends Device implements Avatar {
         else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             repeating++;
             if (repeating > 10) {
-                moveDown(e.isControlDown());
+                moveDown((e.getModifiers() & shortcut_modifier) > 0);
                 return true;
             }
             return false;
