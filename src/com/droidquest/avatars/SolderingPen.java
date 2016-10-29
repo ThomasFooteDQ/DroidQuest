@@ -429,6 +429,8 @@ public class SolderingPen extends Device implements Avatar {
             }
         }
 
+        CheckPort();
+
         level.roomdisplay.dq.selectCursor();
         return true;
     }
@@ -505,6 +507,8 @@ public class SolderingPen extends Device implements Avatar {
         level.roomdisplay.dq.selectPaintBrush();
 
         handleRemote();
+
+        CheckPort();
 
         return true;
     }
