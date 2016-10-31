@@ -64,7 +64,7 @@ public class GateKeeper extends Item {
 
     public void Animate() {
         if (behavior == 1) {
-            if (x != goToX && y != goToY) {
+            if (x != goToX || y != goToY) {
                 if (x != goToX) {
                     int diff = Math.abs(goToX - x);
                     int dir = diff / (goToX - x);

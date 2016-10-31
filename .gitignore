@@ -1,3 +1,5 @@
 *.lvl
 *.class
 target/
+.idea/
+*.iml

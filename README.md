@@ -9,7 +9,8 @@ Build with:
 
 Run the game:
 
-    ./start_game.sh
+    MacOSX / Linux: ./start.sh
+    Windows: start.bat (IN PROGRESS)
 OR
     java -jar target/dq-1.1-SNAPSHOT.jar
 

@@ -13,7 +13,7 @@ import com.droidquest.levels.Level;
 public class BatteryIn extends Material {
     // Charges the Battery when an Energy Crystal is passed over it.
 
-    public void BatteryIn() {
+    public BatteryIn() {
         passable = true;
         GenerateIcons();
     }

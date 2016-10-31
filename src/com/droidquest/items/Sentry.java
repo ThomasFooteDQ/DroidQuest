@@ -240,9 +240,11 @@ public class Sentry extends Item {
 
         if (behavior == -1) {
             if (carrying == null) {
-                x = robot.x + robot.width / 2 - width / 2;
-                y = robot.y + robot.height / 2 - height / 2;
-                PicksUp(robot);
+                if(robot != null) {
+                    x = robot.x + robot.width / 2 - width / 2;
+                    y = robot.y + robot.height / 2 - height / 2;
+                    PicksUp(robot);
+                }
             }
         }
 
