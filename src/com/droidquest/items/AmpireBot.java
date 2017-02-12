@@ -234,7 +234,7 @@ public class AmpireBot extends Item {
                 for (int a = 0; a < level.items.size(); a++) {
                     target = level.items.elementAt(a);
                     if (target.room == room) {
-                        if (target.charge > 0) {
+                        if (target.charge != 0) {
                             previousBehavior = behaviorState;
                             behaviorState = 6;
                             a = level.items.size();
@@ -318,6 +318,7 @@ public class AmpireBot extends Item {
                         }
                     }
                     break;
+                // Hunt and seek behavior (chase down anything with a charge)
                 case 6:
                     if (target.room != room) {
                         behaviorState = previousBehavior;
@@ -340,25 +341,24 @@ public class AmpireBot extends Item {
                         moveDown(false);
                     }
                     break;
+                //Drain the batteries!
                 case 7:
                     if (target.room != room) {
                         behaviorState = previousBehavior;
                         break;
                     }
                     if (target.charge > 0 && Overlaps(target)) {
-                        if (target.getClass().toString().endsWith("BlackCrystal")) {
-                            alive = false;
+                        target.charge -= 3125;
+                        if (target.charge <= 0) {
+                            target.charge = 0;
+                            behaviorState = previousBehavior;
                         }
-                        else {
-                            target.charge -= 3125;
-                        }
+                    }
+                    else if (target.charge < 0 && Overlaps(target)) {
+                        alive = false;
                     }
                     else {
                         behaviorState = 6;
-                    }
-                    if (target.charge <= 0) {
-                        target.charge = 0;
-                        behaviorState = previousBehavior;
                     }
                     break;
             }
