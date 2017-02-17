@@ -68,8 +68,7 @@ public class Level implements ImageObserver, Serializable {
             BURNSOUND, ENDMUSICSOUND, STARTMUSICSOUND,
             TELEPORTSOUND, TRANSPORTSOUND
     };
-    public transient boolean cheatmode = true;
-
+    
     Level() {
         Item.level = this;
         Room.level = this;
@@ -266,12 +265,12 @@ public class Level implements ImageObserver, Serializable {
         }
 
         electricity = s.readBoolean();
-        player = FindItem(s.readInt());
+    player = FindItem(s.readInt());
         gameCursor = FindItem(s.readInt());
         currentViewer = FindItem(s.readInt());
         solderingPen = FindItem(s.readInt());
         remote = FindItem(s.readInt());
-        toolbox = FindItem(s.readInt());
+    toolbox = FindItem(s.readInt());
         helpCam = FindItem(s.readInt());
         paintbrush = FindItem(s.readInt());
 

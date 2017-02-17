@@ -322,7 +322,7 @@ public class GameCursor extends Player {
 
     @Override
     protected boolean isCheatMode() {
-        return level.cheatmode;
+        return level.roomdisplay.dq.cheatmode;
     }
 
 

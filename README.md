@@ -40,6 +40,8 @@ Controls:
 Note: On OS X, control + arrow-keys are bound to Apple's "Mission Control".  I switched to the 'shortcut' modifier which is control on windows and command on OS X.  Alternatively, you can disable
 built in OS X shortcuts via System Preferences -> Keyboard -> Shorcuts.
 
+Note: Cheating (just teleporting between rooms ATM) may be enabled by passing "debug" on the command line. Currently the message about this doesn't work.
+
 
 Copyright (c) 2000 Thomas Foote
 
