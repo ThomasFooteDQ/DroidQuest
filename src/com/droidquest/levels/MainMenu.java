@@ -12,6 +12,8 @@ import com.droidquest.materials.Portal;
 
 import java.awt.*;
 import java.io.File;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class MainMenu extends Level {
     public MainMenu(RoomDisplay rd) {
@@ -271,7 +273,17 @@ public class MainMenu extends Level {
         if (!f.exists()) {
             f.mkdir();
         }
-        String[] files = f.list();
+        File[] files = f.listFiles();
+        Arrays.sort(files, new Comparator<File>(){
+       		public int compare(File f1,File f2){
+       			if( f1.lastModified() > f2.lastModified() ){
+       				return -1;
+       			}
+       			else{
+       				return 1;
+       			}
+       		}
+        });
         int pageIndex = 5;
         for (int a = 0; a < files.length; a++) {
             if (a > 4 && a % 5 == 0) {
@@ -301,12 +313,12 @@ public class MainMenu extends Level {
                 LinkRoomsUpDown(pageIndex, newPageIndex);
                 pageIndex = newPageIndex;
             }
-            materials.addElement(new Portal("ROlevels/" + files[a], false, false));
+            materials.addElement(new Portal("ROlevels/" + files[a].getName(), false, false));
             int matIndex = materials.size() - 1;
             int y = 1 + (a % 5) * 2;
             Room room = rooms.elementAt(pageIndex);
             room.RoomArray[y][2] = matIndex;
-            room.AddTextBox(files[a], 3 * 28 + 14, y * 32 + 32, 400);
+            room.AddTextBox(files[a].getName(), 3 * 28 + 14, y * 32 + 32, 400);
         }
 
     }
