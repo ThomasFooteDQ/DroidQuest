@@ -25,10 +25,11 @@ public class Crystal extends Item {
     }
 
     public void GenerateIcons() {
-        icons = new ImageIcon[3];
+        icons = new ImageIcon[4];
         icons[0] = new ImageIcon(new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR));
         icons[1] = new ImageIcon(new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR));
         icons[2] = new ImageIcon(new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR));
+        icons[3] = new ImageIcon(new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR));
         Graphics g;
         Graphics2D g2;
         Color transparent = new Color(0, 0, 0, 0);
@@ -96,6 +97,30 @@ public class Crystal extends Item {
         g.fillRect(24, 4, 4, 2);
         g.fillRect(24, 18, 4, 2);
 
+
+        // 3 = black
+        try {
+            g = icons[3].getImage().getGraphics();
+        }
+        catch (NullPointerException e) {
+            System.out.println("Could not get Graphics pointer to " + getClass() + " Image");
+            return;
+        }
+        g2 = (Graphics2D) g;
+        g2.setBackground(transparent);
+        g2.clearRect(0, 0, width, height);
+        g.setColor(Color.black);
+        g.fillRect(12, 0, 4, 24);
+        g.fillRect(8, 4, 12, 16);
+        g.fillRect(4, 6, 20, 12);
+        g.fillRect(0, 10, 28, 4);
+        g.fillRect(0, 4, 4, 2);
+        g.fillRect(0, 18, 4, 2);
+        g.fillRect(24, 4, 4, 2);
+        g.fillRect(24, 18, 4, 2);
+
+
+
         currentIcon = icons[color].getImage();
         if (charge == 0) {
             currentIcon = icons[2].getImage();
@@ -106,6 +131,9 @@ public class Crystal extends Item {
         if (charge > 0) {
             color = 1 - color;
             currentIcon = icons[color].getImage();
+        }
+        else if (charge < 0 ) {
+            currentIcon = icons[3].getImage();
         }
         else {
             currentIcon = icons[2].getImage();

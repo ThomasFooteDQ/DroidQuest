@@ -232,6 +232,8 @@ class RO1 extends Level {
                     {1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1}
             };
             String[] i1 = {"0073.jpg", "0074.jpg"};
+            // The black crystal is now a negatively charged crystal.
+            items.addElement(new Crystal(2 * 28, 7 * 32, room,-100000));
             room.graphix.addElement(new Graphix(i1, 4 * 28 + 14, 5 * 32));
         }
         { // Room  4, Maze 2 "CG" 
@@ -855,7 +857,6 @@ class RO1 extends Level {
         items.addElement(helpCam);
         player = gameCursor;
         currentViewer = player;
-        items.addElement(new BlackCrystal(2 * 28, 7 * 32, rooms.elementAt(3)));
 
     }
 
@@ -867,7 +868,15 @@ class RO1Init extends Initializer {
         // X=10*28, Y=9*32, Room=21
         // X=16*28, Y=5*32, Room-22
         Item magnet = level.FindItem("Magnet");
-        Item crystal = level.FindItem(".Crystal");
+        Item crystal = null;
+        //Manual implementation of "find item" since we need to distinguish the black crystal from the crystal.
+        for (int a = 0; a < level.items.size(); a++) {
+            Item item = level.items.elementAt(a);
+            if (item.getClass().toString().endsWith("Crystal") && item.charge > 0) {
+                crystal = item;
+                // this should always succed. If it doesn't, that's a bug, crash with a null pointer assignment...
+            }
+        }
         if (level.random.nextInt(2) == 1) {
             magnet.x = 10 * 28;
             magnet.y = 9 * 32;
@@ -912,7 +921,18 @@ class RO1Init extends Initializer {
         // Room=9  4,3  
         // Room=10 6,8  
 
-        Item bcrystal = level.FindItem("BlackCrystal");
+        Item bcrystal = null;
+        //Manual implementation of "find item" since we need to distinguish the black crystal from the crystal.
+        for (int a = 0; a < level.items.size(); a++) {
+            Item item = level.items.elementAt(a);
+            System.out.println(item.getClass().toString());
+            System.out.println(item.charge);
+
+            if (item.getClass().toString().endsWith("Crystal") && item.charge < 0) {
+                bcrystal = item;
+                // this should always succeed. If it doesn't, that's a bug, crash with a null pointer assignment...
+            }
+        }
         switch (level.random.nextInt(8)) {
             case 0:
                 bcrystal.x = 2 * 28;

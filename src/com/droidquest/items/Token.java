@@ -119,7 +119,8 @@ public class Token extends Item {
                 break;
         }
         doorState++;
-        if (doorState == 22) {
+        // Lengthened from 22 pulses to 88. Kept not making it through, having to get token again. Kinda pointless, it's not a reflex game!
+        if (doorState == 88) {
             doorState = 0;
         }
     }

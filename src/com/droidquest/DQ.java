@@ -27,6 +27,8 @@ public class DQ extends JFrame implements ActionListener {
 
     private JMenuItem menuFlipDevice = null;
 
+    public static Boolean cheatmode = false;
+
     private DQ() {
         // Constructor
         super("DroidQuest");
@@ -176,12 +178,19 @@ public class DQ extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
+        for ( final String e : args){
+            if ("debug".equals(e)){
+                cheatmode = true;
+                break;
+            }
+        }
         DQ dq = new DQ();
         GraphicsConfiguration gc = dq.getGraphicsConfiguration();
         Rectangle bounds = gc.getBounds();
         dq.setLocation(bounds.x + (bounds.width - 568) / 2,
                 bounds.y + (bounds.height - 435) / 2);
         dq.setVisible(true);
+        //Primative? requires the first parameter be "debug"... Not sure how java handles this.
 
     }
 
