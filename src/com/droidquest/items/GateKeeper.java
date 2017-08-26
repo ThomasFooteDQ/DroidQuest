@@ -13,7 +13,10 @@ public class GateKeeper extends Item {
 // 1= Go to trash, delete F-12, delete StormShield
 
     private int goToX = 2 * 28 + 14;
-    private int goToY = 8 * 32;
+    // This was 8 * 32, but the GateKeeper is unable to go past
+    // 8 * 32 - 6, so it would never reach the target the player couldn't
+    // proceed past this challenge.
+    private int goToY = 8 * 32 - 6;
 
     public GateKeeper(int X, int Y, Room r) {
         x = X;
@@ -63,6 +66,11 @@ public class GateKeeper extends Item {
     }
 
     public void Animate() {
+        // hack: check if goToY is the expected value. It is essentially
+        // a constant, but it was changed in the code and older saved games
+        // may bring in an older value when the object is deserialized.
+        if (goToY != 8 * 32 - 6) goToY = 8 * 32 - 6;
+        
         if (behavior == 1) {
             if (x != goToX || y != goToY) {
                 if (x != goToX) {

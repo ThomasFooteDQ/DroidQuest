@@ -196,8 +196,8 @@ public class TrashCollector extends Item {
                 if (room != gotoRoom) {
                     moveDown(4);
                     if (x != 266) {
-                        int diff = Math.abs(266 - y);
-                        int dir = diff / (266 - y);
+                        int diff = Math.abs(266 - x);
+                        int dir = diff / (266 - x);
                         if (diff > 4) {
                             diff = 4;
                         }
