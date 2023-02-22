@@ -30,7 +30,11 @@ public class DQ extends JFrame implements ActionListener {
     private DQ() {
         // Constructor
         super("DroidQuest");
-        setSize(560 + 8, 384 + 27 + 24);
+        Dimension dim = new Dimension(560 + 8, 384 + 27 + 24);
+        setSize(dim);
+        setMinimumSize(dim);
+        setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
+
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 setVisible(false);
@@ -550,7 +554,6 @@ public class DQ extends JFrame implements ActionListener {
 //Readme.txt
 //
 //
-
 
 
 
