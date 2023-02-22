@@ -25,7 +25,8 @@ public class RoomDisplay extends JPanel {
     public Timer timer;
     private int timerspeed = 128;
     public boolean useSounds = true;
-    private AffineTransform at = new AffineTransform();
+    private double w = 1.0;
+    private double h = 1.0;
 
     public Font bigFont;
     public Font smallFont;
@@ -50,9 +51,8 @@ public class RoomDisplay extends JPanel {
             public void componentResized(ComponentEvent e) {
                 Dimension d = new Dimension();
                 getSize(d);
-                double w = d.width / 560.0;
-                double h = d.height / 384.0;
-                at.setToScale(w, h);
+                w = d.width / 560.0;
+                h = d.height / 384.0;
             }
         });
 
@@ -96,8 +96,8 @@ public class RoomDisplay extends JPanel {
         // Mouse Functions
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                int newX = (int) (e.getX() / at.getScaleX());
-                int newY = (int) (e.getY() / at.getScaleY());
+                int newX = (int) (e.getX() / w);
+                int newY = (int) (e.getY() / h);
                 int deltaX = newX - e.getX();
                 int deltaY = newY - e.getY();
                 e.translatePoint(deltaX, deltaY);
@@ -289,7 +289,10 @@ public class RoomDisplay extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponents(g); // Paint background
         Graphics2D g2 = (Graphics2D) g;
-        g2.setTransform(at);
+        AffineTransform tx = new AffineTransform();
+        tx.concatenate ( g2.getTransform() );
+        tx.scale(w, h); 
+        g2.setTransform(tx);
 
         // Paint Materials
         if (level.currentViewer.room.MaterialArray == null) {
@@ -336,6 +339,7 @@ public class RoomDisplay extends JPanel {
         //
         //	Problem with this: You can't find the Black Crystal. This could be fixed by
         //	putting a menu item in "Cursor always on top".
+        g2.dispose();
 
     }
 
